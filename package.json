@@ -1,0 +1,22 @@
+{
+  "name": "stealth-lumen",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "concurrently -n web,api -c cyan,magenta \"npm run dev:web\" \"npm run dev:api\"",
+    "dev:web": "npm run dev --workspace @stealth-lumen/web",
+    "dev:api": "python -m uvicorn app.main:app --reload --app-dir backend",
+    "build": "npm run build --workspace @stealth-lumen/web",
+    "test": "npm run test:web && npm run test:api",
+    "test:web": "npm run test --workspace @stealth-lumen/web",
+    "test:api": "python -m pytest backend/tests",
+    "verify:data": "python scripts/data/verify_manifest.py"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
+

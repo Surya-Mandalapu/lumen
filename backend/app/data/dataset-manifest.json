@@ -1,0 +1,68 @@
+{
+  "application": "Stealth Lumen",
+  "dataset_version": "foundation-0.1.0",
+  "status": "not_downloaded",
+  "supported_region": {
+    "id": "lunar-south-pole-87s",
+    "label": "Lunar south pole, 87°S–90°S",
+    "minimum_latitude_deg": -90,
+    "maximum_latitude_deg": -87,
+    "longitude_convention": "planetocentric, east-positive [-180, 180)",
+    "boundary_description": "All longitudes poleward of 87 degrees south. The exact pole is not sampled as a candidate."
+  },
+  "coordinate_reference": {
+    "reference_radius_m": 1737400,
+    "source_frame": "MOON_ME_DE421",
+    "calculation_frame": "MOON_ME_DE440_ME421",
+    "projection": "south polar stereographic, true scale at the south pole",
+    "height_definition": "metres above the 1,737.4 km lunar reference sphere"
+  },
+  "analysis": {
+    "terrain_resolution_m": 80,
+    "candidate_spacing_m": 500,
+    "observer_height_m": 2,
+    "horizon_azimuth_step_deg": 1,
+    "horizon_maximum_range_km": 200,
+    "coarse_time_step_minutes": 60,
+    "finalist_time_step_minutes": 5
+  },
+  "valid_time_range": {
+    "start_utc": "2025-01-01T00:00:00Z",
+    "end_utc": "2035-12-31T23:59:59Z",
+    "maximum_query_days": 31
+  },
+  "sources": [
+    {
+      "id": "pgda-lola-south-pole",
+      "role": "terrain, slope, roughness, quality and PSR source",
+      "url": "https://pgda.gsfc.nasa.gov/products/90",
+      "availability": "source_available"
+    },
+    {
+      "id": "usgs-iau-gazetteer",
+      "role": "authoritative named lunar features",
+      "url": "https://planetarynames.wr.usgs.gov/GIS_Downloads",
+      "availability": "source_available"
+    },
+    {
+      "id": "naif-generic-kernels",
+      "role": "ephemerides, lunar orientation, body constants and time conversion",
+      "url": "https://naif.jpl.nasa.gov/naif/data_generic.html",
+      "availability": "source_available"
+    }
+  ],
+  "derived_artifacts": {
+    "regional_dem": "not_built",
+    "candidate_table": "not_built",
+    "horizon_profiles": "not_built",
+    "feature_index": "not_built",
+    "terrain_meshes": "not_built"
+  },
+  "disclaimers": [
+    "Prototype comparative planning indicators only.",
+    "Not flight certified and not a landing-safety determination.",
+    "Geometric Earth-center visibility is not guaranteed communications coverage.",
+    "Terrain indicators cannot resolve hazards below the source data resolution."
+  ]
+}
+

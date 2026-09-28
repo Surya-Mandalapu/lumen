@@ -1,0 +1,39 @@
+{
+  "catalog_version": "0.1.0",
+  "policy": "Large source and derived files remain outside Git. Pin checksums after download.",
+  "sources": [
+    {
+      "id": "nasa-svs-moon-model",
+      "landing_page": "https://svs.gsfc.nasa.gov/14959/",
+      "purpose": "Optional global context model only",
+      "recommended_asset": "moon_small.glb",
+      "approximate_size_mb": 13.2,
+      "analysis_ready": false
+    },
+    {
+      "id": "pgda-product-90",
+      "landing_page": "https://pgda.gsfc.nasa.gov/products/90",
+      "purpose": "Primary 80 m terrain and aligned slope, roughness, quality and PSR products",
+      "analysis_ready": true
+    },
+    {
+      "id": "pgda-product-78",
+      "landing_page": "https://pgda.gsfc.nasa.gov/products/78",
+      "purpose": "Curated 5 m detail tiles",
+      "analysis_ready": true
+    },
+    {
+      "id": "iau-gazetteer",
+      "landing_page": "https://planetarynames.wr.usgs.gov/GIS_Downloads",
+      "purpose": "Authoritative landmark resolution",
+      "analysis_ready": true
+    },
+    {
+      "id": "naif-generic-kernels",
+      "landing_page": "https://naif.jpl.nasa.gov/naif/data_generic.html",
+      "purpose": "DE440 ephemerides and lunar orientation",
+      "analysis_ready": true
+    }
+  ]
+}
+

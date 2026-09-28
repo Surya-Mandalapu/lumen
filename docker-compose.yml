@@ -1,0 +1,9 @@
+services:
+  stealth-lumen:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      STEALTH_LUMEN_ENV: development
+      STEALTH_LUMEN_DATA_ROOT: /app/data/derived
+

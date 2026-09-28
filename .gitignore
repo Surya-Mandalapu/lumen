@@ -1,0 +1,26 @@
+# JavaScript
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+*.egg-info/
+
+# Environment and editor files
+.env
+.DS_Store
+.idea/
+.vscode/
+
+# Scientific source and derived data are intentionally not committed.
+data/raw/
+data/derived/
+data/cache/
+backend/app/data/derived/
+
