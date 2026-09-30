@@ -1,2 +1,2 @@
-"""Stealth Lumen API package."""
+"""Lumen API package."""
 

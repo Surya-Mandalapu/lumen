@@ -8,7 +8,7 @@ from app.api import router
 from app.settings import settings
 
 app = FastAPI(
-    title="Stealth Lumen API",
+    title="Lumen API",
     version="0.1.0",
     description=(
         "Prototype lunar south-pole comparison interfaces. Results are planning indicators, "
@@ -33,7 +33,7 @@ else:
     @app.get("/", include_in_schema=False)
     def root() -> dict[str, str]:
         return {
-            "service": "stealth-lumen-api",
+            "service": "lumen-api",
             "docs": "/docs",
             "frontend": "Run the Vite development server or build apps/web.",
         }

@@ -3,9 +3,9 @@ requires = ["setuptools>=75"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "stealth-lumen-api"
+name = "lumen-api"
 version = "0.1.0"
-description = "Scientific API foundation for Stealth Lumen"
+description = "Scientific API foundation for Lumen"
 requires-python = ">=3.12"
 dependencies = [
   "fastapi>=0.116,<1",

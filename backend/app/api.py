@@ -13,7 +13,7 @@ router = APIRouter(prefix="/api/v1")
 
 @router.get("/health")
 def health() -> dict[str, str]:
-    return {"status": "ok", "service": "stealth-lumen-api"}
+    return {"status": "ok", "service": "lumen-api"}
 
 
 @router.get("/region")

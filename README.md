@@ -1,6 +1,6 @@
-# Stealth Lumen
+# Lumen
 
-Stealth Lumen is a hackathon prototype for comparing candidate lunar south-pole landing
+Lumen is a hackathon prototype for comparing candidate lunar south-pole landing
 sites using terrain, illumination, and geometric direct-to-Earth visibility indicators.
 
 The repository now contains a runnable product foundation:

@@ -9,7 +9,7 @@ RUN npm run build
 FROM python:3.12-slim AS runtime
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    STEALTH_LUMEN_STATIC_DIR=/app/apps/web/dist
+    LUMEN_STATIC_DIR=/app/apps/web/dist
 WORKDIR /app
 COPY backend backend
 RUN pip install --no-cache-dir ./backend

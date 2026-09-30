@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
-  <title id="title">Stealth Lumen</title>
+  <title id="title">Lumen</title>
   <desc id="desc">A crescent Moon crossed by a gold horizon line.</desc>
   <rect width="128" height="128" rx="24" fill="#07111f"/>
   <circle cx="62" cy="60" r="37" fill="#d9e2e8"/>
@@ -7,4 +7,3 @@
   <path d="M18 87C42 76 79 76 110 89" fill="none" stroke="#f4c95d" stroke-width="6" stroke-linecap="round"/>
   <circle cx="95" cy="35" r="6" fill="#f4c95d"/>
 </svg>
-

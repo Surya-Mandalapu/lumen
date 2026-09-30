@@ -22,9 +22,9 @@ export default function App() {
   return (
     <main>
       <header className="topbar">
-        <a className="brand" href="#top" aria-label="Stealth Lumen home">
-          <img src="/stealth-lumen-mark.svg" alt="" />
-          <span>Stealth Lumen</span>
+        <a className="brand" href="#top" aria-label="Lumen home">
+          <img src="/lumen-mark.svg" alt="" />
+          <span>Lumen</span>
         </a>
         <div className="prototype-label">Prototype foundation</div>
       </header>
