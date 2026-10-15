@@ -18,9 +18,16 @@ __pycache__/
 .idea/
 .vscode/
 
-# Scientific source and derived data are intentionally not committed.
+# Large scientific data is excluded; only the small prepared demo bundle is tracked.
 data/raw/
-data/derived/
+data/derived/*
+!data/derived/pgda-demo-v1/
+data/derived/pgda-demo-v1/*
+!data/derived/pgda-demo-v1/metadata.json
+!data/derived/pgda-demo-v1/terrain.npz
+!data/derived/pgda-demo-v1/terrain.json
+!data/derived/pgda-demo-v1/features.json
+!data/derived/pgda-demo-v1/psr.json
 data/cache/
 backend/app/data/derived/
 

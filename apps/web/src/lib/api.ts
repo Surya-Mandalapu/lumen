@@ -1,52 +1,82 @@
 import type {
-  Preferences,
   RegionManifest,
+  SearchRequest,
+  SearchResponse,
   SearchValidationResponse,
+  TerrainData,
+  FeatureCollection,
+  PSRLayer,
+  SiteDetail,
 } from "./types";
-
 const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "/api/v1";
 
+export function getFeatures(signal?: AbortSignal): Promise<FeatureCollection> {
+  return fetch(`${API_BASE}/features`, { signal }).then(
+    expectJson<FeatureCollection>,
+  );
+}
+export function getPSRLayer(signal?: AbortSignal): Promise<PSRLayer> {
+  return fetch(`${API_BASE}/layers/psr`, { signal }).then(expectJson<PSRLayer>);
+}
+export function getSiteAnalysis(
+  id: string,
+  request: SearchRequest,
+  signal?: AbortSignal,
+): Promise<SiteDetail> {
+  return fetch(`${API_BASE}/sites/${encodeURIComponent(id)}/analysis`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(request),
+    signal,
+  }).then(expectJson<SiteDetail>);
+}
 async function expectJson<T>(response: Response): Promise<T> {
   if (!response.ok) {
-    const body = await response.text();
-    throw new Error(body || `Request failed with status ${response.status}`);
+    const body = await response.json().catch(() => null);
+    const detail = body?.detail;
+    const message =
+      typeof detail === "string"
+        ? detail
+        : Array.isArray(detail)
+          ? detail
+              .map(
+                (issue: { msg: string; loc: string[] }) =>
+                  `${issue.loc.slice(1).join(" ")}: ${issue.msg}`,
+              )
+              .join(". ")
+          : (detail?.message ??
+            `Request failed (${response.status}). Try again.`);
+    throw new Error(message);
   }
   return response.json() as Promise<T>;
 }
-
-export async function getRegionManifest(): Promise<RegionManifest> {
-  return expectJson(await fetch(`${API_BASE}/region`));
-}
-
-export async function validateSearch(input: {
-  start_utc: string;
-  end_utc: string;
-  search_radius_km: number;
-  preferences: Preferences;
-}): Promise<SearchValidationResponse> {
-  return expectJson(
-    await fetch(`${API_BASE}/search/validate`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        region: {
-          selector_type: "feature_radius",
-          input_text: "near Shackleton crater",
-          resolved_feature_id: "USGS_PLACEHOLDER_SHACKLETON",
-          center: { latitude_deg: -89.9, longitude_deg_east: 0 },
-          search_radius_km: input.search_radius_km,
-        },
-        time_range: {
-          start_utc: input.start_utc,
-          end_utc: input.end_utc,
-        },
-        hard_constraints: {
-          maximum_slope_deg: 10,
-          minimum_earth_visibility_fraction: 0.5,
-        },
-        preferences: input.preferences,
-      }),
-    }),
+export function getRegionManifest(
+  signal?: AbortSignal,
+): Promise<RegionManifest> {
+  return fetch(`${API_BASE}/region`, { signal }).then(
+    expectJson<RegionManifest>,
   );
 }
-
+export function getTerrain(signal?: AbortSignal): Promise<TerrainData> {
+  return fetch(`${API_BASE}/terrain`, { signal }).then(expectJson<TerrainData>);
+}
+export function searchCandidates(
+  input: SearchRequest,
+  signal?: AbortSignal,
+): Promise<SearchResponse> {
+  return fetch(`${API_BASE}/candidates/search`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(input),
+    signal,
+  }).then(expectJson<SearchResponse>);
+}
+export function validateSearch(
+  input: SearchRequest,
+): Promise<SearchValidationResponse> {
+  return fetch(`${API_BASE}/search/validate`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(input),
+  }).then(expectJson<SearchValidationResponse>);
+}

@@ -1,0 +1,135 @@
+{
+  "dataset_version": "pgda-demo-v1.1",
+  "preprocessing_version": "1.1.0",
+  "coordinate_frame": "MOON_ME_DE440_ME421",
+  "source_frame": "MOON_ME / DE421",
+  "reference_radius_m": 1737400.0,
+  "coverage": {
+    "type": "projected_square",
+    "extent_m": [
+      -10000,
+      -10000,
+      10000,
+      10000
+    ],
+    "latitude_min_deg": -89.9835110570054,
+    "latitude_max_deg": -89.53362483556982,
+    "description": "20 km square around the lunar south pole; excludes the pole point"
+  },
+  "candidate_count": 1680,
+  "candidate_spacing_m": 500,
+  "terrain_resolution_m": 80,
+  "metric_sampling_resolution_m": 1000,
+  "metric_baseline_m": 100,
+  "observer_height_m": 2,
+  "horizon_azimuth_step_deg": 5,
+  "horizon_max_range_m": 200000,
+  "horizon_near_step_m": 80,
+  "horizon_far_step_m": 320,
+  "horizon_near_range_m": 20000,
+  "sources": [
+    {
+      "id": "dem",
+      "filename": "LDEM_80S_80MPP_ADJ.TIF",
+      "url": "https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDEM_80S_80MPP_ADJ.TIF",
+      "sha256": "82030dcbdd7c4bb0c7d858e9b4b293b9f2cda5a543ba31ec0f42784bd6beee5a",
+      "bytes": 189158392,
+      "crs_wkt": "PROJCS[\"Moon (2015) - Sphere / Ocentric / South Polar\",GEOGCS[\"Moon (2015) - Sphere / Ocentric\",DATUM[\"Moon (2015) - Sphere\",SPHEROID[\"Moon (2015) - Sphere\",1737400,0]],PRIMEM[\"Reference Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Polar_Stereographic\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",NORTH],AXIS[\"Northing\",NORTH]]",
+      "resolution_m": 80.0,
+      "nodata": "NaN",
+      "units": "metres"
+    },
+    {
+      "id": "roughness",
+      "filename": "LDRM_80S_1000MPP_ADJ_ROUGH_100M.TIF",
+      "url": "https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDRM_80S_1000MPP_ADJ_ROUGH_100M.TIF",
+      "sha256": "5f4428628d78637f4ef67f383422cd200b270f51f31c2abe47bf0d3c239446ec",
+      "bytes": 1490865,
+      "crs_wkt": "PROJCS[\"Moon (2015) - Sphere / Ocentric / South Polar\",GEOGCS[\"Moon (2015) - Sphere / Ocentric\",DATUM[\"Moon (2015) - Sphere\",SPHEROID[\"Moon (2015) - Sphere\",1737400,0]],PRIMEM[\"Reference Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Polar_Stereographic\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",NORTH],AXIS[\"Northing\",NORTH]]",
+      "resolution_m": 1000.0,
+      "nodata": "NaN",
+      "units": "metres"
+    },
+    {
+      "id": "slope",
+      "filename": "LDRM_80S_1000MPP_ADJ_SLP_100M.TIF",
+      "url": "https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LDRM_80S_1000MPP_ADJ_SLP_100M.TIF",
+      "sha256": "5913b99d83d1158d83085c17083b0a86413457b2a352ca837cd8930ef5123c18",
+      "bytes": 1533793,
+      "crs_wkt": "PROJCS[\"Moon (2015) - Sphere / Ocentric / South Polar\",GEOGCS[\"Moon (2015) - Sphere / Ocentric\",DATUM[\"Moon (2015) - Sphere\",SPHEROID[\"Moon (2015) - Sphere\",1737400,0]],PRIMEM[\"Reference Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Polar_Stereographic\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",NORTH],AXIS[\"Northing\",NORTH]]",
+      "resolution_m": 1000.0,
+      "nodata": "NaN",
+      "units": "degrees"
+    },
+    {
+      "id": "iau-gazetteer",
+      "filename": "MOON_nomenclature_center_pts.kmz",
+      "url": "https://asc-planetarynames-data.s3.us-west-2.amazonaws.com/MOON_nomenclature_center_pts.kmz",
+      "sha256": "09bb71bc63f994e13e3c16368ba7d3a63d31cb7110636730f8274cb83f226d48",
+      "bytes": 11718225,
+      "landing_page": "https://planetarynames.wr.usgs.gov/GIS_Downloads",
+      "control_network": "LOLA 2011",
+      "latitude_type": "planetocentric",
+      "longitude_direction": "east",
+      "units": "degrees; diameter in kilometres",
+      "snapshot_policy": "Official nightly export; immutable downloaded snapshot pinned by SHA-256."
+    },
+    {
+      "id": "psr",
+      "filename": "LPSR_80S_20MPP_ADJ.TIF",
+      "url": "https://pgda.gsfc.nasa.gov/data/LOLA_20mpp/LPSR_80S_20MPP_ADJ.TIF",
+      "sha256": "ad95311b81db773039af441dd66a017f024327858c6e0314b8c92bf2f470834e",
+      "bytes": 154221202,
+      "crs_wkt": "PROJCS[\"Moon (2015) - Sphere / Ocentric / South Polar\",GEOGCS[\"Moon (2015) - Sphere / Ocentric\",DATUM[\"Moon (2015) - Sphere\",SPHEROID[\"Moon (2015) - Sphere\",1737400,0]],PRIMEM[\"Reference Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Polar_Stereographic\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",NORTH],AXIS[\"Northing\",NORTH]]",
+      "resolution_m": 20,
+      "nodata": "NaN",
+      "units": "binary; 1=mapped PSR, 0=not mapped PSR",
+      "citation": "Barker et al. (2023), Planet. Sci. J. 4,183; doi:10.3847/PSJ/acf3e1",
+      "landing_page": "https://pgda.gsfc.nasa.gov/products/90"
+    }
+  ],
+  "citation": "Barker et al. (2023), Planet. Sci. J. 4,183; doi:10.3847/PSJ/acf3e1",
+  "source_landing_page": "https://pgda.gsfc.nasa.gov/products/90",
+  "artifacts": {
+    "terrain.npz": {
+      "sha256": "ba62c3afed06e1b16bff6c59fe1c0217555ab8c2f001bcd5ccd9b1d7f62c1ea9",
+      "bytes": 619013
+    },
+    "terrain.json": {
+      "sha256": "81ca995fb3e197c3b354e54623790afd8c2c6e9b0fef85bbefbf5c64317818bc",
+      "bytes": 118411
+    },
+    "features.json": {
+      "sha256": "5fbfc9de9dd8c313ca630bb1e071fffb4dc46198ebda87ebda3a6ddabb8a3f80",
+      "bytes": 13360
+    },
+    "psr.json": {
+      "sha256": "5192bf456a804dd137014f614731d2eaa8650f88339840c075ff4fc6fa49354b",
+      "bytes": 50490
+    }
+  },
+  "limitations": [
+    "Curated 20 km square only, not the complete 87-90 degree south polar cap.",
+    "5 degree horizon bins and 80/320 m radial sampling can miss narrow blockers; comparative prototype only.",
+    "Terrain beyond 200 km and subpixel obstacles are not modeled.",
+    "Slope and roughness use published 100 m baseline products sampled on a 1 km output grid; not a landing hazard assessment.",
+    "DEM quality/error/count masks are not included; absence of these masks prevents confidence claims.",
+    "PSR proximity uses mapped 20 m pixel areas in the polar projection; its local scale distortion is below 0.01 percent in the buffered crop.",
+    "Mapped PSRs are not date-specific shadow predictions or evidence of accessible water ice.",
+    "Feature proximity uses published IAU center coordinates, not geological feature boundaries."
+  ],
+  "psr": {
+    "distance_definition": "Projected distance to the union of mapped 20 m PSR pixel areas; zero inside.",
+    "distance_resolution_m": 20,
+    "distance_crop_extent_m": [
+      -30000,
+      -30000,
+      30000,
+      30000
+    ],
+    "crop_completeness_checked": true,
+    "display_resolution_m": 200,
+    "distance_min_km": 0.0,
+    "distance_max_km": 2.5973062969160954
+  }
+}

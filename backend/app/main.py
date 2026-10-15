@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.api import router
+from app.exploration_api import router as exploration_router
 from app.settings import settings
 
 app = FastAPI(
@@ -16,6 +17,7 @@ app = FastAPI(
     ),
 )
 app.include_router(router)
+app.include_router(exploration_router)
 
 
 if settings.static_dir.exists():
@@ -25,11 +27,15 @@ if settings.static_dir.exists():
 
     @app.get("/{path:path}", include_in_schema=False)
     def frontend(path: str) -> FileResponse:
-        requested = settings.static_dir / path
+        root = settings.static_dir.resolve()
+        requested = (root / path).resolve()
+        if not requested.is_relative_to(root) or path.startswith("api/"):
+            raise HTTPException(status_code=404, detail="Not found")
         if requested.is_file():
             return FileResponse(requested)
         return FileResponse(settings.static_dir / "index.html")
 else:
+
     @app.get("/", include_in_schema=False)
     def root() -> dict[str, str]:
         return {
@@ -37,4 +43,3 @@ else:
             "docs": "/docs",
             "frontend": "Run the Vite development server or build apps/web.",
         }
-

@@ -13,7 +13,8 @@
     "test": "npm run test:web && npm run test:api",
     "test:web": "npm run test --workspace @lumen/web",
     "test:api": "python -m pytest backend/tests",
-    "verify:data": "python scripts/data/verify_manifest.py"
+    "verify:data": "python scripts/data/verify_manifest.py",
+    "prepare:data": "python scripts/data/prepare_kernels.py && python scripts/data/verify_manifest.py --require-kernels"
   },
   "devDependencies": {
     "concurrently": "^9.2.1"

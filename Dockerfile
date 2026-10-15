@@ -13,8 +13,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /app
 COPY backend backend
 RUN pip install --no-cache-dir ./backend
+COPY scripts/data/prepare_kernels.py scripts/data/prepare_kernels.py
+RUN python scripts/data/prepare_kernels.py
 COPY --from=web-build /workspace/apps/web/dist apps/web/dist
-COPY data data
+COPY data/derived/pgda-demo-v1 data/derived/pgda-demo-v1
 EXPOSE 8000
 CMD ["uvicorn", "app.main:app", "--app-dir", "backend", "--host", "0.0.0.0", "--port", "8000"]
 

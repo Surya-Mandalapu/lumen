@@ -7,7 +7,7 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class StrictModel(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", allow_inf_nan=False)
 
 
 class SelectorType(StrEnum):
@@ -31,11 +31,14 @@ class RegionSelection(StrictModel):
 
     @model_validator(mode="after")
     def validate_spatial_selector(self) -> RegionSelection:
-        if self.selector_type in {
-            SelectorType.feature_radius,
-            SelectorType.circle,
-        } and (self.center is None or self.search_radius_km is None):
-            raise ValueError("Circle and feature-radius searches require center and radius.")
+        if self.selector_type == SelectorType.circle and (
+            self.center is None or self.search_radius_km is None
+        ):
+            raise ValueError("Circle searches require a center and radius.")
+        if self.selector_type == SelectorType.feature_radius and (
+            not self.resolved_feature_id or self.search_radius_km is None
+        ):
+            raise ValueError("Feature-radius searches require an approved feature ID and radius.")
         return self
 
 
@@ -61,10 +64,10 @@ class HardConstraints(StrictModel):
 
 
 class Preferences(StrictModel):
-    illumination: float = Field(default=0.35, ge=0)
-    earth_visibility: float = Field(default=0.35, ge=0)
+    illumination: float = Field(default=0.4, ge=0)
+    earth_visibility: float = Field(default=0.4, ge=0)
     terrain_safety: float = Field(default=0.20, ge=0)
-    science_proximity: float = Field(default=0.10, ge=0)
+    science_proximity: float = Field(default=0, ge=0)
 
 
 class SearchRequest(StrictModel):
@@ -81,3 +84,10 @@ class SearchValidationResponse(StrictModel):
     warnings: list[str]
     estimated_candidate_count: int = Field(ge=0)
 
+
+class ScenarioRequest(StrictModel):
+    request: SearchRequest
+    site_id: str = Field(min_length=1, max_length=100)
+    delay_hours: float = Field(default=12, ge=-168, le=168)
+    offset_radius_m: float = Field(default=500, ge=0, le=2000)
+    include_sampling_sensitivity: bool = True
