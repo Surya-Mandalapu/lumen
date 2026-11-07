@@ -6,6 +6,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.api import router
 from app.exploration_api import router as exploration_router
+from app.global_api import router as global_router
 from app.settings import settings
 
 app = FastAPI(
@@ -18,6 +19,7 @@ app = FastAPI(
 )
 app.include_router(router)
 app.include_router(exploration_router)
+app.include_router(global_router)
 
 
 if settings.static_dir.exists():

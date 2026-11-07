@@ -12,7 +12,15 @@ from app.services.ephemeris import (
     time_grid,
     visibility_metrics,
 )
-from app.services.search import category_scores, region_mask, temporal_pass, terrain_mask
+from app.services.search import (
+    analyze,
+    analyze_batch,
+    category_scores,
+    map_sample,
+    region_mask,
+    temporal_pass,
+    terrain_mask,
+)
 
 
 def test_sky_uses_east_north_radial_frame_and_observer_parallax():
@@ -101,3 +109,31 @@ def test_region_radius_handles_antimeridian():
     assert region_mask(
         request, {"lat_deg": np.array([-89.9, -87]), "lon_deg": np.array([-179.9, 0])}
     ).tolist() == [True, False]
+
+
+def test_batched_analysis_matches_site_analysis_for_partial_final_interval():
+    start = datetime(2028, 10, 1, tzinfo=UTC)
+    times = time_grid(start, start + timedelta(minutes=12, seconds=1), 5)
+    arrays = {
+        "lat_deg": np.array([-89.9, -89.8, -89.7]),
+        "lon_deg": np.array([0.0, 55.0, -120.0]),
+        "elevation_m": np.array([0.0, 100.0, -200.0]),
+        "horizons_deg": np.array([[0.0, 1.0, 2.0, 3.0], [3.0, 2.0, 1.0, 0.0], [1.0] * 4]),
+    }
+    sun = np.array([[150_000_000.0, 1000.0 * j, 0.0] for j in range(len(times))])
+    earth = np.array([[384_000.0, -1000.0 * j, 1000.0] for j in range(len(times))])
+    indices = np.array([0, 2, 1])
+    actual = analyze_batch(arrays, indices, times, sun, earth)
+    for index, metrics in zip(indices, actual, strict=True):
+        assert metrics == pytest.approx(analyze(arrays, index, times, sun, earth)["metrics"])
+
+
+def test_map_sampling_keeps_shortlist_and_bounded_spatial_preview():
+    x, y = np.meshgrid(np.arange(100), np.arange(100))
+    arrays = {"x_m": x.ravel(), "y_m": y.ravel()}
+    ranked = [(float(10_000 - i), f"site-{i}", i) for i in range(10_000)]
+    selected = [ranked[0], ranked[-1]]
+    sampled = map_sample(ranked, arrays, selected)
+    assert len(sampled) <= 5000
+    assert {row[1] for row in selected} <= {row[1] for row in sampled}
+    assert sampled == map_sample(ranked, arrays, selected)

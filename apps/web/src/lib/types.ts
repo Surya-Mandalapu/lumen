@@ -127,6 +127,7 @@ export interface SearchResponse {
   common_window: { start_utc: string; end_utc: string; step_minutes: number };
   empty_reason?: string;
   map_candidates?: MapCandidate[];
+  map_point_count?: number;
   failure_counts?: Record<string, number>;
   rejections?: Record<string, number>;
 }

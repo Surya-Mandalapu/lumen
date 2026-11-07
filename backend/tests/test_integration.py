@@ -1,12 +1,14 @@
 """Integration regression using the bundled NASA patch and optional pinned NAIF kernels."""
 
-from datetime import datetime
+from datetime import UTC, datetime
 from itertools import pairwise
 
 import pytest
 from fastapi.testclient import TestClient
 
+import app.services.search as search_module
 from app.main import app
+from app.models import RegionSelection, SearchRequest, SelectorType, TimeRange
 from app.settings import settings
 
 pytestmark = pytest.mark.skipif(
@@ -54,3 +56,24 @@ def test_real_data_search_is_reproducible_and_timeline_agrees_with_metrics():
     empty = client.post("/api/v1/candidates/search", json=impossible).json()
     assert empty["status"] == "empty"
     assert empty["candidates"] == []
+
+
+def test_precomputed_temporal_cache_preserves_exact_search(tmp_path, monkeypatch):
+    original_path = search_module.temporal_cache_path
+    monkeypatch.setattr(
+        search_module,
+        "temporal_cache_path",
+        lambda *args: (tmp_path / "temporal.npz", original_path(*args)[1]),
+    )
+    start = datetime(2028, 10, 1, tzinfo=UTC)
+    end = datetime(2028, 10, 2, tzinfo=UTC)
+    request = SearchRequest(
+        region=RegionSelection(selector_type=SelectorType.full_supported_region),
+        time_range=TimeRange(start_utc=start, end_utc=end),
+    )
+    search_module.cached_metrics.cache_clear()
+    baseline = search_module.search(request)
+    cache_path = search_module.precompute_temporal_cache(start, end)
+    assert cache_path.exists()
+    search_module.cached_metrics.cache_clear()
+    assert search_module.search(request) == baseline

@@ -3,6 +3,8 @@
 import numpy as np
 from prepare_terrain import (
     RADIUS_M,
+    candidate_grid,
+    cap_tile_bounds,
     geographic_to_projected,
     horizon_profiles,
     projected_to_geographic,
@@ -17,6 +19,23 @@ def test_projection_roundtrip():
     actual_x, actual_y = geographic_to_projected(lat, lon)
     np.testing.assert_allclose(actual_x, x, atol=1e-8)
     np.testing.assert_allclose(actual_y, y, atol=1e-8)
+
+
+def test_cap_tiles_partition_the_87_to_90_degree_south_candidate_grid():
+    points = set()
+    for tile_x in range(10):
+        for tile_y in range(10):
+            x, y, bounds = candidate_grid((tile_x, tile_y))
+            assert bounds == cap_tile_bounds(tile_x, tile_y)
+            assert np.all((x >= bounds[0]) & (x < bounds[2]))
+            assert np.all((y >= bounds[1]) & (y < bounds[3]))
+            lat, _ = projected_to_geographic(x, y)
+            assert np.all(np.rad2deg(lat) <= -87)
+            tile_points = set(zip(x.tolist(), y.tolist(), strict=True))
+            assert not points.intersection(tile_points)
+            points.update(tile_points)
+    assert 100_000 < len(points) < 110_000
+    assert (0, 0) not in points
 
 
 def test_flat_sphere_observer_depression_and_ridge_direction():

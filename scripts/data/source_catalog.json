@@ -3,6 +3,15 @@
   "policy": "Large source and derived files remain outside Git. Pin checksums after download.",
   "sources": [
     {
+      "id": "global-lola-preview",
+      "landing_page": "https://svs.gsfc.nasa.gov/4720/",
+      "purpose": "Optional coarse global single-point preview; not regional landing-site ranking",
+      "asset_url": "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/ldem_16_uint.tif",
+      "sha256": "45a2b32d56e81ed30db07fead8abc842b249b6511219d9ca2c53f81bc2dc5d62",
+      "pixels_per_degree": 16,
+      "analysis_ready": true
+    },
+    {
       "id": "nasa-svs-moon-model",
       "landing_page": "https://svs.gsfc.nasa.gov/14959/",
       "purpose": "Optional global context model only",

@@ -32,7 +32,7 @@ function Moon() {
   );
 }
 
-export function GlobeScene() {
+export function GlobeScene({ preparedLabel }: { preparedLabel?: string }) {
   return (
     <div className="scene-wrapper globe-context">
       <Canvas
@@ -69,9 +69,9 @@ export function GlobeScene() {
           <br />A different horizon.
         </h3>
         <p>
-          South pole · 87°S–90°S planned coverage
+          South pole · 87°S–90°S study cap
           <br />
-          <strong>20 × 20 km prepared in this MVP</strong>
+          <strong>{preparedLabel ?? "Prepared coverage loading"}</strong>
         </p>
         <p className="small muted">
           The mint ring marks 87°S. Global context only; it is not the analysis
