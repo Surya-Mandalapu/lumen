@@ -13,7 +13,10 @@ class Settings:
     environment: str = os.getenv("LUMEN_ENV", "development")
     dataset_manifest_path: Path = PACKAGE_ROOT / "data" / "dataset-manifest.json"
     data_root: Path = Path(
-        os.getenv("LUMEN_DATA_ROOT", REPOSITORY_ROOT / "data" / "derived")
+        os.getenv("LUMEN_DATA_ROOT", REPOSITORY_ROOT / "data" / "derived" / "pgda-demo-v1")
+    )
+    kernel_root: Path = Path(
+        os.getenv("LUMEN_KERNEL_ROOT", REPOSITORY_ROOT / "data" / "raw" / "kernels")
     )
     static_dir: Path = Path(
         os.getenv("LUMEN_STATIC_DIR", REPOSITORY_ROOT / "apps" / "web" / "dist")
@@ -21,4 +24,3 @@ class Settings:
 
 
 settings = Settings()
-

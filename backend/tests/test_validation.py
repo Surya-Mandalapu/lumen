@@ -16,9 +16,7 @@ from app.services.validation import SearchValidationError, validate_search
 def request_for(start: datetime, end: datetime) -> SearchRequest:
     return SearchRequest(
         region=RegionSelection(
-            selector_type=SelectorType.feature_radius,
-            input_text="near Shackleton crater",
-            resolved_feature_id="fixture-shackleton",
+            selector_type=SelectorType.circle,
             center=Coordinate(latitude_deg=-89.9, longitude_deg_east=0),
             search_radius_km=20,
         ),
@@ -52,4 +50,3 @@ def test_rejects_windows_over_31_days() -> None:
                 datetime(2028, 2, 2, tzinfo=UTC),
             )
         )
-

@@ -1,10 +1,10 @@
 import type { Preferences } from "./types";
 
 export const DEFAULT_PREFERENCES: Preferences = {
-  illumination: 0.35,
-  earth_visibility: 0.35,
+  illumination: 0.4,
+  earth_visibility: 0.4,
   terrain_safety: 0.2,
-  science_proximity: 0.1,
+  science_proximity: 0,
 };
 
 export function normalizePreferences(input: Preferences): Preferences {

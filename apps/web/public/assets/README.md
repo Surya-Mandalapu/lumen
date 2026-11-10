@@ -1,14 +1,14 @@
-# Runtime assets
+# Bundled context asset
 
-This directory intentionally contains no large NASA models or scientific rasters.
+`moon-small.glb` is NASA SVS `moon_small.glb` (13,799,876 bytes).
 
-- The current global view uses procedural geometry, so a fresh clone works immediately.
-- The recommended NASA SVS Moon model and LOLA data sources are recorded in
-  `scripts/data/source_catalog.json` and `backend/app/data/dataset-manifest.json`.
-- Source rasters belong under `data/raw/` and generated web assets under `data/derived/`;
-  both paths are ignored by Git.
-- Any imported asset must retain its source URL, version, checksum, credit, coordinate
-  reference information, and permitted usage in the dataset manifest.
+- Source: https://svs.gsfc.nasa.gov/14959/
+- File: https://svs.gsfc.nasa.gov/vis/a010000/a014900/a014959/moon_small.glb
+- SHA-256: 12d3b0bb7fe214903f51447d1bc61710f442e92a11c703fcaca6d4e7ff8e67d4
+- Credit: NASA's Goddard Space Flight Center / Lunar Reconnaissance Orbiter.
+- Usage: https://www.nasa.gov/nasa-brand-center/images-and-media/
 
-Never treat a rendered GLB as an analysis-ready elevation model.
-
+The model wraps a lunar color map on a sphere. It is context only, not an analysis
+DEM, physical-scale model, or source of elevation, slope, horizons or shadow predictions.
+The analytical terrain scene instead loads the prepared PGDA display height grid via API.
+NASA attribution appears in the interface and methods panel. No endorsement is implied.

@@ -1,33 +1,113 @@
 # Lumen
 
-Lumen is a hackathon prototype for comparing candidate lunar south-pole landing
-sites using terrain, illumination, and geometric direct-to-Earth visibility indicators.
+A working lunar south-pole comparison MVP based on the
+[GitHub implementation plan](https://github.com/Surya-Mandalapu/lumen/blob/main/LUNAR_LANDING_SITE_PLAN.md).
+Configure a mission, filter and rank real candidate locations, inspect terrain and sky
+geometry, and compare two sites under the same window.
 
-The repository now contains a runnable product foundation:
+## Run locally
 
-- React/TypeScript contextual 3D interface and structured-search shell.
-- FastAPI request validation and versioned regional dataset manifest.
-- Explicit scientific conventions and a fail-closed candidate-search endpoint.
-- Reproducible data-source catalog and preprocessing handoff.
-- Frontend/backend tests, CI, and Docker packaging.
-
-The full [product and implementation plan](./LUNAR_LANDING_SITE_PLAN.md) remains the source
-for scope and sequencing.
-
-## Local setup
-
-Requirements: Node.js 22+ and Python 3.12+.
+Requires Node.js 22.12+ and Python 3.12+. From the repository folder:
 
 ```powershell
 npm install
 python -m venv .venv
 .venv\Scripts\Activate.ps1
-python -m pip install -e ".\backend[dev]"
+python -m pip install -e "./backend[dev]"
+npm run prepare:data
 npm run dev
 ```
 
-Open `http://localhost:5173`. FastAPI documentation is available at
-`http://localhost:8000/docs`.
+Open [Lumen](http://localhost:5173). The API is at
+[http://localhost:8000/docs](http://localhost:8000/docs).
+
+The small NASA-derived terrain bundle and context Moon model are included.
+`prepare:data` downloads and verifies approximately 44 MB of pinned JPL kernels once.
+After preparation, searches run locally without external science-data services.
+Missing or corrupt science inputs return an explicit unavailable error.
+
+## Try the MVP
+
+### Global point preview
+
+The **Anywhere on the Moon** workspace accepts global coordinates or a click on
+the NASA elevation map. It previews one location's coarse terrain, five-minute
+sunlight and geometric Earth-visibility timeline. This uses a separate 16-pixel
+per degree LOLA grid (about 1.9 km north–south), not the regional landing-site
+ranking engine. It provides no landing-safety, fine slope/roughness or PSR assessment.
+
+Prepare the optional global bundle once, after installing the preprocessing
+requirements and preparing the JPL kernels:
+
+```powershell
+python -m pip install -r scripts/data/requirements.txt
+npm run prepare:global
+```
+
+The source TIFF and generated global bundle stay outside Git. The script verifies
+the pinned NASA source hash and records the elevation encoding and artifact hash.
+Source and grid conventions: [NASA SVS CGI Moon Kit](https://svs.gsfc.nasa.gov/4720/).
+
+### Regional search
+
+1. Keep the prepared study area, October 1-31, 2028 window, maximum slope 10 degrees,
+   and minimum Earth line-of-sight availability 50%.
+2. Select **Find candidate sites**. A monthly search normally takes around 5 seconds
+   on the development machine; time depends on constraints and hardware.
+3. Select a numbered site in the terrain/2D map or shortlist. Move the time slider
+   to inspect Sun/Earth clearance against the terrain horizon.
+4. Compare the two initially pinned sites, or replace either pin. Adjust priorities
+   and run again to change ranking without changing the underlying science metrics.
+5. Export the full JSON analysis: request, raw metrics, timelines, horizons, applied
+   weights, algorithm assumptions, kernel hashes and terrain provenance.
+
+## Exploration workspace
+
+The plan's next workflows are now available:
+
+- **Area preview**: an expandable polar coverage map selects a circle center by click or
+  keyboard, with partial-coverage disclosure and separate source, candidate and display scales.
+- **Result explanations**: the selected shortlist site's weighted score contributions and
+  applied constraint evidence, a selection funnel, and same-window comparison tradeoffs.
+  These use existing results without additional analysis requests.
+- **Mission briefs**: a local, documented phrase parser turns dates, approved landmarks,
+  numeric constraints and priorities into a reviewable draft. Apply it to the form before
+  running a search. This is deterministic text interpretation, not an LLM or a science engine.
+- **Mission library**: four representative presets, named browser-local configurations,
+  and validated JSON import/export. Results are not persisted or mixed across windows.
+- **Advanced filters**: roughness, elevation bounds, continuous sunlight/Earth opportunity,
+  mapped PSR distance and selected approved-feature center distance.
+- **Real science proximity**: a NASA 20 m PSR mask and 30 IAU-adopted feature centers.
+  The PSR overlay displays 200 m area fractions; feature distances are to official centers.
+- **Candidate layers**: planning score, sunlight and Earth visibility at every eligible
+  candidate point. Select any point for its actual site analysis, including unshortlisted sites.
+- **Local sky**: interactive 3D east/north/up directions, horizon and apparent Sun/Earth
+  paths, synchronized with the selected site's timeline. Diagram sizes are not physical scale.
+- **Timeline playback and CSV**: animate the mission and export the complete sampled series.
+- **Events and blockers**: refine bracketed state changes to at most 60 seconds, inspect
+  intervals and approximate blocking-terrain coordinates, and export site evidence.
+- **Scenario lab**: compare +12/+24-hour arrival shifts, nearby 500 m/1 km grid locations,
+  and a 2.5-minute time grid, with metric deltas and constraint status. The original search
+  stays unchanged until shifted dates are explicitly applied and rerun.
+
+## Implemented scope
+
+- 1,680 real NASA LOLA candidate locations, spaced 500 m across a 20 x 20 km polar square.
+- Orbitable 3D terrain, accessible 2D candidate map, NASA textured Moon context.
+- Dates, coordinate/radius searches, constraints, normalized priorities and explicit empty states.
+- Sun `CN+S` and outgoing Earth `XCN+S` directions in `MOON_ME_DE440_ME421`.
+- Curvature-aware horizons to 200 km, finite solar disk, 5-minute timelines and local sky paths.
+- Hard filtering before fixed-utility scoring, five-site shortlist with 1.5 km separation.
+- Two-site comparison, raw metrics, weighted contributions and reproducibility export.
+- Responsive layout, keyboard controls, chart table equivalents and methods disclosure.
+
+This is a **curated MVP**, not completion of the entire regional plan. Full 87-90 degrees
+south coverage, 1-degree/refined terrain horizons, DEM quality masks, formal confidence/uncertainty
+propagation and optional 5 m tiles remain future work. Detected time transitions are now
+refined, while shortlist scores retain the reproducible five-minute integration. Horizon bins are 5 degrees and can miss narrow ridges. Terrain source is
+80 m; published 100 m-baseline slope/roughness are sampled from 1 km output grids.
+Displayed terrain uses a 250 m grid with 1.5x vertical exaggeration and illustrative lighting.
+See [scientific conventions](docs/scientific-conventions.md).
 
 ## Verification
 
@@ -35,17 +115,91 @@ Open `http://localhost:5173`. FastAPI documentation is available at
 npm test
 npm run build
 npm run verify:data
+python -m ruff check backend scripts
+# Optional preprocessing regressions (requires scripts/data/requirements.txt):
+python -m pytest scripts/data/test_prepare_terrain.py scripts/data/test_prepare_science_layers.py
 ```
 
-## Scientific data
+For repeatable local search timings after preparing the kernels, run
+`python scripts/benchmark_search.py --repeat 2`. It reports loading/filtering,
+ephemeris, site-analysis and response-assembly times for the October 2028
+full-patch search. The first run includes cold cache work; later runs reuse
+the in-process dataset and ephemeris caches.
 
-Large NASA/USGS/JPL source files and generated artifacts are not committed. See
-[`scripts/data/README.md`](./scripts/data/README.md) and
-[`scripts/data/source_catalog.json`](./scripts/data/source_catalog.json).
+Actual-kernel integration tests run when `prepare:data` has completed; CI prepares kernels
+and the optional global terrain before API tests, including the real near-side, far-side
+and polar previews. CI also runs the data-preparation regressions.
 
-The candidate-search endpoint intentionally returns `503 scientific_data_not_prepared`
-until a verified derived dataset bundle is present. This prevents the UI from presenting
-fabricated metrics as scientific results.
+To repeat the desktop/mobile browser checks against the production build:
 
-> This project is a prototype planning tool, not flight-certified mission-planning software
-> and not a landing-safety certification system.
+```powershell
+python -m pip install playwright
+python -m playwright install chromium
+npm run build
+# In a separate terminal with the virtual environment active:
+python -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000
+# Then:
+python scripts/browser_smoke.py
+```
+
+The browser check covers regional coverage selection, explanations, comparison,
+exports, stale/empty results, global terrain/timelines, service-error recovery and
+390 px mobile layouts. Reports, exports and screenshots stay in ignored
+`data/cache/demo-qa/`. See [demo verification](docs/demo-integration-verification.md).
+
+## Docker
+
+```powershell
+docker compose up --build
+```
+
+Open [http://localhost:8000](http://localhost:8000). The image downloads and verifies
+pinned kernels during its first build and includes the prepared terrain bundle.
+
+## Rebuild scientific inputs
+
+The raw raster files are not committed. To reproduce the curated terrain bundle:
+
+```powershell
+python -m pip install -r scripts/data/requirements.txt
+python scripts/data/prepare_terrain.py
+python scripts/data/prepare_science_layers.py
+npm run prepare:data
+```
+
+See [the data workflow](scripts/data/README.md) for checksums, source products and sampling.
+
+### Opt-in 87°S–90°S terrain bundle
+
+The cap builder partitions 500 m candidate locations into 88 nonempty, 20 km
+projection tiles. Each tile derives real terrain and horizon values from the
+pinned NASA rasters. The assembler refuses incomplete or corrupt coverage.
+
+```powershell
+python -m pip install -r scripts/data/requirements.txt
+python scripts/data/prepare_cap.py
+python scripts/data/verify_cap_tiles.py --require-complete
+python scripts/data/assemble_cap.py
+```
+
+Set `LUMEN_DATA_ROOT` to `data/derived/lunar-south-cap-v1` to run against the
+assembled cap instead of the bundled 20 km patch. Large cap artifacts remain
+outside Git. It reuses the verified IAU feature-center catalog but does not
+include PSR proximity, DEM confidence masks, or 5 m hazard assessment. A 2 km
+NASA terrain overview is for display only. The default
+checkout continues to use the small curated patch.
+
+Before a live full-cap demo, run `python scripts/data/precompute_window.py`
+with `LUMEN_DATA_ROOT` set. This computes exact five-minute metrics for every
+candidate in the October 2028 window once and stores a versioned cache under
+ignored `data/cache/`. Searches with that window can then change constraints
+and priorities without repeating Sun/Earth calculations. Other windows still
+run the exact calculation and may have a long first-search delay.
+Terrain: [NASA PGDA product 90](https://pgda.gsfc.nasa.gov/products/90), Barker et al.
+(2023), PSJ 4, 183. Ephemerides: [NASA/JPL NAIF](https://naif.jpl.nasa.gov/naif/data_generic.html).
+Moon context: NASA Goddard Space Flight Center,
+[SVS 14959](https://svs.gsfc.nasa.gov/14959/). Asset provenance is in
+[the assets README](apps/web/public/assets/README.md).
+
+Comparative planning indicators only. Not flight certified; not a landing-safety
+assessment or a guarantee of RF communications coverage. No NASA endorsement implied.
