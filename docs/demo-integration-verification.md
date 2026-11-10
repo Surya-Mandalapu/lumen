@@ -59,9 +59,9 @@ first, as described in the README. The check exercises:
   JavaScript errors or unexpected HTTP/console errors.
 
 Screenshots, downloaded JSON and the machine-readable report are saved under
-ignored `data/cache/demo-qa/`. The installed Chrome channel canceled one export
-during the first probe; the documented bundled-Chromium run completed the exports
-and the full journey successfully.
+ignored `data/cache/demo-qa/`. Both bundled Chromium and the installed Chrome channel
+completed the full journey, including exports. The Chrome report and screenshots
+are under `data/cache/demo-qa-chrome/`.
 
 The global elevation API intentionally provides coarse single-point geometry,
 not global site ranking. Full-cap datasets, formal uncertainty estimates, fine

@@ -52,7 +52,7 @@ def test_rejects_nonfinite_weights():
 def test_rejects_naive_datetime_and_outside_cap():
     request = make_request()
     # Deliberately naive: the validator must reject dates without a UTC offset.
-    request.time_range.start_utc = datetime(2028, 10, 1, tzinfo=None)  # noqa: DTZ001
+    request.time_range.start_utc = request.time_range.start_utc.replace(tzinfo=None)
     with pytest.raises(SearchValidationError, match="UTC offset"):
         validate_search(request)
     request = make_request()
