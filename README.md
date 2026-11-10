@@ -43,6 +43,11 @@ Missing or corrupt science inputs return an explicit unavailable error.
 
 The plan's next workflows are now available:
 
+- **Area preview**: an expandable polar coverage map selects a circle center by click or
+  keyboard, with partial-coverage disclosure and separate source, candidate and display scales.
+- **Result explanations**: the selected shortlist site's weighted score contributions and
+  applied constraint evidence, a selection funnel, and same-window comparison tradeoffs.
+  These use existing results without additional analysis requests.
 - **Mission briefs**: a local, documented phrase parser turns dates, approved landmarks,
   numeric constraints and priorities into a reviewable draft. Apply it to the form before
   running a search. This is deterministic text interpretation, not an LLM or a science engine.

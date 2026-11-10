@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { MissionForm } from "./components/MissionForm";
+import { CoveragePreview } from "./components/CoveragePreview";
 import { MissionBrief, MissionLibrary } from "./components/MissionStudio";
 import { ScenarioLab } from "./components/ScenarioLab";
 import { RefinedInspection } from "./components/RefinedInspection";
@@ -464,6 +465,13 @@ export default function App() {
             value={draft}
             features={features}
             onApply={updateDraft}
+          />
+          <CoveragePreview
+            terrain={terrain}
+            manifest={manifest}
+            request={draft}
+            features={features}
+            onChange={updateDraft}
           />
           {initialError && (
             <div className="error-box" role="alert">

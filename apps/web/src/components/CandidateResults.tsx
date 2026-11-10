@@ -1,6 +1,8 @@
 import type { Candidate, Preferences, SearchResponse } from "../lib/types";
 import { coordinate, hours, percent } from "../lib/format";
 import { Icon } from "./Icon";
+import { ResultExplanation } from "./ResultExplanation";
+import { comparisonTradeoffs } from "../lib/explanations";
 
 export function CandidateResults({
   result,
@@ -17,6 +19,7 @@ export function CandidateResults({
   onPin: (id: string) => void;
   onCompare: () => void;
 }) {
+  const explainedSite = result.candidates.find((site) => site.id === selected);
   return (
     <section className="results-section" aria-labelledby="results-title">
       <div className="section-heading">
@@ -39,6 +42,21 @@ export function CandidateResults({
         {result.candidates.length} spatially separated sites · scores within 2
         points are near ties.
       </p>
+      <details className="selection-funnel">
+        <summary>How the shortlist was selected</summary>
+        <p>
+          {result.counts.region.toLocaleString()} prepared candidates in the
+          area → {result.counts.terrain_pass.toLocaleString()} pass terrain and
+          proximity limits → {result.counts.temporal_pass.toLocaleString()} pass
+          mission-time limits → {result.counts.shortlisted} spatially separated
+          shortlist sites.
+        </p>
+        <p className="field-hint">
+          Counts describe prepared locations only. Rejected candidates are not
+          ranked; nearby unlisted locations may also be eligible. No constraints
+          were relaxed.
+        </p>
+      </details>
       {result.candidates.length === 0 ? (
         <div className="empty-results" role="status">
           <Icon name="compass" size={32} />
@@ -141,6 +159,13 @@ export function CandidateResults({
             </article>
           ))}
         </div>
+      )}
+      {explainedSite && (
+        <ResultExplanation
+          key={explainedSite.id}
+          site={explainedSite}
+          result={result}
+        />
       )}
     </section>
   );
@@ -253,6 +278,26 @@ export function Comparison({
             One dataset. One mission window. The same{" "}
             {result.common_window.step_minutes}-minute samples.
           </p>
+          <div className="comparison-takeaway">
+            <strong>
+              {Math.abs(sites[0].score - sites[1].score) < 2
+                ? "A near tie under these priorities."
+                : `Candidate ${String((sites[0].score >= sites[1].score ? sites[0] : sites[1]).rank).padStart(2, "0")} scores higher under these priorities.`}
+            </strong>
+            <ul>
+              {comparisonTradeoffs(sites[0], sites[1]).map((row) => (
+                <li key={row.label}>
+                  {row.leader
+                    ? `Candidate ${String(row.leader.rank).padStart(2, "0")}: ${row.difference.toFixed(1)} ${row.unit} ${row.higher ? "more" : "less"} ${row.label}.`
+                    : `Similar ${row.label} at the displayed precision.`}
+                </li>
+              ))}
+            </ul>
+            <p className="field-hint">
+              Differences use the existing sampled metrics. Display precision is
+              not a confidence bound.
+            </p>
+          </div>
           <div className="table-scroll">
             <table className="comparison-table">
               <thead>

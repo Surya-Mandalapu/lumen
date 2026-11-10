@@ -2556,6 +2556,86 @@ h2[id] {
   font-weight: 500;
   color: #caddcb;
 }
+.coverage-preview,
+.selection-funnel,
+.result-explanation {
+  border: 1px solid #35483b;
+  border-radius: 8px;
+  font-size: 12px;
+}
+.coverage-preview {
+  margin: 0 0 20px;
+}
+.coverage-preview summary,
+.selection-funnel summary,
+.result-explanation summary {
+  cursor: pointer;
+  padding: 12px 15px;
+  color: #caddcb;
+}
+.coverage-preview summary span {
+  color: #a5b4a9;
+  font-size: 11px;
+  margin-left: 12px;
+}
+.coverage-preview-body {
+  display: grid;
+  grid-template-columns: minmax(160px, 240px) minmax(0, 1fr);
+  gap: 22px;
+  padding: 5px 16px 16px;
+}
+.coverage-map {
+  width: 100%;
+  aspect-ratio: 1;
+  display: block;
+  border: 0;
+  padding: 0;
+  background: #1d2926;
+  cursor: crosshair;
+  overflow: hidden;
+  border-radius: 5px;
+}
+.coverage-map svg { display: block; width: 100%; height: 100%; }
+.coverage-map:focus-visible { outline: 2px solid #e0c792; outline-offset: 4px; }
+.coverage-facts p,
+.explanation-body p,
+.selection-funnel p { line-height: 1.6; }
+.coverage-facts dl,
+.contribution-list { margin: 12px 0; }
+.coverage-facts dl > div,
+.contribution-list > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px solid #2c4232;
+}
+.coverage-facts dd,
+.contribution-list dd { margin: 0; text-align: right; }
+.coverage-facts dt,
+.contribution-list dt small { color: #a5b4a9; }
+.selection-funnel { margin: 0 0 18px; }
+.selection-funnel p { margin: 0 15px 12px; }
+.result-explanation { margin: 14px 0 0; }
+.result-explanation summary { padding: 12px 15px; }
+.explanation-body { padding: 0 15px 12px; font-size: 12px; }
+.explanation-body .contribution-list { max-width: 520px; }
+.constraint-evidence { padding-left: 16px; line-height: 1.7; }
+.comparison-takeaway {
+  padding: 15px;
+  border-left: 2px solid #9ce2bf;
+  background: #1b2922;
+  margin: 0 0 18px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.comparison-takeaway ul { padding-left: 18px; margin: 8px 0; }
+@media (max-width: 650px) {
+  .coverage-preview-body { grid-template-columns: minmax(0, 1fr); }
+  .coverage-map { max-width: 240px; margin: auto; }
+  .coverage-preview summary span { display: block; margin: 7px 0 0 16px; }
+  .coverage-facts dl > div { flex-wrap: wrap; }
+}
 .sky-context-caption a {
   pointer-events: auto;
   color: #b5d1bd;
