@@ -89,6 +89,7 @@ export function MissionForm({
   onSearch,
   features,
   scienceAvailable,
+  regionLabel,
 }: {
   loading: boolean;
   value: SearchRequest;
@@ -96,6 +97,7 @@ export function MissionForm({
   onSearch: (request: SearchRequest) => void;
   features: LunarFeature[];
   scienceAvailable: boolean;
+  regionLabel: string;
 }) {
   const [expanded, setExpanded] = useState(false),
     [confirmed, setConfirmed] = useState(false),
@@ -278,7 +280,7 @@ export function MissionForm({
           <div className="coverage-note">
             <span className="status-dot" />
             <span>
-              20 × 20 km study area
+              {regionLabel}
               <br />
               <span className="muted">500 m candidates · 80 m source DEM</span>
             </span>

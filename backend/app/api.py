@@ -34,22 +34,55 @@ def region() -> dict:
             prepared_candidate_count=len(arrays["lat_deg"]),
         )
         manifest["analysis"].update(
-            horizon_azimuth_step_deg=5, finalist_time_step_minutes=5, coarse_time_step_minutes=5
+            horizon_azimuth_step_deg=metadata["horizon_azimuth_step_deg"],
+            finalist_time_step_minutes=5,
+            coarse_time_step_minutes=5,
         )
         manifest.setdefault("planned_region", manifest["supported_region"].copy())
+        coverage = metadata["coverage"]
+        coverage_type = coverage["type"]
+        region_id = {
+            "polar_cap": "lunar-south-pole-87s-cap",
+            "polar_cap_tile": "lunar-south-pole-cap-tile",
+        }.get(coverage_type, "lola-polar-patch-20km")
+        region_label = {
+            "polar_cap": "Prepared 87°S–90°S polar cap",
+            "polar_cap_tile": "Prepared 20 km polar cap tile",
+        }.get(coverage_type, "Prepared 20 km square polar patch")
         manifest["supported_region"].update(
-            id="lola-polar-patch-20km",
-            label="Prepared 20 km square polar patch",
-            minimum_latitude_deg=metadata["coverage"]["latitude_min_deg"],
-            maximum_latitude_deg=metadata["coverage"]["latitude_max_deg"],
-            boundary_description=metadata["coverage"]["description"],
+            id=region_id,
+            label=region_label,
+            minimum_latitude_deg=coverage["latitude_min_deg"],
+            maximum_latitude_deg=coverage["latitude_max_deg"],
+            boundary_description=coverage["description"],
         )
         manifest["derived_artifacts"].update(
-            candidate_table="prepared", horizon_profiles="prepared", terrain_meshes="prepared"
+            candidate_table="prepared",
+            horizon_profiles="prepared",
+            terrain_meshes="prepared",
+            feature_index="prepared"
+            if (settings.data_root / "features.json").exists()
+            else "missing",
+            psr_proximity="prepared" if "distance_psr_km" in arrays else "missing",
+            psr_display_mask="prepared"
+            if (settings.data_root / "psr.json").exists()
+            else "missing",
         )
-        manifest["disclaimers"].append(
-            "Prepared coverage is a 20 km square polar patch, not the full cap."
-        )
+        if coverage_type != "projected_square":
+            manifest["disclaimers"] = [
+                item
+                for item in manifest["disclaimers"]
+                if not any(
+                    term in item
+                    for term in (
+                        "Curated 20 km square",
+                        "PSR proximity uses",
+                        "Mapped PSRs",
+                        "Feature proximity uses",
+                    )
+                )
+            ]
+        manifest["disclaimers"].append(f"Prepared coverage: {coverage['description']}.")
     except (DataUnavailable, OSError, ValueError, SpiceyError) as exc:
         manifest["status"] = "not_prepared"
         manifest["preparation_error"] = str(exc)

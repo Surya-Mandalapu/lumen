@@ -3,7 +3,10 @@ from __future__ import annotations
 import hashlib
 import json
 from datetime import UTC
+from functools import lru_cache
 from itertools import pairwise
+from pathlib import Path
+from time import perf_counter
 
 import numpy as np
 
@@ -23,6 +26,17 @@ from app.services.ephemeris import (
 from app.services.proximity import science_utility, with_proximity
 from app.services.validation import SearchValidationError, validate_search
 from app.settings import settings
+
+METRIC_KEYS = (
+    "illumination_fraction",
+    "earth_visibility_fraction",
+    "longest_sunlight_hours",
+    "longest_darkness_hours",
+    "longest_communication_hours",
+    "longest_blackout_hours",
+    "mean_visible_solar_disk_fraction",
+)
+TEMPORAL_CACHE_VERSION = 1
 
 
 def region_mask(request: SearchRequest, arrays: dict) -> np.ndarray:
@@ -126,6 +140,167 @@ def analyze(arrays: dict, i: int, times, sun, earth, *, timeline: bool = False) 
     return result
 
 
+def _longest_runs(states: np.ndarray, hours: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """Duration of the longest visible and blocked runs for each site."""
+    edges = np.concatenate(([0.0], np.cumsum(hours)))
+    starts = np.zeros(states.shape, dtype=np.int32)
+    starts[:, 1:] = np.where(states[:, 1:] != states[:, :-1], np.arange(1, states.shape[1]), 0)
+    np.maximum.accumulate(starts, axis=1, out=starts)
+    durations = edges[1:][None, :] - edges[starts]
+    visible = np.max(np.where(states, durations, 0.0), axis=1)
+    blocked = np.max(np.where(~states, durations, 0.0), axis=1)
+    return np.round(visible, 9), np.round(blocked, 9)
+
+
+def analyze_batch(arrays: dict, indices: np.ndarray, times, sun, earth) -> list[dict]:
+    """Evaluate a bounded group of sites on the same scientific time grid."""
+    lat = np.deg2rad(arrays["lat_deg"][indices])
+    lon = np.deg2rad(arrays["lon_deg"][indices])
+    cos_lat, sin_lat = np.cos(lat), np.sin(lat)
+    cos_lon, sin_lon = np.cos(lon), np.sin(lon)
+    up = np.stack((cos_lat * cos_lon, cos_lat * sin_lon, sin_lat), axis=1)
+    east = np.stack((-sin_lon, cos_lon, np.zeros_like(lon)), axis=1)
+    north = np.cross(up, east)
+    observer_km = up * ((1_737_400 + arrays["elevation_m"][indices] + 2) / 1000)[:, None]
+    profile = arrays["horizons_deg"][indices]
+
+    def direction(body):
+        vectors = body[None, :, :] - observer_km[:, None, :]
+        distance = np.linalg.norm(vectors, axis=2)
+        azimuth = (
+            np.rad2deg(
+                np.arctan2(
+                    np.einsum("bti,bi->bt", vectors, east),
+                    np.einsum("bti,bi->bt", vectors, north),
+                )
+            )
+            % 360
+        )
+        elevation = np.rad2deg(
+            np.arcsin(np.clip(np.einsum("bti,bi->bt", vectors, up) / distance, -1, 1))
+        )
+        bins = azimuth * profile.shape[1] / 360
+        lo = np.floor(bins).astype(np.int32) % profile.shape[1]
+        horizon = np.maximum(
+            np.take_along_axis(profile, lo, axis=1),
+            np.take_along_axis(profile, (lo + 1) % profile.shape[1], axis=1),
+        )
+        return elevation, horizon, distance
+
+    sun_elevation, sun_horizon, sun_distance = direction(sun)
+    earth_elevation, earth_horizon, _ = direction(earth)
+    sun_radius = np.rad2deg(np.arcsin(SUN_RADIUS_KM / sun_distance))
+    sunlight = sun_elevation + sun_radius > sun_horizon
+    communication = earth_elevation > earth_horizon
+    hours = np.array([(b - a).total_seconds() / 3600 for a, b in pairwise(times)])
+    total_hours = hours.sum()
+    illumination = np.sum(sunlight[:, :-1] * hours, axis=1) / total_hours
+    visibility = np.sum(communication[:, :-1] * hours, axis=1) / total_hours
+    sunlong, darklong = _longest_runs(sunlight[:, :-1], hours)
+    earthlong, blackout = _longest_runs(communication[:, :-1], hours)
+    disk_fraction = solar_disk_fraction(sun_elevation - sun_horizon, sun_radius)
+    mean_disk = np.sum(disk_fraction[:, :-1] * hours, axis=1) / total_hours
+    return [
+        {
+            "illumination_fraction": float(illumination[j]),
+            "earth_visibility_fraction": float(visibility[j]),
+            "longest_sunlight_hours": float(sunlong[j]),
+            "longest_darkness_hours": float(darklong[j]),
+            "longest_communication_hours": float(earthlong[j]),
+            "longest_blackout_hours": float(blackout[j]),
+            "mean_visible_solar_disk_fraction": float(mean_disk[j]),
+        }
+        for j in range(len(indices))
+    ]
+
+
+@lru_cache(maxsize=2)
+def cached_metrics(
+    data_root,
+    artifact_fingerprint: str,
+    kernel_hashes: tuple[str, ...],
+    start,
+    end,
+    indices: tuple[int, ...],
+) -> tuple[dict, ...]:
+    """Reuse exact five-minute metrics when only ranking preferences change."""
+    _, arrays = dataset(data_root)
+    path, key = temporal_cache_path(data_root, artifact_fingerprint, kernel_hashes, start, end)
+    if path.exists():
+        try:
+            with np.load(path, allow_pickle=False) as archive:
+                if (
+                    str(archive["key"]) == key
+                    and np.array_equal(archive["ids"], arrays["ids"])
+                    and all(len(archive[name]) == len(arrays["ids"]) for name in METRIC_KEYS)
+                ):
+                    columns = {name: archive[name] for name in METRIC_KEYS}
+                    return tuple(
+                        {name: float(columns[name][i]) for name in METRIC_KEYS} for i in indices
+                    )
+        except (OSError, ValueError, KeyError):
+            pass  # A stale or damaged optional cache cannot change science results.
+    times, sun, earth = body_positions(settings.kernel_root, start, end, 5)
+    rows = []
+    for offset in range(0, len(indices), 64):
+        batch = np.asarray(indices[offset : offset + 64], dtype=np.int32)
+        rows.extend(analyze_batch(arrays, batch, times, sun, earth))
+    return tuple(rows)
+
+
+def temporal_cache_path(
+    data_root: Path, artifact_fingerprint: str, kernel_hashes: tuple[str, ...], start, end
+) -> tuple[Path, str]:
+    key = hashlib.sha256(
+        json.dumps(
+            {
+                "version": TEMPORAL_CACHE_VERSION,
+                "artifacts": artifact_fingerprint,
+                "kernels": kernel_hashes,
+                "start": start.isoformat(),
+                "end": end.isoformat(),
+                "step_minutes": 5,
+            },
+            sort_keys=True,
+        ).encode()
+    ).hexdigest()
+    return data_root.parents[1] / "cache/temporal" / f"{key}.npz", key
+
+
+def precompute_temporal_cache(start, end) -> Path:
+    """Write exact metrics for every prepared site in one pinned mission window."""
+    metadata, arrays = dataset(settings.data_root)
+    kernels = load_kernels(settings.kernel_root)
+    fingerprint = hashlib.sha256(
+        json.dumps(metadata["artifacts"], sort_keys=True).encode()
+    ).hexdigest()
+    hashes = tuple(item["sha256"] for item in kernels)
+    path, key = temporal_cache_path(settings.data_root, fingerprint, hashes, start, end)
+    if path.exists():
+        try:
+            with np.load(path, allow_pickle=False) as archive:
+                if (
+                    str(archive["key"]) == key
+                    and np.array_equal(archive["ids"], arrays["ids"])
+                    and all(len(archive[name]) == len(arrays["ids"]) for name in METRIC_KEYS)
+                ):
+                    return path
+        except (OSError, ValueError, KeyError):
+            pass
+    indices = tuple(range(len(arrays["ids"])))
+    rows = cached_metrics(settings.data_root, fingerprint, hashes, start, end, indices)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(".partial.npz")
+    np.savez_compressed(
+        temporary,
+        key=np.array(key),
+        ids=arrays["ids"],
+        **{name: np.asarray([row[name] for row in rows], dtype=np.float64) for name in METRIC_KEYS},
+    )
+    temporary.replace(path)
+    return path
+
+
 def category_scores(
     metrics: dict,
     slope: float,
@@ -158,7 +333,29 @@ def category_scores(
     }
 
 
-def search(request: SearchRequest) -> dict:
+def map_sample(ranked: list[tuple], arrays: dict, selected: list[tuple], limit: int = 5000):
+    """Keep top scoring points per spatial cell and every shortlisted point."""
+    if len(ranked) <= limit:
+        return ranked
+    selected_ids = {row[1] for row in selected}
+    x, y = arrays["x_m"], arrays["y_m"]
+    side = max(float(np.ptp(x)), float(np.ptp(y))) / np.sqrt(limit - len(selected_ids))
+    while True:
+        occupied = set()
+        sampled = []
+        for row in ranked:
+            i = row[2]
+            cell = (int(np.floor(x[i] / side)), int(np.floor(y[i] / side)))
+            if row[1] in selected_ids or cell not in occupied:
+                sampled.append(row)
+                occupied.add(cell)
+        if len(sampled) <= limit:
+            return sampled
+        side *= 1.2
+
+
+def search(request: SearchRequest, *, timings: dict | None = None) -> dict:
+    started = perf_counter()
     validation = validate_search(request)
     metadata, arrays = dataset(settings.data_root)
     arrays = with_proximity(
@@ -175,7 +372,7 @@ def search(request: SearchRequest) -> dict:
         total = 1
     weights = {k: v / total for k, v in weights.items()}
     warnings = validation.warnings + [
-        "Coverage is limited to the prepared 20 km polar patch; full-region means this patch.",
+        f"Full-region means the prepared coverage: {metadata['coverage']['description']}.",
         "Visibility uses 5-minute samples; transition and longest-interval uncertainty is at least one sample.",
         "A solar upper-limb sighting counts as sunlight; disk fraction is geometric, not usable power.",
         "Earth visibility is geometric Earth-center line of sight, not a communications link budget.",
@@ -204,10 +401,22 @@ def search(request: SearchRequest) -> dict:
     mask = region_mask(request, arrays)
     terrain = mask & terrain_mask(request, arrays)
     indices = np.flatnonzero(terrain)
+    filtered_at = perf_counter()
     times, sun, earth = body_positions(settings.kernel_root, start, end, 5)
+    ephemeris_at = perf_counter()
+    artifact_fingerprint = hashlib.sha256(
+        json.dumps(metadata["artifacts"], sort_keys=True).encode()
+    ).hexdigest()
+    metrics_rows = cached_metrics(
+        settings.data_root,
+        artifact_fingerprint,
+        tuple(item["sha256"] for item in kernels),
+        start,
+        end,
+        tuple(int(i) for i in indices),
+    )
     ranked = []
-    for i in indices:
-        metrics = analyze(arrays, i, times, sun, earth)["metrics"]
+    for i, metrics in zip(indices, metrics_rows, strict=True):
         if not temporal_pass(request, metrics):
             continue
         scores = category_scores(
@@ -226,6 +435,7 @@ def search(request: SearchRequest) -> dict:
         )
         score = 100 * sum(weights[k] * (v or 0) for k, v in scores.items())
         ranked.append((score, str(arrays["ids"][i]), int(i), scores, metrics))
+    analyzed_at = perf_counter()
     ranked.sort(key=lambda item: (-item[0], item[1]))
     selected = []
     for row in ranked:
@@ -238,6 +448,7 @@ def search(request: SearchRequest) -> dict:
             selected.append(row)
         if len(selected) == 5:
             break
+    map_ranked = map_sample(ranked, arrays, selected)
     candidates = []
     for rank, (score, site_id, i, scores, metrics) in enumerate(selected, 1):
         detail = analyze(arrays, i, times, sun, earth, timeline=True)
@@ -317,8 +528,9 @@ def search(request: SearchRequest) -> dict:
                     if key in arrays
                 },
             }
-            for score, site_id, i, scores, metrics in ranked
+            for score, site_id, i, scores, metrics in map_ranked
         ],
+        "map_point_count": len(map_ranked),
         "rejections": {
             "outside_region": int((~mask).sum()),
             "terrain_or_proximity": int(mask.sum()) - len(indices),
@@ -346,5 +558,16 @@ def search(request: SearchRequest) -> dict:
             "No prepared candidates intersect the selected region."
             if not mask.any()
             else "No candidates satisfy all hard constraints in this mission window."
+        )
+    if len(map_ranked) < len(ranked):
+        result["warnings"].append(
+            "The map displays a spatial sample of eligible points; ranking used every eligible site."
+        )
+    if timings is not None:
+        timings.update(
+            filter_s=filtered_at - started,
+            ephemeris_s=ephemeris_at - filtered_at,
+            analysis_s=analyzed_at - ephemeris_at,
+            response_s=perf_counter() - analyzed_at,
         )
     return result

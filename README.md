@@ -28,6 +28,27 @@ Missing or corrupt science inputs return an explicit unavailable error.
 
 ## Try the MVP
 
+### Global point preview
+
+The **Anywhere on the Moon** workspace accepts global coordinates or a click on
+the NASA elevation map. It previews one location's coarse terrain, five-minute
+sunlight and geometric Earth-visibility timeline. This uses a separate 16-pixel
+per degree LOLA grid (about 1.9 km north–south), not the regional landing-site
+ranking engine. It provides no landing-safety, fine slope/roughness or PSR assessment.
+
+Prepare the optional global bundle once, after installing the preprocessing
+requirements and preparing the JPL kernels:
+
+```powershell
+python scripts/data/prepare_global.py
+```
+
+The source TIFF and generated global bundle stay outside Git. The script verifies
+the pinned NASA source hash and records the elevation encoding and artifact hash.
+Source and grid conventions: [NASA SVS CGI Moon Kit](https://svs.gsfc.nasa.gov/4720/).
+
+### Regional search
+
 1. Keep the prepared study area, October 1-31, 2028 window, maximum slope 10 degrees,
    and minimum Earth line-of-sight availability 50%.
 2. Select **Find candidate sites**. A monthly search normally takes around 5 seconds
@@ -98,6 +119,12 @@ python -m ruff check backend scripts
 python -m pytest scripts/data/test_prepare_terrain.py scripts/data/test_prepare_science_layers.py
 ```
 
+For repeatable local search timings after preparing the kernels, run
+`python scripts/benchmark_search.py --repeat 2`. It reports loading/filtering,
+ephemeris, site-analysis and response-assembly times for the October 2028
+full-patch search. The first run includes cold cache work; later runs reuse
+the in-process dataset and ephemeris caches.
+
 Actual-kernel integration tests run when `prepare:data` has completed; CI prepares kernels
 before API tests. Browser smoke checks covered the full search/inspect/compare/export
 journey, empty searches, reruns, and mobile layout.
@@ -123,6 +150,33 @@ npm run prepare:data
 ```
 
 See [the data workflow](scripts/data/README.md) for checksums, source products and sampling.
+
+### Opt-in 87°S–90°S terrain bundle
+
+The cap builder partitions 500 m candidate locations into 88 nonempty, 20 km
+projection tiles. Each tile derives real terrain and horizon values from the
+pinned NASA rasters. The assembler refuses incomplete or corrupt coverage.
+
+```powershell
+python -m pip install -r scripts/data/requirements.txt
+python scripts/data/prepare_cap.py
+python scripts/data/verify_cap_tiles.py --require-complete
+python scripts/data/assemble_cap.py
+```
+
+Set `LUMEN_DATA_ROOT` to `data/derived/lunar-south-cap-v1` to run against the
+assembled cap instead of the bundled 20 km patch. Large cap artifacts remain
+outside Git. It reuses the verified IAU feature-center catalog but does not
+include PSR proximity, DEM confidence masks, or 5 m hazard assessment. A 2 km
+NASA terrain overview is for display only. The default
+checkout continues to use the small curated patch.
+
+Before a live full-cap demo, run `python scripts/data/precompute_window.py`
+with `LUMEN_DATA_ROOT` set. This computes exact five-minute metrics for every
+candidate in the October 2028 window once and stores a versioned cache under
+ignored `data/cache/`. Searches with that window can then change constraints
+and priorities without repeating Sun/Earth calculations. Other windows still
+run the exact calculation and may have a long first-search delay.
 Terrain: [NASA PGDA product 90](https://pgda.gsfc.nasa.gov/products/90), Barker et al.
 (2023), PSJ 4, 183. Ephemerides: [NASA/JPL NAIF](https://naif.jpl.nasa.gov/naif/data_generic.html).
 Moon context: NASA Goddard Space Flight Center,

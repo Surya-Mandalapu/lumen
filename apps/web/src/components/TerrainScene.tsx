@@ -14,6 +14,7 @@ import { SceneBoundary } from "./SceneBoundary";
 import { SceneLabel } from "./SceneLabel";
 
 interface LayerOptions {
+  previewPoint?: boolean;
   layer: MapLayer;
   mapCandidates: MapCandidate[];
   psr: PSRLayer | null;
@@ -154,6 +155,7 @@ function TerrainMesh({
   mapCandidates,
   psr,
   features,
+  previewPoint,
 }: {
   terrain: TerrainData;
   candidates: Candidate[];
@@ -226,7 +228,12 @@ function TerrainMesh({
         />
       </mesh>
       <gridHelper
-        args={[24, 12, "#28413d", "#1a2829"]}
+        args={[
+          Math.max(terrain.extent_m[2] - terrain.extent_m[0], terrain.extent_m[3] - terrain.extent_m[1]) / 1000 * 1.2,
+          12,
+          "#28413d",
+          "#1a2829",
+        ]}
         position={[0, -0.08, 0]}
       />
       {["score", "illumination", "earth_visibility"].includes(layer) && (
@@ -240,7 +247,8 @@ function TerrainMesh({
       )}
       {features.map((feature) => {
         const [x, y] = featurePoint(feature);
-        if (Math.abs(x) > 10000 || Math.abs(y) > 10000) return null;
+        if (x < terrain.extent_m[0] || x > terrain.extent_m[2] ||
+            y < terrain.extent_m[1] || y > terrain.extent_m[3]) return null;
         return (
           <SceneLabel
             key={feature.id}
@@ -254,6 +262,8 @@ function TerrainMesh({
           />
         );
       })}
+      {previewPoint && <SceneLabel text="+ Selected point" selected
+        position={[0, ((heightAt(terrain, 0, 0) - base) / 1000) * 1.5 + .3, 0]} width={9} />}
       {candidates.map((site) => {
         const y =
           ((heightAt(terrain, site.x_m, site.y_m) - base) / 1000) * 1.5 + 0.12;
@@ -294,6 +304,7 @@ export function FlatMap({
   mapCandidates,
   psr,
   features,
+  previewPoint,
 }: {
   terrain: TerrainData;
   candidates: Candidate[];
@@ -308,7 +319,7 @@ export function FlatMap({
     <div className="flat-map">
       <svg
         viewBox="0 0 600 600"
-        aria-label="Top-down terrain map with candidate locations"
+        aria-label={previewPoint ? "Local coarse terrain centered on the selected global point" : "Top-down terrain map with candidate locations"}
         role="img"
       >
         {terrain.elevations_m.map((height, i) =>
@@ -371,6 +382,7 @@ export function FlatMap({
             </text>
           );
         })}
+        {previewPoint && <g transform="translate(300 300)"><path d="M-10 0H10M0-10V10" stroke="#fff9d3" strokeWidth="3" /><text x="14" y="-12" fill="#fff9d3" fontSize="13">Selected point</text></g>}
         {candidates.map((site) => (
           <g
             key={site.id}
@@ -414,6 +426,7 @@ export function TerrainScene({
   mapCandidates,
   psr,
   features,
+  previewPoint,
 }: {
   terrain: TerrainData;
   candidates: Candidate[];
@@ -422,8 +435,13 @@ export function TerrainScene({
   mode: "terrain" | "map";
 } & LayerOptions) {
   const elevation = layer === "elevation";
+  const spanKm = Math.max(
+    terrain.extent_m[2] - terrain.extent_m[0],
+    terrain.extent_m[3] - terrain.extent_m[1],
+  ) / 1000;
   const flat = (
     <FlatMap
+      previewPoint={previewPoint}
       terrain={terrain}
       candidates={candidates}
       selected={selected}
@@ -439,11 +457,16 @@ export function TerrainScene({
     <SceneBoundary fallback={flat}>
       <Canvas
         dpr={[1, 1.7]}
-        camera={{ position: [21, 19, 24], fov: 44, near: 0.1, far: 200 }}
+        camera={{
+          position: [spanKm * 1.05, spanKm * 0.95, spanKm * 1.2],
+          fov: 44,
+          near: 0.1,
+          far: Math.max(200, spanKm * 5),
+        }}
         fallback={flat}
       >
         <color attach="background" args={["#101819"]} />
-        <fog attach="fog" args={["#101819", 45, 100]} />
+        <fog attach="fog" args={["#101819", spanKm * 2.25, spanKm * 5]} />
         <ambientLight intensity={0.5} />
         <directionalLight
           position={[-12, 20, -10]}
@@ -456,6 +479,7 @@ export function TerrainScene({
           color="#99c4bb"
         />
         <TerrainMesh
+          previewPoint={previewPoint}
           terrain={terrain}
           candidates={candidates}
           selected={selected}
@@ -469,7 +493,7 @@ export function TerrainScene({
           makeDefault
           target={[0, 2.0, 0]}
           minDistance={6}
-          maxDistance={55}
+          maxDistance={Math.max(55, spanKm * 3)}
           maxPolarAngle={Math.PI / 2.05}
         />
       </Canvas>

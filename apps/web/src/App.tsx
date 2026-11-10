@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { MissionForm } from "./components/MissionForm";
 import { CoveragePreview } from "./components/CoveragePreview";
+import { GlobalPreview } from "./components/GlobalPreview";
 import { MissionBrief, MissionLibrary } from "./components/MissionStudio";
 import { ScenarioLab } from "./components/ScenarioLab";
 import { RefinedInspection } from "./components/RefinedInspection";
@@ -85,9 +86,8 @@ function Methods({
       </div>
       <p>
         Lumen is a prototype for comparing lunar surface locations under a
-        common mission window. The current dataset is a{" "}
-        <strong>20 × 20 km square around the south pole</strong>. The wider
-        87°S–90°S cap is planned coverage.
+        common mission window. Prepared coverage is{" "}
+        <strong>{manifest?.supported_region.boundary_description ?? "loading"}</strong>.
       </p>
       <div className="methods-facts">
         <div>
@@ -126,7 +126,7 @@ function Methods({
           NASA PGDA’s south-pole LOLA products
         </a>
         . Slope and roughness use published 100 m baseline products on a{" "}
-        <strong>1 km output grid</strong>. The display is resampled to 250 m and
+        <strong>1 km output grid</strong>. The map shows its display resolution and
         vertically exaggerated 1.5×; its lighting illustrates the terrain and
         does not predict shadows.
       </p>
@@ -224,6 +224,7 @@ function Methods({
 }
 
 export default function App() {
+  const [workspaceMode, setWorkspaceMode] = useState<"regional" | "global">("regional");
   const [draft, setDraft] = useState<SearchRequest>(() =>
     structuredClone(DEFAULT_REQUEST),
   );
@@ -402,7 +403,7 @@ export default function App() {
             <span className="brand-caption">LUNAR EXPLORATION PLANNER</span>
           </span>
         </a>
-        <nav aria-label="Main navigation">
+        {workspaceMode === "regional" && <nav aria-label="Main navigation">
           <a href="#explorer" className="nav-link active">
             Explore
           </a>
@@ -420,12 +421,17 @@ export default function App() {
             Data & methods
             <Icon name="info" size={14} />
           </button>
-        </nav>
+        </nav>}
         <span className="prototype-badge">
           <span className="status-dot" />
           RESEARCH PROTOTYPE
         </span>
       </header>
+      <nav className="workspace-switch" aria-label="Analysis coverage">
+        <button aria-pressed={workspaceMode === "regional"} onClick={() => setWorkspaceMode("regional")}>South-pole site search</button>
+        <button aria-pressed={workspaceMode === "global"} onClick={() => setWorkspaceMode("global")}>Anywhere on the Moon</button>
+      </nav>
+      {workspaceMode === "global" ? <GlobalPreview /> : <>
       <div className="workspace" id="explorer">
         <MissionForm
           loading={loading}
@@ -434,6 +440,7 @@ export default function App() {
           onDraftChange={updateDraft}
           features={features}
           scienceAvailable={psr !== null}
+          regionLabel={manifest?.supported_region.label ?? "Prepared study area"}
         />
         <div className="main-workspace">
           <section className="workspace-intro">
@@ -457,7 +464,7 @@ export default function App() {
               <span>
                 {count != null
                   ? `${count.toLocaleString()} candidate locations`
-                  : "20 × 20 km study area"}
+                  : manifest?.supported_region.label ?? "Prepared study area"}
               </span>
             </div>
           </section>
@@ -585,7 +592,7 @@ export default function App() {
                       </div>
                     }
                   >
-                    <GlobeScene />
+                    <GlobeScene preparedLabel={manifest?.supported_region.label} />
                   </SceneBoundary>
                 ) : terrain ? (
                   <TerrainScene
@@ -615,7 +622,7 @@ export default function App() {
                   <div className="map-location">
                     <span className="eyebrow">SOUTH POLE STUDY AREA</span>
                     <h3>At the edge of light.</h3>
-                    <span>20 × 20 km · polar stereographic</span>
+                    <span>{manifest?.supported_region.label ?? "Prepared study area"} · polar stereographic</span>
                   </div>
                   <div className="map-compass">
                     <Icon name="compass" size={35} />
@@ -623,7 +630,7 @@ export default function App() {
                   </div>
                   {view === "terrain" && (
                     <div className="map-scale">
-                      <strong>2 km ground grid</strong>
+                      <strong>{terrain ? Math.max(terrain.extent_m[2] - terrain.extent_m[0], terrain.extent_m[3] - terrain.extent_m[1]) / 10000 : 2} km ground grid</strong>
                       <small>Perspective view · projected distances</small>
                     </div>
                   )}
@@ -635,7 +642,10 @@ export default function App() {
                   {result && (
                     <div className="map-result-key">
                       <span className="status-dot" />
-                      Ranked candidate locations
+                      {result.map_point_count != null &&
+                      result.map_point_count < result.counts.temporal_pass
+                        ? `${result.map_point_count.toLocaleString()} map points sampled from ${result.counts.temporal_pass.toLocaleString()} eligible sites`
+                        : "Ranked candidate locations"}
                     </div>
                   )}
                 </>
@@ -644,9 +654,8 @@ export default function App() {
             <div className="coverage-strip">
               <Icon name="info" size={14} />
               <span>
-                <strong>Prepared coverage: 20 × 20 km.</strong> Full 87°S–90°S
-                analysis is planned. Terrain indicators describe relative
-                trade-offs.
+                <strong>{manifest?.supported_region.label ?? "Prepared coverage"}.</strong>{" "}
+                Terrain indicators describe relative trade-offs.
               </span>
               <button onClick={() => setMethods(true)}>
                 View assumptions
@@ -660,7 +669,7 @@ export default function App() {
                 {layer === "psr"
                   ? "Mapped PSR fraction · 200 m display cells from 20 m source"
                   : layer === "terrain" || layer === "elevation"
-                    ? "Display heights resampled to 250 m"
+                    ? `Display heights resampled to ${terrain?.resolution_m ?? "—"} m`
                     : "Each point is a computed eligible candidate; click to inspect"}
               </span>
               {!["terrain", "elevation", "psr"].includes(layer) && (
@@ -844,6 +853,7 @@ export default function App() {
           </footer>
         </div>
       </div>
+      </>}
       {library && (
         <MissionLibrary
           value={draft}
