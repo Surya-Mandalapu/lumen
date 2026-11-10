@@ -47,7 +47,7 @@ function Timeline({
           { key: "sun_visible", label: "Sun above terrain", className: "sun" },
           {
             key: "earth_visible",
-            label: "Earth line of sight",
+            label: "Time with Earth in view",
             className: "earth",
           },
         ] as const
@@ -167,7 +167,7 @@ function HorizonChart({
             strokeDasharray="2 5"
           />
           <text x={x(az)} y="201" textAnchor="middle">
-            {["N 0Â°", "E 90Â°", "S 180Â°", "W 270Â°", "N 360Â°"][i]}
+            {["N 0°", "E 90°", "S 180°", "W 270°", "N 360°"][i]}
           </text>
         </g>
       ))}
@@ -175,7 +175,7 @@ function HorizonChart({
         <g key={el}>
           <line x1="38" x2="642" y1={y(el)} y2={y(el)} stroke="#2a3435" />
           <text x="29" y={y(el) + 4} textAnchor="end">
-            {Math.round(el)}Â°
+            {Math.round(el)}°
           </text>
         </g>
       ))}
@@ -227,15 +227,25 @@ export function SiteAnalysis({
   site,
   result,
   onSampleChange,
+  section = "all",
 }: {
   site: Candidate;
   result: SearchResponse;
   onSampleChange?: (sample: TimeSample) => void;
+  section?: "all" | "timeline" | "horizon";
 }) {
   const [index, setIndex] = useState(0);
+  const [tablePage, setTablePage] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(() => matchMedia("(prefers-reduced-motion: reduce)").matches);
   useEffect(() => {
-    if (!playing) return;
+    const media = matchMedia("(prefers-reduced-motion: reduce)");
+    const change = () => { setReducedMotion(media.matches); if (media.matches) setPlaying(false); };
+    media.addEventListener("change", change);
+    return () => media.removeEventListener("change", change);
+  }, []);
+  useEffect(() => {
+    if (!playing || reducedMotion) return;
     const timer = setInterval(
       () =>
         setIndex((current) => {
@@ -248,7 +258,7 @@ export function SiteAnalysis({
       180,
     );
     return () => clearInterval(timer);
-  }, [playing, site.timeline.length]);
+  }, [playing, reducedMotion, site.timeline.length]);
   useEffect(() => {
     if (index >= site.timeline.length - 1) setPlaying(false);
   }, [index, site.timeline.length]);
@@ -278,7 +288,7 @@ export function SiteAnalysis({
         <div>
           <span>
             <Icon name="sun" size={14} />
-            Sunlight availability
+            Time with sunlight
           </span>
           <strong className="sun-color">
             {percent(site.metrics.illumination_fraction)}
@@ -288,7 +298,7 @@ export function SiteAnalysis({
         <div>
           <span>
             <Icon name="earth" size={14} />
-            Earth line of sight
+            Time with Earth in view
           </span>
           <strong className="earth-color">
             {percent(site.metrics.earth_visibility_fraction)}
@@ -307,15 +317,18 @@ export function SiteAnalysis({
         </div>
       </div>
       <div className="analysis-grid">
-        <article className="chart-panel">
+        {section !== "horizon" && <article className="chart-panel">
           <div className="chart-heading">
             <h3>Mission timeline</h3>
-            <span className="small muted">UTC Â· sampled visibility</span>
+            <span className="small muted">UTC · sampled visibility</span>
           </div>
+          {reducedMotion && <p className="field-hint">Reduced motion is enabled. Inspect samples with the slider or data table.</p>}
           <div className="playback-controls">
             <button
               type="button"
               className="secondary-button"
+              disabled={reducedMotion}
+              title={reducedMotion ? "Reduced motion is enabled; use the sample slider or data table." : undefined}
               onClick={() => {
                 if (index >= site.timeline.length - 1) setIndex(0);
                 setPlaying((current) => !current);
@@ -364,11 +377,11 @@ export function SiteAnalysis({
                     : "Blocked"}
                 </strong>
                 <small>
-                  Az {sample.sun_azimuth_deg.toFixed(1)}Â° Â· El{" "}
-                  {sample.sun_elevation_deg.toFixed(2)}Â°
+                  Az {sample.sun_azimuth_deg.toFixed(1)}° · El{" "}
+                  {sample.sun_elevation_deg.toFixed(2)}°
                 </small>
                 <small>
-                  Terrain {sample.sun_horizon_deg.toFixed(2)}Â° Â· disk{" "}
+                  Terrain {sample.sun_horizon_deg.toFixed(2)}° · disk{" "}
                   {percent(sample.solar_fraction)}
                 </small>
               </div>
@@ -380,21 +393,26 @@ export function SiteAnalysis({
                   {sample.earth_visible ? "Line of sight" : "Blocked"}
                 </strong>
                 <small>
-                  Az {sample.earth_azimuth_deg.toFixed(1)}Â° Â· El{" "}
-                  {sample.earth_elevation_deg.toFixed(2)}Â°
+                  Az {sample.earth_azimuth_deg.toFixed(1)}° · El{" "}
+                  {sample.earth_elevation_deg.toFixed(2)}°
                 </small>
                 <small>
-                  Terrain horizon {sample.earth_horizon_deg.toFixed(2)}Â°
+                  Terrain horizon {sample.earth_horizon_deg.toFixed(2)}°
                 </small>
               </div>
             </div>
           )}
-        </article>
-        <article className="chart-panel">
+          <details className="data-table-details"><summary>View mission timeline as a table</summary>
+            <p>Exact returned samples, 100 per page. Percentages describe sampled time.</p>
+            <div className="guide-actions"><button className="secondary-button" disabled={tablePage === 0} onClick={() => setTablePage(value => value - 1)}>Previous samples</button><span>Samples {tablePage * 100 + 1}–{Math.min((tablePage + 1) * 100, site.timeline.length)} of {site.timeline.length}</span><button className="secondary-button" disabled={(tablePage + 1) * 100 >= site.timeline.length} onClick={() => setTablePage(value => value + 1)}>Next samples</button></div>
+            <div className="table-scroll" role="region" aria-label="Mission timeline data" tabIndex={0}><table><thead><tr><th scope="col">UTC</th><th scope="col">Sunlight · upper limb</th><th scope="col">Visible solar disk</th><th scope="col">Earth center above horizon</th></tr></thead><tbody>{site.timeline.slice(tablePage * 100, (tablePage + 1) * 100).map(row => <tr key={row.time_utc}><th scope="row">{row.time_utc}</th><td>{row.sun_visible ? "Visible" : "Blocked"}</td><td>{percent(row.solar_fraction)}</td><td>{row.earth_visible ? "Visible" : "Blocked"}</td></tr>)}</tbody></table></div>
+          </details>
+        </article>}
+        {section !== "timeline" && <article className="chart-panel">
           <div className="chart-heading">
             <h3>What blocks the view?</h3>
             <span className="small muted">
-              Local sky Â· azimuth / elevation
+              Local sky · azimuth / elevation
             </span>
           </div>
           <HorizonChart site={site} sample={sample} />
@@ -414,7 +432,7 @@ export function SiteAnalysis({
           </div>
           <p className="field-hint">
             Paths span the common mission window. Points show the selected time.
-            Terrain is sampled at 5Â° azimuth spacing to 200 km; intervening
+            Terrain is sampled at 5° azimuth spacing to 200 km; intervening
             ridges may be missed.
           </p>
           <details className="data-table-details">
@@ -431,8 +449,8 @@ export function SiteAnalysis({
                 <tbody>
                   {site.horizon.map((p) => (
                     <tr key={p.azimuth_deg}>
-                      <td>{p.azimuth_deg.toFixed(0)}Â°</td>
-                      <td>{p.elevation_deg.toFixed(2)}Â°</td>
+                      <td>{p.azimuth_deg.toFixed(0)}°</td>
+                      <td>{p.elevation_deg.toFixed(2)}°</td>
                       <td>
                         {p.distance_m == null
                           ? "Unavailable"
@@ -444,7 +462,7 @@ export function SiteAnalysis({
               </table>
             </div>
           </details>
-        </article>
+        </article>}
       </div>
     </section>
   );

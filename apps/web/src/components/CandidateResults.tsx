@@ -1,174 +1,34 @@
+import { useState } from "react";
 import type { Candidate, Preferences, SearchResponse } from "../lib/types";
 import { coordinate, hours, percent } from "../lib/format";
 import { Icon } from "./Icon";
-import { ResultExplanation } from "./ResultExplanation";
 import { comparisonTradeoffs } from "../lib/explanations";
+import { siteTakeaway } from "../lib/planning";
 
-export function CandidateResults({
-  result,
-  selected,
-  pinned,
-  onSelect,
-  onPin,
-  onCompare,
-}: {
-  result: SearchResponse;
-  selected: string | null;
-  pinned: string[];
-  onSelect: (id: string) => void;
-  onPin: (id: string) => void;
-  onCompare: () => void;
+export function CandidateResults({ result, selected, pinned, onSelect, onPin, onCompare }: {
+  result: SearchResponse; selected: string | null; pinned: string[];
+  onSelect: (id: string) => void; onPin: (id: string) => void; onCompare: () => void;
 }) {
-  const explainedSite = result.candidates.find((site) => site.id === selected);
-  return (
-    <section className="results-section" aria-labelledby="results-title">
-      <div className="section-heading">
-        <div>
-          <span className="eyebrow">THE SHORTLIST</span>
-          <h2 id="results-title">Different sites. Different strengths.</h2>
-        </div>
-        <button
-          className="secondary-button"
-          onClick={onCompare}
-          disabled={pinned.length !== 2}
-        >
-          <Icon name="compare" size={16} />
-          Compare {pinned.length}/2
-        </button>
-      </div>
-      <p className="results-summary">
-        {result.counts.temporal_pass.toLocaleString()} eligible of{" "}
-        {result.counts.region.toLocaleString()} covered candidates ·{" "}
-        {result.candidates.length} spatially separated sites · scores within 2
-        points are near ties.
-      </p>
-      <details className="selection-funnel">
-        <summary>How the shortlist was selected</summary>
-        <p>
-          {result.counts.region.toLocaleString()} prepared candidates in the
-          area → {result.counts.terrain_pass.toLocaleString()} pass terrain and
-          proximity limits → {result.counts.temporal_pass.toLocaleString()} pass
-          mission-time limits → {result.counts.shortlisted} spatially separated
-          shortlist sites.
-        </p>
-        <p className="field-hint">
-          Counts describe prepared locations only. Rejected candidates are not
-          ranked; nearby unlisted locations may also be eligible. No constraints
-          were relaxed.
-        </p>
-      </details>
-      {result.candidates.length === 0 ? (
-        <div className="empty-results" role="status">
-          <Icon name="compass" size={32} />
-          <h3>No candidates meet this configuration.</h3>
-          <p>
-            {result.empty_reason ??
-              "Review the mission window, region, or hard constraints and run another search."}
-          </p>
-          <div>
-            {result.counts.region} in region → {result.counts.terrain_pass} pass
-            terrain → {result.counts.temporal_pass} pass temporal constraints
-          </div>
-          <small>Constraints have not been relaxed.</small>
-        </div>
-      ) : (
-        <div className="candidate-grid">
-          {result.candidates.map((site) => (
-            <article
-              className={`candidate-card ${selected === site.id ? "selected" : ""}`}
-              key={site.id}
-            >
-              <button
-                className="candidate-select"
-                onClick={() => onSelect(site.id)}
-                aria-pressed={selected === site.id}
-              >
-                <div className="candidate-top">
-                  <span className="candidate-number">
-                    {String(site.rank).padStart(2, "0")}
-                  </span>
-                  <span className="candidate-score">
-                    {Math.round(site.score)}
-                    <small>/100</small>
-                  </span>
-                </div>
-                <h3>Candidate {String(site.rank).padStart(2, "0")}</h3>
-                <p className="candidate-coordinate">
-                  {coordinate(site.latitude_deg, site.longitude_deg_east)}
-                </p>
-                <div className="candidate-metrics">
-                  <span>
-                    <Icon name="sun" size={14} />
-                    <strong>
-                      {percent(site.metrics.illumination_fraction)}
-                    </strong>
-                  </span>
-                  <span>
-                    <Icon name="earth" size={14} />
-                    <strong>
-                      {percent(site.metrics.earth_visibility_fraction)}
-                    </strong>
-                  </span>
-                  <span>
-                    <Icon name="terrain" size={14} />
-                    <strong>{site.slope_deg.toFixed(1)}°</strong>
-                  </span>
-                </div>
-                <div
-                  className="score-stack"
-                  aria-label="Weighted score contributions"
-                >
-                  {(
-                    [
-                      "illumination",
-                      "earth_visibility",
-                      "terrain_safety",
-                      "science_proximity",
-                    ] as const
-                  ).map((key) => (
-                    <span
-                      className={key}
-                      key={key}
-                      style={{
-                        width: `${(site.criteria_scores[key] ?? 0) * result.normalized_preferences[key] * 100}%`,
-                      }}
-                    />
-                  ))}
-                </div>
-                <span className="inspect-link">
-                  {selected === site.id
-                    ? "Inspecting this site"
-                    : "Inspect site"}
-                  <Icon name="arrow" size={14} />
-                </span>
-              </button>
-              <button
-                className={`pin-button ${pinned.includes(site.id) ? "pinned" : ""}`}
-                onClick={() => onPin(site.id)}
-                disabled={pinned.length === 2 && !pinned.includes(site.id)}
-                aria-pressed={pinned.includes(site.id)}
-              >
-                <Icon
-                  name={pinned.includes(site.id) ? "check" : "pin"}
-                  size={14}
-                />
-                {pinned.includes(site.id)
-                  ? "Added to comparison"
-                  : "Add to comparison"}
-              </button>
-            </article>
-          ))}
-        </div>
-      )}
-      {explainedSite && (
-        <ResultExplanation
-          key={explainedSite.id}
-          site={explainedSite}
-          result={result}
-        />
-      )}
-    </section>
-  );
+  const [expanded, setExpanded] = useState(false);
+  const selectedSite = result.candidates.find(site => site.id === selected);
+  const explanation = selectedSite ? siteTakeaway(selectedSite, result) : null;
+  return <section className="results-section" aria-labelledby="results-title">
+    <div className="section-heading"><div><span className="eyebrow">03 / REVIEW THE TRADEOFFS</span><h2 id="results-title">A few places to consider.</h2></div>
+      <button className="secondary-button" disabled={pinned.length !== 2} onClick={onCompare}>Compare {pinned.length}/2 selected sites</button></div>
+    <p className="results-summary">{result.counts.temporal_pass.toLocaleString()} eligible of {result.counts.region.toLocaleString()} prepared locations. Scores less than 2 points apart are near ties under these priorities.</p>
+    {!result.candidates.length ? <div className="empty-results" role="status"><h3>No sites meet these requirements.</h3><p>{result.empty_reason}</p><p>{result.counts.region} in the area → {result.counts.terrain_pass} pass terrain/proximity limits → {result.counts.temporal_pass} pass mission-time limits.</p><p>Your limits have not been relaxed. Go back to edit your mission.</p></div> : <>
+      <div className="candidate-grid">{result.candidates.slice(0, expanded ? undefined : 3).map(site => <article className={`candidate-card ${selected === site.id ? "selected" : ""}`} key={site.id}>
+        <div className="compact-candidate-content"><span className="eyebrow">Candidate {String(site.rank).padStart(2, "0")}</span><h3>{coordinate(site.latitude_deg, site.longitude_deg_east)}</h3>
+          <dl className="primary-metrics"><div><dt>Time with sunlight</dt><dd>{percent(site.metrics.illumination_fraction)}</dd></div><div><dt>Time with Earth in view</dt><dd>{percent(site.metrics.earth_visibility_fraction)}</dd></div><div><dt>Terrain slope</dt><dd>{site.slope_deg.toFixed(1)}°</dd></div></dl>
+          <button className="secondary-button" onClick={() => onSelect(site.id)}>Inspect site {String(site.rank).padStart(2, "0")}</button></div>
+        <button className={`pin-button ${pinned.includes(site.id) ? "pinned" : ""}`} aria-pressed={pinned.includes(site.id)} disabled={pinned.length === 2 && !pinned.includes(site.id)} onClick={() => onPin(site.id)}>{pinned.includes(site.id) ? "Remove from comparison" : "Add to comparison"}<span className="sr-only"> candidate {site.rank}</span></button>
+      </article>)}</div>
+      {result.candidates.length > 3 && <button className="text-button reveal-candidates" onClick={() => setExpanded(value => !value)}>{expanded ? "Show three initial sites" : `Reveal ${result.candidates.length - 3} more candidates`}</button>}
+      {explanation && <aside className="site-takeaway"><h3>Why consider Candidate {selectedSite!.rank}?</h3><p>{explanation.reason}</p><p>{explanation.tradeoff}</p><p className="field-hint">This compares your mission priorities. It does not establish landing safety or RF performance.</p></aside>}
+    </>}
+    <p className="field-hint">Sunlight counts any visible upper solar limb. Earth view means the center of Earth is above the modeled terrain horizon. Percentages are sampled mission time, not certainty.</p>
+    <details className="selection-funnel"><summary>How the shortlist was selected</summary><p>{result.counts.region.toLocaleString()} prepared locations → {result.counts.terrain_pass.toLocaleString()} pass terrain/proximity → {result.counts.temporal_pass.toLocaleString()} pass mission-time limits → {result.counts.shortlisted} spatially separated sites. Nearby unlisted locations can also be eligible.</p></details>
+  </section>;
 }
 
 const criteria: { key: keyof Preferences; label: string }[] = [
@@ -298,7 +158,7 @@ export function Comparison({
               not a confidence bound.
             </p>
           </div>
-          <div className="table-scroll">
+          <div className="table-scroll" role="region" aria-label="Same-window comparison table" tabIndex={0}>
             <table className="comparison-table">
               <thead>
                 <tr>

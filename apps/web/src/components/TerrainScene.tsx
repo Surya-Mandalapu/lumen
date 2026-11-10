@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { Line, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import type {
   Candidate,
@@ -15,6 +15,8 @@ import { SceneLabel } from "./SceneLabel";
 
 interface LayerOptions {
   previewPoint?: boolean;
+  onPick?: (x_m: number, y_m: number) => void;
+  studyArea?: { x_m: number; y_m: number; radius_m: number };
   layer: MapLayer;
   mapCandidates: MapCandidate[];
   psr: PSRLayer | null;
@@ -156,6 +158,8 @@ function TerrainMesh({
   psr,
   features,
   previewPoint,
+  studyArea,
+  onPick,
 }: {
   terrain: TerrainData;
   candidates: Candidate[];
@@ -178,8 +182,8 @@ function TerrainMesh({
     const positions = new Float32Array(width * height * 3);
     const colors = new Float32Array(width * height * 3);
     const indices: number[] = [];
-    const low = new THREE.Color(elevation ? "#1b3b38" : "#303a3e"),
-      high = new THREE.Color(elevation ? "#a7d8a6" : "#bbc1bc");
+    const low = new THREE.Color(elevation ? "#1b3b38" : "#343434"),
+      high = new THREE.Color(elevation ? "#a7d8a6" : "#c0c0c0");
     for (let row = 0; row < height; row++)
       for (let col = 0; col < width; col++) {
         const i = row * width + col,
@@ -220,19 +224,29 @@ function TerrainMesh({
   useEffect(() => () => geometry.dispose(), [geometry]);
   return (
     <group>
-      <mesh geometry={geometry}>
+      <mesh geometry={geometry} onClick={event => {
+        if (!onPick || event.delta > 5 || event.button !== 0) return;
+        event.stopPropagation();
+        onPick(event.point.x * 1000, -event.point.z * 1000);
+      }}>
         <meshStandardMaterial
           vertexColors
           roughness={0.95}
           side={THREE.DoubleSide}
         />
       </mesh>
+      {studyArea && <Line points={Array.from({ length: 97 }, (_, index) => {
+        const angle = index / 96 * Math.PI * 2;
+        const x = studyArea.x_m + Math.cos(angle) * studyArea.radius_m;
+        const y = studyArea.y_m + Math.sin(angle) * studyArea.radius_m;
+        return [x / 1000, ((heightAt(terrain, x, y) - base) / 1000) * 1.5 + .15, -y / 1000] as [number, number, number];
+      })} color="#f1d49b" lineWidth={3} />}
       <gridHelper
         args={[
           Math.max(terrain.extent_m[2] - terrain.extent_m[0], terrain.extent_m[3] - terrain.extent_m[1]) / 1000 * 1.2,
           12,
-          "#28413d",
-          "#1a2829",
+          "#414141",
+          "#292929",
         ]}
         position={[0, -0.08, 0]}
       />
@@ -305,6 +319,8 @@ export function FlatMap({
   psr,
   features,
   previewPoint,
+  studyArea,
+  onPick,
 }: {
   terrain: TerrainData;
   candidates: Candidate[];
@@ -330,7 +346,7 @@ export function FlatMap({
               y={(Math.floor(i / terrain.width) / terrain.height) * 600}
               width={600 / terrain.width + 0.5}
               height={600 / terrain.height + 0.5}
-              fill={`hsl(160 12% ${12 + ((height - min) / Math.max(1, max - min)) * 45}%)`}
+              fill={`hsl(0 0% ${12 + ((height - min) / Math.max(1, max - min)) * 45}%)`}
             />
           ),
         )}
@@ -382,6 +398,7 @@ export function FlatMap({
             </text>
           );
         })}
+        {studyArea && <ellipse cx={(studyArea.x_m - xmin) / (xmax - xmin) * 600} cy={(ymax - studyArea.y_m) / (ymax - ymin) * 600} rx={studyArea.radius_m / (xmax - xmin) * 600} ry={studyArea.radius_m / (ymax - ymin) * 600} fill="none" stroke="#f1d49b" strokeWidth="3" />}
         {previewPoint && <g transform="translate(300 300)"><path d="M-10 0H10M0-10V10" stroke="#fff9d3" strokeWidth="3" /><text x="14" y="-12" fill="#fff9d3" fontSize="13">Selected point</text></g>}
         {candidates.map((site) => (
           <g
@@ -408,7 +425,7 @@ export function FlatMap({
         <g stroke="#d4e4d5" fill="#e2ede3">
           <path d="M25 568v7h150v-7" fill="none" strokeWidth="2" />
           <text x="25" y="558" stroke="none" fontSize="12">
-            5 km
+            {Number(((xmax - xmin) / 4000).toPrecision(3))} km
           </text>
         </g>
       </svg>
@@ -427,6 +444,8 @@ export function TerrainScene({
   psr,
   features,
   previewPoint,
+  studyArea,
+  onPick,
 }: {
   terrain: TerrainData;
   candidates: Candidate[];
@@ -442,6 +461,7 @@ export function TerrainScene({
   const flat = (
     <FlatMap
       previewPoint={previewPoint}
+      studyArea={studyArea}
       terrain={terrain}
       candidates={candidates}
       selected={selected}
@@ -454,32 +474,36 @@ export function TerrainScene({
   );
   if (mode === "map") return flat;
   return (
-    <SceneBoundary fallback={flat}>
+    <SceneBoundary fallback={<><p role="status">3D terrain unavailable on this device. Showing the 2D map.</p>{flat}</>}>
+      <div className="terrain-3d-frame" role="img" aria-label="Interactive 3D lunar elevation terrain. Drag to orbit; scroll or pinch to zoom.">
       <Canvas
+        frameloop="demand"
         dpr={[1, 1.7]}
         camera={{
-          position: [spanKm * 1.05, spanKm * 0.95, spanKm * 1.2],
+          position: [(terrain.extent_m[0] + terrain.extent_m[2]) / 2000 + spanKm * .7, spanKm * .65, -(terrain.extent_m[1] + terrain.extent_m[3]) / 2000 + spanKm * .8],
           fov: 44,
           near: 0.1,
           far: Math.max(200, spanKm * 5),
         }}
-        fallback={flat}
+        fallback={<><p role="status">WebGL unavailable. Showing the 2D map.</p>{flat}</>}
       >
-        <color attach="background" args={["#101819"]} />
-        <fog attach="fog" args={["#101819", spanKm * 2.25, spanKm * 5]} />
+        <color attach="background" args={["#111213"]} />
+        <fog attach="fog" args={["#111213", spanKm * 2.25, spanKm * 5]} />
         <ambientLight intensity={0.5} />
         <directionalLight
           position={[-12, 20, -10]}
           intensity={2.3}
-          color="#eef1de"
+          color="#ffffff"
         />
         <directionalLight
           position={[10, 4, 15]}
           intensity={0.35}
-          color="#99c4bb"
+          color="#ffffff"
         />
         <TerrainMesh
           previewPoint={previewPoint}
+          studyArea={studyArea}
+          onPick={onPick}
           terrain={terrain}
           candidates={candidates}
           selected={selected}
@@ -491,12 +515,14 @@ export function TerrainScene({
         />
         <OrbitControls
           makeDefault
-          target={[0, 2.0, 0]}
+          target={[(terrain.extent_m[0] + terrain.extent_m[2]) / 2000, 2, -(terrain.extent_m[1] + terrain.extent_m[3]) / 2000]}
           minDistance={6}
           maxDistance={Math.max(55, spanKm * 3)}
           maxPolarAngle={Math.PI / 2.05}
         />
       </Canvas>
+      <span className="terrain-interaction-hint">{onPick ? "Click surface to select · drag to orbit · height 1.5×" : "3D elevation · drag to orbit · scroll or pinch to zoom · height 1.5×"}</span>
+      </div>
     </SceneBoundary>
   );
 }
