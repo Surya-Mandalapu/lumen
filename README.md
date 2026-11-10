@@ -7,7 +7,7 @@ geometry, and compare two sites under the same window.
 
 ## Run locally
 
-Requires Node.js 22+ and Python 3.12+. From the repository folder:
+Requires Node.js 22.12+ and Python 3.12+. From the repository folder:
 
 ```powershell
 npm install
@@ -40,7 +40,8 @@ Prepare the optional global bundle once, after installing the preprocessing
 requirements and preparing the JPL kernels:
 
 ```powershell
-python scripts/data/prepare_global.py
+python -m pip install -r scripts/data/requirements.txt
+npm run prepare:global
 ```
 
 The source TIFF and generated global bundle stay outside Git. The script verifies
@@ -126,8 +127,25 @@ full-patch search. The first run includes cold cache work; later runs reuse
 the in-process dataset and ephemeris caches.
 
 Actual-kernel integration tests run when `prepare:data` has completed; CI prepares kernels
-before API tests. Browser smoke checks covered the full search/inspect/compare/export
-journey, empty searches, reruns, and mobile layout.
+and the optional global terrain before API tests, including the real near-side, far-side
+and polar previews. CI also runs the data-preparation regressions.
+
+To repeat the desktop/mobile browser checks against the production build:
+
+```powershell
+python -m pip install playwright
+python -m playwright install chromium
+npm run build
+# In a separate terminal with the virtual environment active:
+python -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000
+# Then:
+python scripts/browser_smoke.py
+```
+
+The browser check covers regional coverage selection, explanations, comparison,
+exports, stale/empty results, global terrain/timelines, service-error recovery and
+390 px mobile layouts. Reports, exports and screenshots stay in ignored
+`data/cache/demo-qa/`. See [demo verification](docs/demo-integration-verification.md).
 
 ## Docker
 

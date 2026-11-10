@@ -54,8 +54,19 @@ function PointMap({ data, latitude, longitude, onSelect }: {
     ctx.putImageData(image, 0, 0);
   }, [data]);
   return <div className="global-map">
-    <canvas ref={canvas} width={data.width} height={data.height}
-      aria-label="Global NASA lunar elevation map. Enter coordinates below or click to select a point."
+    <canvas ref={canvas} width={data.width} height={data.height} tabIndex={0}
+      role="button"
+      aria-label="Select a point on the global NASA lunar elevation map. Click or use arrow keys to move one degree; enter precise coordinates below."
+      onKeyDown={event => {
+        const shifts: Record<string, [number, number]> = {
+          ArrowLeft: [0, -1], ArrowRight: [0, 1], ArrowUp: [1, 0], ArrowDown: [-1, 0],
+        };
+        const shift = shifts[event.key];
+        if (!shift) return;
+        event.preventDefault();
+        onSelect(Math.max(-90, Math.min(90, latitude + shift[0])),
+          ((longitude + shift[1] + 180) % 360 + 360) % 360 - 180);
+      }}
       onClick={event => {
         const bounds = event.currentTarget.getBoundingClientRect();
         const longitude = Math.max(-180, Math.min(179.999999, (event.clientX - bounds.left) / bounds.width * 360 - 180));
@@ -69,6 +80,8 @@ function PointMap({ data, latitude, longitude, onSelect }: {
 
 export function GlobalPreview() {
   const [overview, setOverview] = useState<Overview | null>(null);
+  const [overviewError, setOverviewError] = useState(false);
+  const [overviewAttempt, setOverviewAttempt] = useState(0);
   const [latitude, setLatitude] = useState(0.6741);
   const [longitude, setLongitude] = useState(23.4729);
   const [start, setStart] = useState("2028-10-01T00:00");
@@ -81,10 +94,11 @@ export function GlobalPreview() {
   const controller = useRef<AbortController | null>(null);
   useEffect(() => {
     const abort = new AbortController();
+    setOverviewError(false);
     fetch(`${API}/global/terrain`, { signal: abort.signal }).then(json<Overview>).then(setOverview)
-      .catch(reason => { if (!abort.signal.aborted) setError(reason.message); });
+      .catch(() => { if (!abort.signal.aborted) setOverviewError(true); });
     return () => { abort.abort(); controller.current?.abort(); };
-  }, []);
+  }, [overviewAttempt]);
   function select(lat: number, lon: number) {
     setLatitude(lat); setLongitude(lon); setDirty(true);
     controller.current?.abort(); setLoading(false);
@@ -111,7 +125,11 @@ export function GlobalPreview() {
       <p>Select anywhere on the map or enter coordinates. Explore one location using global NASA LOLA terrain and JPL ephemerides.</p>
     </div></div>
     <div className="global-notice">1/16° terrain grid · about 1.9 km north–south · preliminary geometry only. Local hazards and landing suitability are unresolved.</div>
-    {!overview && !error && <p role="status">Loading verified global terrain…</p>}
+    {!overview && !overviewError && <p role="status">Loading verified global terrain…</p>}
+    {overviewError && <div className="error-box" role="alert">
+      <p>Global terrain is unavailable. You can retry loading it or use the south-pole site search.</p>
+      <button className="secondary-button" onClick={() => setOverviewAttempt(attempt => attempt + 1)}>Retry loading terrain</button>
+    </div>}
     {overview && <><PointMap data={overview} latitude={latitude} longitude={longitude} onSelect={select} />
       <div className="global-map-scale"><span>180°W</span><span>0° · near-side center</span><span>180°E</span></div></>}
     <form className="global-form" onSubmit={run}>

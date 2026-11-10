@@ -2,6 +2,9 @@
   "name": "lumen",
   "private": true,
   "version": "0.1.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "workspaces": [
     "apps/web"
   ],
@@ -14,10 +17,10 @@
     "test:web": "npm run test --workspace @lumen/web",
     "test:api": "python -m pytest backend/tests",
     "verify:data": "python scripts/data/verify_manifest.py",
-    "prepare:data": "python scripts/data/prepare_kernels.py && python scripts/data/verify_manifest.py --require-kernels"
+    "prepare:data": "python scripts/data/prepare_kernels.py && python scripts/data/verify_manifest.py --require-kernels",
+    "prepare:global": "python scripts/data/prepare_global.py"
   },
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.2.5"
   }
 }
-
