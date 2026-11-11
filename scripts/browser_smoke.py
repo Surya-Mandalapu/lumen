@@ -208,10 +208,13 @@ def south_pole_3d_checks(page, output, passed):
         page.wait_for_load_state("networkidle")
         expect(page.locator(".moon-loading")).to_have_count(0, timeout=30000)
         page.wait_for_timeout(300)
-        before = moon.screenshot()
+        if page.get_by_role("button", name="Show whole Moon", exact=True).is_visible():
+            page.get_by_role("button", name="Show whole Moon", exact=True).click()
+            page.wait_for_timeout(300)
+        whole = moon.screenshot()
         page.get_by_role("button", name="Zoom to south pole", exact=True).click()
         page.wait_for_timeout(300)
-        assert moon.screenshot() != before, "Moon did not zoom to the pole"
+        assert moon.screenshot() != whole, "Moon did not zoom to the supported cap"
         previous = coords.input_value()
         (moon.tap if width == 390 else moon.click)(
             position={

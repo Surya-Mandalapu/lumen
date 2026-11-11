@@ -12,3 +12,12 @@ The model wraps a lunar color map on a sphere. It is context only, not an analys
 DEM, physical-scale model, or source of elevation, slope, horizons or shadow predictions.
 The analytical terrain scene instead loads the prepared PGDA display height grid via API.
 NASA attribution appears in the interface and methods panel. No endorsement is implied.
+
+Scene orientation: the cube-atlas model's X axis runs west-positive. The scene
+reflects X to match the application's east-positive convention (+Y north, -Z
+prime meridian). This was checked against 531 matched features in NASA's
+equirectangular grid model from the same SVS release (centered at 0° longitude).
+Surface picks use the transformed world point, so markers, textures and analytical
+coordinates share a frame. The camera orbits the Moon's center and cannot zoom
+inside its surface. The default view faces the south pole, with a dedicated zoom
+control that frames the verified cap for location selection.

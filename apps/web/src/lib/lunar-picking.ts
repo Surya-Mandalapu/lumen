@@ -1,4 +1,6 @@
 /** Shared scene convention: +Y north, +X 90°E, -Z prime meridian. */
+export const NASA_MOON_AXES = [-1, 1, 1] as const;
+
 export function lunarPoint(latitude: number, longitude: number, radius = 2.016): [number, number, number] {
   const lat = latitude * Math.PI / 180, lon = longitude * Math.PI / 180;
   return [radius * Math.cos(lat) * Math.sin(lon), radius * Math.sin(lat), -radius * Math.cos(lat) * Math.cos(lon)];

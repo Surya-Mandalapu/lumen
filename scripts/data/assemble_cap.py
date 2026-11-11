@@ -7,6 +7,7 @@ import shutil
 
 import numpy as np
 import rasterio
+from build_cap_catalog import build_catalog
 from prepare_terrain import ROOT, SOURCE_SHA256, sample_raster, sha256
 from verify_cap_tiles import verify_tiles
 
@@ -56,7 +57,7 @@ def main() -> None:
     with rasterio.open(DEM) as source:
         axis = np.linspace(-100_000, 100_000, 101)
         x, y = np.meshgrid(axis, axis[::-1])
-        mesh = sample_raster(source.read(1), source.transform, x, y)
+        mesh = sample_raster(source.read(1, masked=True).astype(np.float32).filled(np.nan), source.transform, x, y)
     if not np.isfinite(mesh).all():
         raise SystemExit("Cap overview has missing NASA DEM samples")
     mesh_path = TILE_ROOT / "terrain.json"
@@ -91,6 +92,7 @@ def main() -> None:
     metadata.update(
         dataset_version="lunar-south-cap-v1",
         candidate_count=len(merged["ids"]),
+        excluded_count=report["excluded_candidates"],
         coverage={
             "type": "polar_cap",
             "extent_m": [-100_000, -100_000, 100_000, 100_000],
@@ -113,6 +115,9 @@ def main() -> None:
             "Approved-feature proximity uses official center points, not geological boundaries.",
         ],
     )
+    catalog = build_catalog(TILE_ROOT)
+    metadata["scoring_reference"] = catalog["scoring_reference"]
+    metadata["catalog_sha256"] = catalog["catalog_sha256"]
     (TILE_ROOT / "metadata.json").write_text(
         json.dumps(metadata, indent=2), encoding="utf-8"
     )

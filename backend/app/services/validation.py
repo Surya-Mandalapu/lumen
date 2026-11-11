@@ -14,6 +14,7 @@ from app.models import (
 )
 from app.services.dataset import DataUnavailable, dataset
 from app.services.proximity import feature_catalog
+from app.services.repository import is_tiled, load_area, release_metadata
 from app.settings import settings
 
 DEFAULT_PREFERENCES = Preferences(
@@ -49,6 +50,10 @@ def normalize_preferences(preferences: Preferences) -> tuple[Preferences, list[s
 
 
 def _estimate_candidates(request: SearchRequest) -> int:
+    if is_tiled(settings.data_root):
+        if request.region.selector_type == SelectorType.full_supported_region:
+            return release_metadata(settings.data_root)["candidate_count"]
+        return len(load_area(settings.data_root, request.region)[1]["ids"])
     try:
         _, arrays = dataset(settings.data_root)
         if request.region.selector_type == SelectorType.full_supported_region:
@@ -79,7 +84,7 @@ def validate_search(request: SearchRequest) -> SearchValidationResponse:
     region_assumptions: list[str] = []
     if request.region.selector_type == SelectorType.feature_radius:
         try:
-            dataset(settings.data_root)
+            release_metadata(settings.data_root) if is_tiled(settings.data_root) else dataset(settings.data_root)
         except DataUnavailable as exc:
             raise SearchValidationError(
                 "Named-region resolution requires an unavailable approved-feature dataset."
@@ -111,9 +116,15 @@ def validate_search(request: SearchRequest) -> SearchValidationResponse:
         raise SearchValidationError("Mission dates must fall within the validated 2025–2035 range.")
 
     constraints = request.hard_constraints
+    if is_tiled(settings.data_root):
+        if request.region.selector_type == SelectorType.full_supported_region:
+            if start != datetime(2028, 10, 1, tzinfo=UTC) or end != datetime(2028, 10, 31, tzinfo=UTC):
+                raise SearchValidationError("The full cap demo uses exactly October 1–31, 2028; choose a local circle for other dates.")
+        elif request.region.search_radius_km > 5 or end-start > timedelta(days=7):
+            raise SearchValidationError("Live cap searches allow up to 5 km radius and 7 days; use the fixed full-cap demo for broader analysis.")
     if constraints.maximum_distance_to_psr_km is not None:
         try:
-            _, arrays = dataset(settings.data_root)
+            _, arrays = ({}, {}) if is_tiled(settings.data_root) else dataset(settings.data_root)
         except DataUnavailable as exc:
             raise SearchValidationError("PSR proximity requires an unavailable dataset.") from exc
         if "distance_psr_km" not in arrays:
@@ -127,7 +138,7 @@ def validate_search(request: SearchRequest) -> SearchValidationResponse:
         )
     if constraints.science_feature_ids:
         try:
-            dataset(settings.data_root)
+            release_metadata(settings.data_root) if is_tiled(settings.data_root) else dataset(settings.data_root)
         except DataUnavailable as exc:
             raise SearchValidationError(
                 "Approved-feature proximity requires an unavailable dataset."

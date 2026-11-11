@@ -26,6 +26,14 @@ The small NASA-derived terrain bundle and context Moon model are included.
 After preparation, searches run locally without external science-data services.
 Missing or corrupt science inputs return an explicit unavailable error.
 
+The guided planner opens NASA's 3D Moon first. Select **Zoom to south pole** to
+pick a detailed study area, or enter coordinates/use a supported approved landmark.
+An installed, verified `data/derived/lunar-south-cap-v1/catalog.json` enables the
+full 88-tile, 103,996-site cap automatically. Without that release the app clearly
+advertises the smaller bundled patch. `LUMEN_DATA_ROOT` explicitly overrides the
+selection. See [cap/UI integration and installation](docs/cap-ui-integration.md)
+for the release package, scientific checks and hosting instructions.
+
 ## Try the MVP
 
 ### Global point preview
@@ -50,14 +58,15 @@ Source and grid conventions: [NASA SVS CGI Moon Kit](https://svs.gsfc.nasa.gov/4
 
 ### Regional search
 
-1. Keep the prepared study area, October 1-31, 2028 window, maximum slope 10 degrees,
-   and minimum Earth line-of-sight availability 50%.
-2. Select **Find candidate sites**. A monthly search normally takes around 5 seconds
-   on the development machine; time depends on constraints and hardware.
-3. Select a numbered site in the terrain/2D map or shortlist. Move the time slider
-   to inspect Sun/Earth clearance against the terrain horizon.
-4. Compare the two initially pinned sites, or replace either pin. Adjust priorities
-   and run again to change ranking without changing the underlying science metrics.
+1. Choose a circle within the advertised prepared coverage. Local cap searches
+   allow up to 5 km radius and seven days. A partial intersection requires explicit acknowledgment.
+2. Continue to the mission, set dates and priorities, review, then select
+   **Find candidate sites**. The full-cap option uses the exact October 1–31, 2028
+   cache. Supported local searches calculate their own requested window.
+3. Start with three candidate cards. Select **Inspect site** for terrain, timeline,
+   horizon and source evidence; reveal the remaining candidates when needed.
+4. Pin two sites for a same-window comparison. Adjust priorities and rerun to
+   change ranking without changing the underlying science metrics.
 5. Export the full JSON analysis: request, raw metrics, timelines, horizons, applied
    weights, algorithm assumptions, kernel hashes and terrain provenance.
 

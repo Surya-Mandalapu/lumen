@@ -12,7 +12,9 @@ from fastapi import APIRouter, HTTPException
 from app.models import Coordinate, RegionSelection, SearchRequest, SelectorType, TimeRange
 from app.services.dataset import dataset
 from app.services.proximity import feature_catalog
+from app.services.repository import is_tiled, load_area, release_metadata, store
 from app.services.search import region_mask
+from app.services.terrain_store import digest
 from app.settings import settings
 
 router = APIRouter(prefix="/api/v1/coverage")
@@ -22,6 +24,45 @@ RADIUS = 1_737_400.0
 @lru_cache(maxsize=2)
 def catalog_for(root, fingerprint: str):
     del fingerprint
+    if is_tiled(root):
+        release = store(root).catalog()
+        holes = [{"x_m": 0.0, "y_m": 0.0, "reason": "Exact pole excluded", "radius_m": 0}]
+        for tile in release["tiles"]:
+            path = root / tile["validity_path"]
+            artifact = tile["artifacts"]["exclusions.json"]
+            if path.stat().st_size != artifact["bytes"] or digest(path) != artifact["sha256"]:
+                raise ValueError("Invalid coverage exclusion artifact")
+            holes.extend(
+                {
+                    "x_m": item["x_m"],
+                    "y_m": item["y_m"],
+                    "reason": item["reason"],
+                    "radius_m": 500 / np.sqrt(2),
+                }
+                for item in json.loads(path.read_text())
+            )
+        return {
+            "dataset_version": release["dataset_version"],
+            "catalog_sha256": release["catalog_sha256"],
+            "verified": True,
+            "label": "Prepared 87°S–90°S lunar south cap",
+            "geometry": {
+                "type": "cap",
+                "extent_m": release["coverage"]["extent_m"],
+                "radius_m": float(2 * RADIUS * np.tan(np.deg2rad(3) / 2)),
+            },
+            "excluded_locations": holes,
+            "candidate_count": release["verification"]["verified_candidates"],
+            "candidate_spacing_m": 500,
+            "layers": {"psr_distance": False, "approved_features": True},
+            "public_limits": {
+                "maximum_radius_km": 5,
+                "maximum_live_days": 7,
+                "full_region_start_utc": "2028-10-01T00:00:00Z",
+                "full_region_end_utc": "2028-10-31T00:00:00Z",
+            },
+            "search_service": {"mode": "synchronous"},
+        }
     metadata, arrays = dataset(root)
     coverage = metadata["coverage"]
     spacing = float(metadata["candidate_spacing_m"])
@@ -83,6 +124,9 @@ def catalog_for(root, fingerprint: str):
 
 
 def catalog():
+    if is_tiled(settings.data_root):
+        metadata = release_metadata(settings.data_root)
+        return catalog_for(settings.data_root, metadata["catalog_sha256"])
     metadata, _ = dataset(settings.data_root)
     return catalog_for(settings.data_root, json.dumps(metadata, sort_keys=True))
 
@@ -101,7 +145,6 @@ def get_catalog():
 def preview(region: RegionSelection):
     try:
         coverage = catalog()
-        _, arrays = dataset(settings.data_root)
         if region.selector_type == SelectorType.feature_radius:
             feature = next(
                 (
@@ -127,7 +170,15 @@ def preview(region: RegionSelection):
                 end_utc=datetime(2028, 10, 2, tzinfo=UTC),
             ),
         )
-        count = int(region_mask(request, arrays).sum())
+        if is_tiled(settings.data_root):
+            count = (
+                coverage["candidate_count"]
+                if region.selector_type == SelectorType.full_supported_region
+                else len(load_area(settings.data_root, region)[1]["ids"])
+            )
+        else:
+            _, arrays = dataset(settings.data_root)
+            count = int(region_mask(request, arrays).sum())
         if region.center and region.center.latitude_deg > -87:
             count = 0
         status = "inside"

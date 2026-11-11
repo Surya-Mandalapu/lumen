@@ -12,6 +12,7 @@ import hashlib
 import json
 import urllib.request
 from pathlib import Path
+from time import perf_counter
 
 import numpy as np
 import rasterio
@@ -131,6 +132,7 @@ def horizon_profiles(dem, transform, lat, lon, elevation, azimuth_step_deg=5):
 
 
 def main():
+    started = perf_counter()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--raw", type=Path, default=ROOT / "data/raw/pgda-product-90")
     parser.add_argument("--output", type=Path)
@@ -166,7 +168,8 @@ def main():
                 "an upstream source update before preparing a new dataset version."
             )
         with rasterio.open(path) as dataset:
-            rasters[key] = (dataset.read(1), dataset.transform)
+            values = dataset.read(1, masked=True).astype(np.float32).filled(np.nan)
+            rasters[key] = (values, dataset.transform)
             sources.append(
                 {
                     "id": key,
@@ -190,14 +193,26 @@ def main():
     slope = sample_raster(*rasters["slope"], x, y, order=0)
     roughness = sample_raster(*rasters["roughness"], x, y, order=0)
     finite = np.isfinite(elevation) & np.isfinite(slope) & np.isfinite(roughness)
+    exclusions = [
+        {"id": f"lola-{int(a):+06d}-{int(b):+06d}", "x_m": int(a), "y_m": int(b),
+         "reason": "missing_candidate_source"}
+        for a, b in zip(x[~finite], y[~finite], strict=True)
+    ]
     x, y, lat, lon, elevation, slope, roughness = (
         a[finite] for a in (x, y, lat, lon, elevation, slope, roughness)
     )
     azimuth, horizons, blockers, valid = horizon_profiles(
         dem, transform, lat, lon, elevation, args.azimuth_step_deg
     )
+    exclusions.extend(
+        {"id": f"lola-{int(a):+06d}-{int(b):+06d}", "x_m": int(a), "y_m": int(b),
+         "reason": "missing_horizon_source"}
+        for a, b in zip(x[~valid], y[~valid], strict=True)
+    )
+    exclusion_path = args.output / "exclusions.json"
+    exclusion_path.write_text(json.dumps(exclusions, indent=2), encoding="utf-8")
     candidate_path = args.output / "terrain.npz"
-    ids = np.array([f"lola-{int(a):+06d}-{int(b):+06d}" for a, b in zip(x, y)])
+    ids = np.array([f"lola-{int(a):+06d}-{int(b):+06d}" for a, b in zip(x, y)], dtype="U32")
     np.savez_compressed(
         candidate_path,
         ids=ids[valid],
@@ -241,8 +256,8 @@ def main():
         "coverage": {
             "type": "projected_square" if cap_tile is None else "polar_cap_tile",
             "extent_m": list(extent),
-            "latitude_min_deg": float(np.rad2deg(lat[valid]).min()),
-            "latitude_max_deg": float(np.rad2deg(lat[valid]).max()),
+            "latitude_min_deg": float(np.rad2deg(lat[valid]).min()) if valid.any() else None,
+            "latitude_max_deg": float(np.rad2deg(lat[valid]).max()) if valid.any() else None,
             "description": (
                 "20 km square around the lunar south pole; excludes the pole point"
                 if cap_tile is None
@@ -259,6 +274,8 @@ def main():
             ),
         },
         "candidate_count": int(valid.sum()),
+        "excluded_count": len(exclusions),
+        "validity_schema_version": 1,
         "candidate_spacing_m": 500,
         "terrain_resolution_m": 80,
         "metric_sampling_resolution_m": 1000,
@@ -274,7 +291,7 @@ def main():
         "source_landing_page": "https://pgda.gsfc.nasa.gov/products/90",
         "artifacts": {
             p.name: {"sha256": sha256(p), "bytes": p.stat().st_size}
-            for p in (candidate_path, mesh_path)
+            for p in (candidate_path, mesh_path, exclusion_path)
         },
         "limitations": [
             (
@@ -289,9 +306,25 @@ def main():
             "PSR proximity and named-feature distance are unavailable and must not be inferred.",
         ],
     }
-    (args.output / "metadata.json").write_text(
+    temporary_metadata = args.output / "metadata.partial.json"
+    temporary_metadata.write_text(
         json.dumps(metadata, indent=2), encoding="utf-8"
     )
+    temporary_metadata.replace(args.output / "metadata.json")
+    measurement = {
+        "elapsed_seconds": perf_counter() - started,
+        "raw_source_bytes_read": sum(item["bytes"] for item in sources),
+        "raster_array_bytes": sum(values.nbytes for values, _ in rasters.values()),
+        "derived_bytes": sum(p.stat().st_size for p in args.output.iterdir() if p.is_file()),
+        "valid_candidates": int(valid.sum()), "excluded_candidates": len(exclusions),
+    }
+    try:
+        import psutil
+        memory = psutil.Process().memory_info()
+        measurement["peak_process_bytes"] = getattr(memory, "peak_wset", memory.rss)
+    except ImportError:
+        pass
+    (args.output / "measurement.json").write_text(json.dumps(measurement, indent=2))
     print(
         f"Prepared {int(valid.sum())} real LOLA candidates in {args.output}", flush=True
     )
