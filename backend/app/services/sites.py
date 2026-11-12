@@ -20,6 +20,8 @@ from app.services.ephemeris import (
     positions_at_times,
 )
 from app.services.proximity import science_utility, with_proximity
+from app.services.repository import is_tiled, load_site
+from app.services.scoring_reference import scoring_reference
 from app.services.search import analyze, category_scores, region_mask, temporal_pass, terrain_mask
 from app.services.validation import normalize_preferences, validate_search
 from app.settings import settings
@@ -152,7 +154,7 @@ def provenance(metadata: dict) -> dict:
 
 def site_analysis(site_id: str, request: SearchRequest) -> dict:
     validate_search(request)
-    metadata, arrays = dataset(settings.data_root)
+    metadata, arrays = load_site(settings.data_root, site_id) if is_tiled(settings.data_root) else dataset(settings.data_root)
     arrays = with_proximity(
         arrays, request.hard_constraints.science_feature_ids, settings.data_root
     )
@@ -172,10 +174,7 @@ def site_analysis(site_id: str, request: SearchRequest) -> dict:
         )
         row.update(blocker_latitude_deg=lat, blocker_longitude_deg_east=lon)
     intervals, refinement = refined_intervals(arrays, index, detail["timeline"])
-    anchors = {
-        key: np.percentile(arrays[key], [5, 95])
-        for key in ("slope_deg", "roughness_m", "elevation_m")
-    }
+    anchors = scoring_reference(metadata, arrays)["bounds"]
     scores = category_scores(
         detail["metrics"],
         float(arrays["slope_deg"][index]),
@@ -202,6 +201,7 @@ def site_analysis(site_id: str, request: SearchRequest) -> dict:
         "score": 100 * sum(weights[key] * (value or 0) for key, value in scores.items()),
         "criteria_scores": scores,
         "normalized_preferences": weights,
+        "scoring_reference_id": scoring_reference(metadata, arrays)["id"],
         **detail,
         "intervals": intervals,
         "constraint_status": constraint_status(request, arrays, index, detail["metrics"]),
@@ -226,7 +226,7 @@ def scenario_analysis(scenario: ScenarioRequest) -> dict:
     shifted.time_range.start_utc += timedelta(hours=scenario.delay_hours)
     shifted.time_range.end_utc += timedelta(hours=scenario.delay_hours)
     validate_search(shifted)
-    metadata, arrays = dataset(settings.data_root)
+    metadata, arrays = load_site(settings.data_root, scenario.site_id, scenario.offset_radius_m) if is_tiled(settings.data_root) else dataset(settings.data_root)
     arrays = with_proximity(
         arrays, request.hard_constraints.science_feature_ids, settings.data_root
     )

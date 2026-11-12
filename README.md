@@ -1,9 +1,16 @@
 # Lumen
 
-A working lunar south-pole comparison MVP based on the
+A lunar southern-hemisphere explorer and detailed south-pole comparison app based on the
 [GitHub implementation plan](https://github.com/Surya-Mandalapu/lumen/blob/main/LUNAR_LANDING_SITE_PLAN.md).
 Configure a mission, filter and rank real candidate locations, inspect terrain and sky
 geometry, and compare two sites under the same window.
+
+The workspace opens on a topographic Moon with labeled landmarks, textured Earth
+and Sun models, native fullscreen, and a JPL-driven orbital timeline. Place lookup
+and saved areas are compact tools beside the model. Narrow to prepared polar
+coverage for detailed site comparisons. The performance target is a successful
+average below 30 seconds for each search type; a separate two-minute watchdog
+protects against stalled calculations. See [3D planner details](docs/orbital-planner.md).
 
 ## Run locally
 
@@ -26,13 +33,22 @@ The small NASA-derived terrain bundle and context Moon model are included.
 After preparation, searches run locally without external science-data services.
 Missing or corrupt science inputs return an explicit unavailable error.
 
+The guided planner opens the topographic 3D Moon first. Select **Go to my site** to
+inspect your area, or use coordinates and **Find a place** beside the model.
+**Earth orbit** shows lunar motion as you scrub or play the scene timeline.
+An installed, verified `data/derived/lunar-south-cap-v1/catalog.json` enables the
+full 88-tile, 103,996-site cap automatically. Without that release the app clearly
+advertises the smaller bundled patch. `LUMEN_DATA_ROOT` explicitly overrides the
+selection. See [cap/UI integration and installation](docs/cap-ui-integration.md)
+for the release package, scientific checks and hosting instructions.
+
 ## Try the MVP
 
 ### Global point preview
 
-The **Anywhere on the Moon** workspace accepts global coordinates or a click on
-the NASA elevation map. It previews one location's coarse terrain, five-minute
-sunlight and geometric Earth-visibility timeline. This uses a separate 16-pixel
+Choose a southern-hemisphere point outside detailed polar coverage, then use
+**Preview this point** in the study-area panel. It previews coarse terrain,
+sunlight and geometric Earth visibility for the selected dates. This uses a separate 16-pixel
 per degree LOLA grid (about 1.9 km north–south), not the regional landing-site
 ranking engine. It provides no landing-safety, fine slope/roughness or PSR assessment.
 
@@ -50,14 +66,15 @@ Source and grid conventions: [NASA SVS CGI Moon Kit](https://svs.gsfc.nasa.gov/4
 
 ### Regional search
 
-1. Keep the prepared study area, October 1-31, 2028 window, maximum slope 10 degrees,
-   and minimum Earth line-of-sight availability 50%.
-2. Select **Find candidate sites**. A monthly search normally takes around 5 seconds
-   on the development machine; time depends on constraints and hardware.
-3. Select a numbered site in the terrain/2D map or shortlist. Move the time slider
-   to inspect Sun/Earth clearance against the terrain horizon.
-4. Compare the two initially pinned sites, or replace either pin. Adjust priorities
-   and run again to change ranking without changing the underlying science metrics.
+1. Choose a circle within the advertised prepared coverage. Local cap searches
+   allow up to 5 km radius and seven days. A partial intersection requires explicit acknowledgment.
+2. Continue to the mission, set dates and priorities, review, then select
+   **Find candidate sites**. The full-cap option uses the exact October 1–31, 2028
+   cache. Supported local searches calculate their own requested window.
+3. Start with three candidate cards. Select **Inspect site** for terrain, timeline,
+   horizon and source evidence; reveal the remaining candidates when needed.
+4. Pin two sites for a same-window comparison. Adjust priorities and rerun to
+   change ranking without changing the underlying science metrics.
 5. Export the full JSON analysis: request, raw metrics, timelines, horizons, applied
    weights, algorithm assumptions, kernel hashes and terrain provenance.
 
@@ -203,3 +220,12 @@ Moon context: NASA Goddard Space Flight Center,
 
 Comparative planning indicators only. Not flight certified; not a landing-safety
 assessment or a guarantee of RF communications coverage. No NASA endorsement implied.
+
+### Local-area rankings and 3D result locations
+
+Outside detailed polar coverage, **Rank this area** compares a 2 km lattice of
+locations inside the selected 1–5 km circle by sunlight and Earth visibility over
+up to seven days. This coarse ranking does not invent fine terrain assessments or
+screen the detailed mission's hard constraints. **Places to consider → View sites
+on 3D Moon** shows shortlisted and returned eligible locations, with marker
+selection and site inspection. See [local-area ranking](docs/local-area-ranking.md).

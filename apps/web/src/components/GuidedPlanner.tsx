@@ -12,13 +12,14 @@ import { PlanningMission } from "./PlanningMission";
 import { CandidateResults } from "./CandidateResults";
 import { CompareDialog, MissionSummary, PlanningEvidence } from "./PlanningEvidence";
 import { MissionLibrary } from "./MissionStudio";
+import { SearchBudget } from "./SearchBudget";
 import "./guided-planner.css";
 
 function initialRequest(): SearchRequest {
   return { ...structuredClone(DEFAULT_REQUEST), region: { selector_type: "circle", center: { latitude_deg: -89.9, longitude_deg_east: 0 }, search_radius_km: 3 },
     time_range: { start_utc: "2028-10-01T00:00:00Z", end_utc: "2028-10-08T00:00:00Z" } };
 }
-const phases = { submitting: "Submitting mission", queued: "Waiting in the queue", running: "Analysis running", complete: "Analysis complete", canceled: "Analysis canceled", failed: "Analysis failed", expired: "Analysis expired", queue_full: "The queue is full", waking: "Service waking up", outside: "Outside prepared coverage" };
+const phases = { timeout: "Search time limit reached", submitting: "Submitting mission", queued: "Waiting in the queue", running: "Analysis running", complete: "Analysis complete", canceled: "Analysis canceled", failed: "Analysis failed", expired: "Analysis expired", queue_full: "The queue is full", waking: "Service waking up", outside: "Outside prepared coverage" };
 
 export function GuidedPlanner() {
   const [step, setStep] = useState(1);
@@ -116,7 +117,7 @@ export function GuidedPlanner() {
   }
   function cancel() {
     version.current++; requestController.current?.abort(); setBusy(false);
-    setState({ phase: "canceled", message: catalog?.search_service?.mode === "jobs" ? "Cancellation requested. Your mission inputs are retained." : "Stopped waiting for this calculation. The synchronous service may finish its work, but its response cannot replace your results." });
+    setState({ phase: "canceled", message: "Cancellation requested. Your mission inputs and previous results are retained." });
   }
   async function inspect(id: string) {
     if (!result) return;
@@ -128,17 +129,17 @@ export function GuidedPlanner() {
     try {
       const detail = await getSiteAnalysis(id, result.request, abort.signal);
       if (abort.signal.aborted) return;
-      setSelected(id); setExtraSite({ ...detail.site, rank: 0, score: point.score, criteria_scores: point.criteria_scores ?? { illumination: null, earth_visibility: null, terrain_safety: null, science_proximity: null }, metrics: detail.metrics, timeline: detail.timeline, horizon: detail.horizon });
+      setSelected(id); setExtraSite({ ...detail.site, rank: 0, score: point.score, criteria_scores: point.criteria_scores ?? { illumination: null, earth_visibility: null, terrain_safety: null, science_proximity: null }, metrics: detail.metrics, timeline: detail.timeline, horizon: detail.horizon }); setModal("site");
     } catch (reason) { if (!abort.signal.aborted) setState({ phase: "failed", message: reason instanceof Error ? reason.message : "Inspection unavailable." }); }
     finally { if (!abort.signal.aborted) setInspecting(false); }
   }
   return <div className="guided-planner" id="explorer">
-    <header className="guide-intro"><div><span className="eyebrow">DETAILED SOUTH-POLE PLANNING</span><h1>From a place to a plan.</h1><p>Choose an area, define your mission, then compare the tradeoffs.</p></div><span className="guide-data-badge">{catalog ? `${catalog.candidate_count.toLocaleString()} verified locations` : "Connecting to scientific coverage"}</span></header>
+    <header className="guide-intro"><div><span className="eyebrow">EXPLORE THE SOUTHERN HEMISPHERE</span><h1>A hemisphere of possibilities.</h1></div><span className="guide-data-badge">{catalog ? `${catalog.candidate_count.toLocaleString()} detailed polar locations` : "Connecting to scientific coverage"}</span></header>
     <nav className="guide-steps" aria-label="Planning stages">{["Choose an area", "Describe the mission", "Review sites"].map((label, index) => <button key={label} aria-current={step === index + 1 ? "step" : undefined} disabled={index === 1 ? !areaReady : index === 2 ? !result && !busy && !state : false} onClick={() => go(index + 1)}><span>0{index + 1}</span>{label}</button>)}</nav>
     {result && stale && <div className="changed-notice" role="status">Inputs edited. Existing results and exports belong to the previous applied mission. Review and submit your revised mission to replace them.</div>}
     {loadError && <div className="guide-error" role="alert"><h2>Service waking up or coverage unavailable</h2><p>{loadError}</p><p>Your inputs are retained.</p><button className="secondary-button" onClick={() => setRefresh(value => value + 1)}>Retry loading coverage</button></div>}
     {!catalog && !loadError && <p role="status">Loading the verified coverage catalog…</p>}
-    {catalog && step === 1 && <section className="guide-stage"><h2 tabIndex={-1} ref={heading}>Choose an area</h2><p>Detailed ranking is limited to verified prepared coverage. Whole-Moon previews are available in the separate mode above.</p>
+    {catalog && step === 1 && <section className="guide-stage"><h2 className="sr-only" tabIndex={-1} ref={heading}>Choose an area</h2>
       <VerifiedArea terrain={terrain} catalog={catalog} request={draft} features={features} outcome={coverage} pending={coveragePending} error={coverageError} onChange={update} onRetry={() => setCoverageRefresh(value => value + 1)} />
       {coverage?.status === "partial" && <label className="coverage-ack"><input type="checkbox" checked={acknowledged} onChange={event => setAcknowledged(event.target.checked)} />I understand only the supported intersection will be analyzed.</label>}
       {(draft.region.search_radius_km ?? 0) > catalog.public_limits.maximum_radius_km && draft.region.selector_type !== "full_supported_region" && <p className="guide-error">Live detailed areas have a maximum {catalog.public_limits.maximum_radius_km} km radius. Edit the radius or choose the full-region demo.</p>}
@@ -150,7 +151,7 @@ export function GuidedPlanner() {
     </section>}
     {step === 3 && <section className="guide-stage"><h2 className="sr-only" tabIndex={-1} ref={heading}>Review sites</h2>
       {state && <div className={`analysis-status ${state.phase}`} role="status"><strong>{phases[state.phase as keyof typeof phases] ?? "Analysis update"}</strong><p>{state.message}</p>{state.queue_position != null && <p>Queue position reported by the service: {state.queue_position}.</p>}
-        {busy ? <button className="secondary-button" onClick={cancel}>{catalog?.search_service?.mode === "jobs" ? "Cancel analysis" : "Stop waiting"}</button> : state.phase !== "complete" && <button className="secondary-button" onClick={() => { setStep(2); setReview(false); }}>Review and resubmit mission</button>}</div>}
+        {busy && <SearchBudget />}{busy ? <button className="secondary-button" onClick={cancel}>Cancel analysis</button> : state.phase !== "complete" && <button className="secondary-button" onClick={() => { setStep(2); setReview(false); }}>Review and resubmit mission</button>}</div>}
       {result && <><div className="applied-mission"><div><span className="eyebrow">APPLIED MISSION</span><p>{areaName(result.request.region)} · {priorityName(result.request)}<br />{result.common_window.start_utc} to {result.common_window.end_utc}</p></div><div className="guide-actions"><button className="secondary-button" onClick={() => setModal("summary")}>Create mission summary</button><button className="text-button" onClick={() => downloadJson(result, `lumen-${result.search_id}.json`)}>Export scientific JSON</button></div></div>
         <CandidateResults key={result.search_id} result={result} selected={selected} pinned={pinned} onSelect={id => void inspect(id)} onPin={id => setPinned(current => current.includes(id) ? current.filter(value => value !== id) : current.length < 2 ? [...current, id] : current)} onCompare={() => setModal("compare")} />
       </>}
@@ -161,6 +162,6 @@ export function GuidedPlanner() {
     {result && modal === "compare" && <CompareDialog result={result} sites={result.candidates.filter(item => pinned.includes(item.id))} onClose={() => setModal(null)} />}
     {result && modal === "summary" && <MissionSummary result={result} sites={pinned.length ? result.candidates.filter(item => pinned.includes(item.id)) : site ? [site] : []} coverage={appliedCoverage} stale={stale} onClose={() => setModal(null)} />}
     {library && <MissionLibrary value={draft} scienceAvailable={!!catalog?.layers.psr_distance} onLoad={request => { update(request); go(1); }} onClose={() => setLibrary(false)} />}
-    <footer className="guide-footer"><span>LUMEN / Comparative mission geometry</span><span>Detailed prepared-region ranking · coarse global previews remain separate.</span></footer>
+    <footer className="guide-footer"><span>LUMEN / Comparative mission geometry</span><span>Hemisphere exploration · verified local planning.</span></footer>
   </div>;
 }

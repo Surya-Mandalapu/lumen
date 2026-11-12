@@ -3,6 +3,7 @@
 from datetime import UTC, datetime
 from itertools import pairwise
 
+import numpy as np
 import pytest
 from fastapi.testclient import TestClient
 
@@ -75,5 +76,12 @@ def test_precomputed_temporal_cache_preserves_exact_search(tmp_path, monkeypatch
     baseline = search_module.search(request)
     cache_path = search_module.precompute_temporal_cache(start, end)
     assert cache_path.exists()
+    search_module.cached_metrics.cache_clear()
+    assert search_module.search(request) == baseline
+    # A syntactically valid NPZ with changed values must still fail integrity.
+    with np.load(cache_path, allow_pickle=False) as archive:
+        damaged = {key: archive[key] for key in archive.files}
+    damaged["illumination_fraction"][:] = 0.99
+    np.savez_compressed(cache_path, **damaged)
     search_module.cached_metrics.cache_clear()
     assert search_module.search(request) == baseline

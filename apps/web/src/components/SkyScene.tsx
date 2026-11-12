@@ -1,10 +1,11 @@
 import { Canvas } from "@react-three/fiber";
 import { Line, OrbitControls } from "@react-three/drei";
-import { useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import * as THREE from "three";
 import type { Candidate, TimeSample } from "../lib/types";
 import { utcTime } from "../lib/format";
 import { SceneLabel } from "./SceneLabel";
+import { CelestialBody } from "./CelestialBody";
 
 const skyPoint = (azimuth: number, elevation: number, radius = 4) => {
   const az = THREE.MathUtils.degToRad(azimuth),
@@ -42,7 +43,7 @@ function LocalSky({ site, sample }: { site: Candidate; sample: TimeSample }) {
   return (
     <>
       <ambientLight intensity={1.1} />
-      <directionalLight position={[4, 8, 5]} intensity={2} />
+      <directionalLight position={sun} intensity={2} />
       <Line
         points={tangent}
         color="#3d6052"
@@ -94,14 +95,7 @@ function LocalSky({ site, sample }: { site: Candidate; sample: TimeSample }) {
         transparent
         opacity={0.4}
       />
-      <mesh position={sun}>
-        <sphereGeometry args={[0.13, 24, 24]} />
-        <meshBasicMaterial color="#f0cd79" />
-      </mesh>
-      <mesh position={earth}>
-        <sphereGeometry args={[0.13, 24, 24]} />
-        <meshStandardMaterial color="#76add0" roughness={0.8} />
-      </mesh>
+      <Suspense fallback={null}><group position={sun}><CelestialBody body="sun" radius={.18} /></group><group position={earth}><CelestialBody body="earth" radius={.18} /></group></Suspense>
       <mesh>
         <sphereGeometry args={[0.055, 16, 16]} />
         <meshBasicMaterial color="#c7e4cb" />

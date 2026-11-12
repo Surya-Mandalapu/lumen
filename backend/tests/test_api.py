@@ -17,13 +17,14 @@ def test_region_manifest_exposes_supported_boundary() -> None:
     assert response.json()["supported_region"]["maximum_latitude_deg"] <= -87
 
 
-def test_candidate_search_fails_closed_without_prepared_data(monkeypatch) -> None:
-    from app.services.dataset import DataUnavailable
+def test_candidate_search_fails_closed_without_prepared_data(monkeypatch, tmp_path) -> None:
+    from dataclasses import replace
 
-    def unavailable(_):
-        raise DataUnavailable("Missing test bundle")
+    from app.settings import settings
 
-    monkeypatch.setattr("app.services.search.dataset", unavailable)
+    monkeypatch.setattr(
+        "app.services.bounded_analysis.settings", replace(settings, data_root=tmp_path)
+    )
     response = client.post(
         "/api/v1/candidates/search",
         json={

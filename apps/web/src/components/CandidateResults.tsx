@@ -1,21 +1,30 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { Candidate, Preferences, SearchResponse } from "../lib/types";
 import { coordinate, hours, percent } from "../lib/format";
 import { Icon } from "./Icon";
 import { comparisonTradeoffs } from "../lib/explanations";
+import { SiteLocations } from "./SiteLocations";
+import type { SceneSite } from "../lib/scene-geometry";
 import { siteTakeaway } from "../lib/planning";
 
 export function CandidateResults({ result, selected, pinned, onSelect, onPin, onCompare }: {
   result: SearchResponse; selected: string | null; pinned: string[];
   onSelect: (id: string) => void; onPin: (id: string) => void; onCompare: () => void;
 }) {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(false), [mapOpen, setMapOpen] = useState(false);
+  const sites = useMemo(() => result.candidates.map(site => ({ ...site, illumination_fraction: site.metrics.illumination_fraction, earth_visibility_fraction: site.metrics.earth_visibility_fraction })), [result]);
+  const eligible = useMemo(() => (result.map_candidates ?? []).flatMap(point => {
+    if (point.latitude_deg == null || point.longitude_deg_east == null) return [];
+    return [{ ...point, latitude_deg: point.latitude_deg, longitude_deg_east: point.longitude_deg_east, rank: result.candidates.find(site => site.id === point.id)?.rank } satisfies SceneSite];
+  }), [result]);
   const selectedSite = result.candidates.find(site => site.id === selected);
   const explanation = selectedSite ? siteTakeaway(selectedSite, result) : null;
   return <section className="results-section" aria-labelledby="results-title">
     <div className="section-heading"><div><span className="eyebrow">03 / REVIEW THE TRADEOFFS</span><h2 id="results-title">A few places to consider.</h2></div>
       <button className="secondary-button" disabled={pinned.length !== 2} onClick={onCompare}>Compare {pinned.length}/2 selected sites</button></div>
     <p className="results-summary">{result.counts.temporal_pass.toLocaleString()} eligible of {result.counts.region.toLocaleString()} prepared locations. Scores less than 2 points apart are near ties under these priorities.</p>
+    {(sites.length > 0 || eligible.length > 0) && <button className="primary-button" onClick={() => setMapOpen(true)}>View sites on 3D Moon</button>}
+    {mapOpen && <SiteLocations sites={sites} eligible={eligible} eligibleTotal={result.counts.temporal_pass} dates={result.request.time_range} onClose={() => setMapOpen(false)} onInspect={onSelect} />}
     {!result.candidates.length ? <div className="empty-results" role="status"><h3>No sites meet these requirements.</h3><p>{result.empty_reason}</p><p>{result.counts.region} in the area → {result.counts.terrain_pass} pass terrain/proximity limits → {result.counts.temporal_pass} pass mission-time limits.</p><p>Your limits have not been relaxed. Go back to edit your mission.</p></div> : <>
       <div className="candidate-grid">{result.candidates.slice(0, expanded ? undefined : 3).map(site => <article className={`candidate-card ${selected === site.id ? "selected" : ""}`} key={site.id}>
         <div className="compact-candidate-content"><span className="eyebrow">Candidate {String(site.rank).padStart(2, "0")}</span><h3>{coordinate(site.latitude_deg, site.longitude_deg_east)}</h3>

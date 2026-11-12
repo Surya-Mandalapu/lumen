@@ -7,12 +7,14 @@ from pathlib import Path
 
 import numpy as np
 
+from app.services.repository import is_tiled, read_asset
+
 
 def feature_catalog(root: Path) -> dict:
     path = root / "features.json"
     if not path.exists():
         return {"features": []}
-    catalog = json.loads(path.read_text(encoding="utf-8"))
+    catalog = read_asset(root, "features.json") if is_tiled(root) else json.loads(path.read_text(encoding="utf-8"))
     catalog["features"] = [row for row in catalog["features"] if row.get("approved") is True]
     return catalog
 

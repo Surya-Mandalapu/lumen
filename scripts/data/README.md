@@ -1,5 +1,10 @@
 # Scientific data workflow
 
+The full 88-tile cap implementation, selective loader contract, exact demo-cache
+layout and reproducible release commands are documented in
+[the lunar cap release guide](../../docs/lunar-cap-release.md). It preserves the
+legacy patch and requires complete candidate/exclusion accounting before release.
+
 Large NASA/USGS/JPL inputs and most generated artifacts are excluded from Git. The five
 small files in `data/derived/pgda-demo-v1/` are an explicit exception so a checkout
 can run the curated demonstration without downloading the source rasters.

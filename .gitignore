@@ -31,3 +31,6 @@ data/derived/pgda-demo-v1/*
 data/cache/
 backend/app/data/derived/
 
+# Prepared scientific archives are distributed as GitHub release assets.
+deliverables/lunar-cap-release/*.zip
+

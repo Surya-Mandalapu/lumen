@@ -2,12 +2,15 @@ from __future__ import annotations
 
 import json
 
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, Request, status
+from fastapi.responses import JSONResponse
 from spiceypy.utils.exceptions import SpiceyError
 
 from app.models import ScenarioRequest, SearchRequest, SearchValidationResponse
+from app.services.bounded_analysis import bounded_analysis
 from app.services.dataset import DataUnavailable, dataset
 from app.services.ephemeris import load_kernels
+from app.services.repository import is_tiled, read_asset, release_metadata
 from app.services.search import search
 from app.services.sites import SiteNotFound, scenario_analysis, site_analysis
 from app.services.validation import SearchValidationError, validate_search
@@ -25,13 +28,19 @@ def health() -> dict[str, str]:
 def region() -> dict:
     manifest = json.loads(settings.dataset_manifest_path.read_text(encoding="utf-8"))
     try:
-        metadata, arrays = dataset(settings.data_root)
+        tiled = is_tiled(settings.data_root)
+        if tiled:
+            metadata, arrays = release_metadata(settings.data_root), {}
+        else:
+            metadata, arrays = dataset(settings.data_root)
         load_kernels(settings.kernel_root)
         manifest.update(
             status="prepared",
             dataset_version=metadata.get("dataset_version", "polar-patch-mvp-1"),
             prepared_coverage=metadata,
-            prepared_candidate_count=len(arrays["lat_deg"]),
+            prepared_candidate_count=metadata["candidate_count"]
+            if tiled
+            else len(arrays["lat_deg"]),
         )
         manifest["analysis"].update(
             horizon_azimuth_step_deg=metadata["horizon_azimuth_step_deg"],
@@ -92,6 +101,8 @@ def region() -> dict:
 @router.get("/terrain")
 def terrain() -> dict:
     try:
+        if is_tiled(settings.data_root):
+            return read_asset(settings.data_root, "terrain.json")
         dataset(settings.data_root)
         return json.loads((settings.data_root / "terrain.json").read_text())
     except (DataUnavailable, OSError, ValueError) as exc:
@@ -111,7 +122,11 @@ def search_validate(request: SearchRequest) -> SearchValidationResponse:
 
 
 @router.post("/candidates/search")
-def candidate_search(request: SearchRequest) -> dict:
+async def candidate_search(payload: SearchRequest, request: Request) -> JSONResponse:
+    return JSONResponse(await bounded_analysis("search", payload.model_dump(mode="json"), request))
+
+
+def candidate_search_calculation(request: SearchRequest) -> dict:
     try:
         return search(request)
     except SearchValidationError as exc:

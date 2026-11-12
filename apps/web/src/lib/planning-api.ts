@@ -1,5 +1,6 @@
 import type { SearchRequest, SearchResponse } from "./types";
 import type { CoverageCatalog, CoverageOutcome } from "./planning";
+import { withinSearchDeadline } from "./deadline";
 
 const BASE = import.meta.env.VITE_API_BASE_URL ?? "/api/v1";
 export class PlanningError extends Error {
@@ -32,6 +33,14 @@ function wait(signal: AbortSignal) {
   });
 }
 export async function runAnalysis(request: SearchRequest, catalog: CoverageCatalog, signal: AbortSignal, onState: (state: AnalysisState) => void): Promise<SearchResponse> {
+  try {
+    return await withinSearchDeadline(signal, boundedSignal => runAnalysisRequest(request, catalog, boundedSignal, onState));
+  } catch (error) {
+    if ((error as { code?: string }).code === "timeout") throw new PlanningError((error as Error).message, "timeout", 504);
+    throw error;
+  }
+}
+async function runAnalysisRequest(request: SearchRequest, catalog: CoverageCatalog, signal: AbortSignal, onState: (state: AnalysisState) => void): Promise<SearchResponse> {
   const jobs = catalog.search_service?.mode === "jobs";
   onState({ phase: "submitting", message: jobs ? "Submitting your mission…" : "Analyzing your mission. This service does not report incremental progress." });
   const response = await fetch(`${BASE}/${jobs ? "jobs" : "candidates/search"}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(request), signal });

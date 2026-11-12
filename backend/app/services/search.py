@@ -24,6 +24,8 @@ from app.services.ephemeris import (
     visibility_metrics,
 )
 from app.services.proximity import science_utility, with_proximity
+from app.services.repository import is_tiled, load_area, selected_metrics
+from app.services.scoring_reference import scoring_reference
 from app.services.validation import SearchValidationError, validate_search
 from app.settings import settings
 
@@ -37,6 +39,23 @@ METRIC_KEYS = (
     "mean_visible_solar_disk_fraction",
 )
 TEMPORAL_CACHE_VERSION = 1
+
+
+def dataset_fingerprint(metadata: dict, arrays: dict) -> str:
+    return hashlib.sha256(json.dumps({
+        "artifacts": metadata["artifacts"],
+        "scoring_reference": scoring_reference(metadata, arrays),
+        "catalog_sha256": metadata.get("catalog_sha256"),
+    }, sort_keys=True).encode()).hexdigest()
+
+
+def temporal_cache_verified(path: Path, key: str) -> bool:
+    try:
+        integrity = json.loads(path.with_suffix(".json").read_text())
+        return (integrity["key"] == key and path.stat().st_size == integrity["bytes"]
+                and hashlib.sha256(path.read_bytes()).hexdigest() == integrity["sha256"])
+    except (OSError, ValueError, KeyError, TypeError):
+        return False
 
 
 def region_mask(request: SearchRequest, arrays: dict) -> np.ndarray:
@@ -226,7 +245,7 @@ def cached_metrics(
     """Reuse exact five-minute metrics when only ranking preferences change."""
     _, arrays = dataset(data_root)
     path, key = temporal_cache_path(data_root, artifact_fingerprint, kernel_hashes, start, end)
-    if path.exists():
+    if temporal_cache_verified(path, key):
         try:
             with np.load(path, allow_pickle=False) as archive:
                 if (
@@ -271,12 +290,10 @@ def precompute_temporal_cache(start, end) -> Path:
     """Write exact metrics for every prepared site in one pinned mission window."""
     metadata, arrays = dataset(settings.data_root)
     kernels = load_kernels(settings.kernel_root)
-    fingerprint = hashlib.sha256(
-        json.dumps(metadata["artifacts"], sort_keys=True).encode()
-    ).hexdigest()
+    fingerprint = dataset_fingerprint(metadata, arrays)
     hashes = tuple(item["sha256"] for item in kernels)
     path, key = temporal_cache_path(settings.data_root, fingerprint, hashes, start, end)
-    if path.exists():
+    if temporal_cache_verified(path, key):
         try:
             with np.load(path, allow_pickle=False) as archive:
                 if (
@@ -298,6 +315,11 @@ def precompute_temporal_cache(start, end) -> Path:
         **{name: np.asarray([row[name] for row in rows], dtype=np.float64) for name in METRIC_KEYS},
     )
     temporary.replace(path)
+    integrity = {"key": key, "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                 "bytes": path.stat().st_size}
+    temporary_manifest = path.with_suffix(".partial.json")
+    temporary_manifest.write_text(json.dumps(integrity, indent=2))
+    temporary_manifest.replace(path.with_suffix(".json"))
     return path
 
 
@@ -313,7 +335,7 @@ def category_scores(
         low, high = anchors[key]
         if high <= low:
             return 0.5
-        normalized = float(np.clip((value - low) / (high - low), 0, 1))
+        normalized = min(1.0, max(0.0, (value - low) / (high - low)))
         return normalized if higher else 1 - normalized
 
     safety = (
@@ -357,7 +379,7 @@ def map_sample(ranked: list[tuple], arrays: dict, selected: list[tuple], limit: 
 def search(request: SearchRequest, *, timings: dict | None = None) -> dict:
     started = perf_counter()
     validation = validate_search(request)
-    metadata, arrays = dataset(settings.data_root)
+    metadata, arrays = load_area(settings.data_root, request.region) if is_tiled(settings.data_root) else dataset(settings.data_root)
     arrays = with_proximity(
         arrays, request.hard_constraints.science_feature_ids, settings.data_root
     )
@@ -393,10 +415,8 @@ def search(request: SearchRequest, *, timings: dict | None = None) -> dict:
     start, end = (
         t.astimezone(UTC) for t in (request.time_range.start_utc, request.time_range.end_utc)
     )
-    anchors = {
-        key: [float(v) for v in np.percentile(arrays[key], [5, 95])]
-        for key in ("slope_deg", "roughness_m", "elevation_m")
-    }
+    reference = scoring_reference(metadata, arrays)
+    anchors = reference["bounds"]
     duration_hours = (end - start).total_seconds() / 3600
     mask = region_mask(request, arrays)
     terrain = mask & terrain_mask(request, arrays)
@@ -404,10 +424,8 @@ def search(request: SearchRequest, *, timings: dict | None = None) -> dict:
     filtered_at = perf_counter()
     times, sun, earth = body_positions(settings.kernel_root, start, end, 5)
     ephemeris_at = perf_counter()
-    artifact_fingerprint = hashlib.sha256(
-        json.dumps(metadata["artifacts"], sort_keys=True).encode()
-    ).hexdigest()
-    metrics_rows = cached_metrics(
+    artifact_fingerprint = dataset_fingerprint(metadata, arrays)
+    metrics_rows = selected_metrics(settings.data_root, metadata, arrays, indices, settings.kernel_root, start, end) if is_tiled(settings.data_root) else cached_metrics(
         settings.data_root,
         artifact_fingerprint,
         tuple(item["sha256"] for item in kernels),
@@ -484,6 +502,7 @@ def search(request: SearchRequest, *, timings: dict | None = None) -> dict:
         "horizon_interpolation": "maximum of adjacent azimuth bins",
         "shortlist_minimum_separation_m": 1500,
         "score_anchors": {
+            "reference_id": reference["id"],
             "method": "full prepared dataset 5th/95th percentiles, clipped linear utility",
             "bounds": anchors,
             "terrain_weights": {"slope": 0.45, "roughness": 0.35, "elevation": 0.20},
@@ -532,12 +551,12 @@ def search(request: SearchRequest, *, timings: dict | None = None) -> dict:
         ],
         "map_point_count": len(map_ranked),
         "rejections": {
-            "outside_region": int((~mask).sum()),
+            "outside_region": metadata["candidate_count"] - int(mask.sum()) if is_tiled(settings.data_root) else int((~mask).sum()),
             "terrain_or_proximity": int(mask.sum()) - len(indices),
             "temporal": len(indices) - len(ranked),
         },
         "counts": {
-            "total": len(arrays["lat_deg"]),
+            "total": metadata["candidate_count"] if is_tiled(settings.data_root) else len(arrays["lat_deg"]),
             "region": int(mask.sum()),
             "terrain_pass": len(indices),
             "temporal_pass": len(ranked),

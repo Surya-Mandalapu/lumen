@@ -1,0 +1,18 @@
+{
+  "id": "pgda-demo-v1.1-terrain-p05-p95-v1",
+  "method": "full prepared dataset 5th/95th percentiles, clipped linear utility",
+  "bounds": {
+    "slope_deg": [
+      5.601886749267578,
+      32.37682685852051
+    ],
+    "roughness_m": [
+      0.4565216302871704,
+      0.9384379386901855
+    ],
+    "elevation_m": [
+      -2673.9539428710937,
+      1390.2912109375
+    ]
+  }
+}

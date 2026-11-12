@@ -5,6 +5,7 @@ import json
 from fastapi import APIRouter, HTTPException
 
 from app.services.dataset import DataUnavailable, dataset
+from app.services.repository import is_tiled, read_asset
 from app.settings import settings
 
 router = APIRouter(prefix="/api/v1")
@@ -12,6 +13,8 @@ router = APIRouter(prefix="/api/v1")
 
 def prepared_json(name: str) -> dict:
     try:
+        if is_tiled(settings.data_root):
+            return read_asset(settings.data_root, name)
         dataset(settings.data_root)
         return json.loads((settings.data_root / name).read_text(encoding="utf-8"))
     except (DataUnavailable, OSError, ValueError) as exc:

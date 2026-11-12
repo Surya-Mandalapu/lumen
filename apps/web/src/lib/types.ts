@@ -158,6 +158,8 @@ export interface PSRLayer {
   source: Record<string, unknown>;
 }
 export interface MapCandidate {
+  latitude_deg?: number;
+  longitude_deg_east?: number;
   id: string;
   x_m: number;
   y_m: number;

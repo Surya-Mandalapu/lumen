@@ -17,6 +17,9 @@ data/derived/pgda-demo-v1/*
 !data/derived/pgda-demo-v1/terrain.npz
 !data/derived/pgda-demo-v1/features.json
 !data/derived/pgda-demo-v1/psr.json
+!data/derived/lunar-south-cap-v1/
+!data/derived/global-preview-v1/
+deliverables
 *.pyc
 .env
 

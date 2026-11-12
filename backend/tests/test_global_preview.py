@@ -46,11 +46,8 @@ def test_global_preview_rejects_invalid_windows(start, end):
     assert response.status_code == 422
 
 
-def test_global_preview_fails_closed_without_verified_terrain(monkeypatch):
-    def unavailable():
-        raise ValueError("Corrupt global artifact")
-
-    monkeypatch.setattr("app.global_api.global_grid", unavailable)
+def test_global_preview_fails_closed_without_verified_terrain(monkeypatch, tmp_path):
+    monkeypatch.setenv("LUMEN_GLOBAL_ROOT", str(tmp_path))
     response = TestClient(app).post(
         "/api/v1/global/preview",
         json={
