@@ -5,9 +5,9 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.api import router
+from app.coverage_api import router as coverage_router
 from app.exploration_api import router as exploration_router
 from app.global_api import router as global_router
-from app.coverage_api import router as coverage_router
 from app.settings import settings
 
 app = FastAPI(
