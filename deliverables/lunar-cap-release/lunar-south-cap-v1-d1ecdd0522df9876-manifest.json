@@ -1,0 +1,2719 @@
+{
+  "schema_version": 1,
+  "dataset_version": "lunar-south-cap-v1",
+  "catalog_sha256": "1f888d6b6daa4a4b550b0017fe60064d027385ecd4de200d90abd560d0fd759f",
+  "files": {
+    "catalog.json": {
+      "sha256": "0aac467de1e65c220a121226600fdc81a497c69ee522a7d61dd73409729a7aa5",
+      "bytes": 138084
+    },
+    "demo-cache/tile-0-2.json": {
+      "sha256": "536bc0e79330ff0c1afeae935b499045e16ce4e708bc43e24c1cc8931ca45d83",
+      "bytes": 1775
+    },
+    "demo-cache/tile-0-2.npz": {
+      "sha256": "bf769aee9fde3c31a0e019937ca84c5328fc280fd3bea81ba486d4853c048e2f",
+      "bytes": 2366
+    },
+    "demo-cache/tile-0-3.json": {
+      "sha256": "97701a937536e05cfcef38f57749326e101786154b0be0c571700648f5a452ee",
+      "bytes": 1779
+    },
+    "demo-cache/tile-0-3.npz": {
+      "sha256": "7f152698bba05f9f775e35cd5d07e7d5e8c36f3a1e05c6011418404cdf3f9748",
+      "bytes": 12929
+    },
+    "demo-cache/tile-0-4.json": {
+      "sha256": "65309a19303c2a507142cf340831bd33c6d7e2862b36ccf8b2159b747e5d6b36",
+      "bytes": 1797
+    },
+    "demo-cache/tile-0-4.npz": {
+      "sha256": "bda38050f1839db52cea0f1365ffed21a42ba2a7acb245c2d50aab50f9f78808",
+      "bytes": 21630
+    },
+    "demo-cache/tile-0-5.json": {
+      "sha256": "93da92218beb2efc90c733fad16839f0b8ddfad777847e66749a3e4e6c49ef32",
+      "bytes": 1778
+    },
+    "demo-cache/tile-0-5.npz": {
+      "sha256": "560fb55702e0720f741e482076ba9c2148f0b6a0282aa1283021124123dbe230",
+      "bytes": 23752
+    },
+    "demo-cache/tile-0-6.json": {
+      "sha256": "2214a37215776b44d1b7b9f453a0f22625084048eee413aa2c8216af3aaa043d",
+      "bytes": 1778
+    },
+    "demo-cache/tile-0-6.npz": {
+      "sha256": "c620a120c817d01a80ab47308de6e8b847841de50927cde844663b5c2a38bdf7",
+      "bytes": 14560
+    },
+    "demo-cache/tile-0-7.json": {
+      "sha256": "d66ac5b68988399b056b3889792ab464b0eb27bb32a53d083df1614f20d8d2ff",
+      "bytes": 1775
+    },
+    "demo-cache/tile-0-7.npz": {
+      "sha256": "2c1aaaf4f31145421b110a7cf61faf58f752790f8e5ca5651c7a58c874410b84",
+      "bytes": 2482
+    },
+    "demo-cache/tile-1-1.json": {
+      "sha256": "f9e941dddbdb615f5e331fb06aaec488cc6c4792698d34d1e673903c612f45b5",
+      "bytes": 1776
+    },
+    "demo-cache/tile-1-1.npz": {
+      "sha256": "b31a150ebd5d3a63ff670946ae4aa4076d5b0150d849de1c52d6fda4396251d3",
+      "bytes": 6618
+    },
+    "demo-cache/tile-1-2.json": {
+      "sha256": "d129d2651878667326c1e8b623772f461d6a008b5ab6724344489c83a7000d10",
+      "bytes": 1779
+    },
+    "demo-cache/tile-1-2.npz": {
+      "sha256": "821e718eef5a30a6d84b5e56ff33beb07ec298b31ba14b58f68dd304be5a6472",
+      "bytes": 32433
+    },
+    "demo-cache/tile-1-3.json": {
+      "sha256": "a0b61a9abe445ccec8607e5cad9dca0cc4cc966c8453fdc7f61c679db651bca3",
+      "bytes": 1780
+    },
+    "demo-cache/tile-1-3.npz": {
+      "sha256": "64b7542eb56a86513c9b0bee8b87ef129ab057199645e6b2cf43a40b7d11a0fd",
+      "bytes": 35461
+    },
+    "demo-cache/tile-1-4.json": {
+      "sha256": "27c844843f88c1abb47d8ddfd1c859cc88633fb6552bbb143feaeaf9ac9ba594",
+      "bytes": 1779
+    },
+    "demo-cache/tile-1-4.npz": {
+      "sha256": "7cc093a4d0a067a13f03793ce3a59b4349c8678a035f5381adae8bfd631f8f3d",
+      "bytes": 39262
+    },
+    "demo-cache/tile-1-5.json": {
+      "sha256": "d444a6413c75536f571715121dfa26e5e731f9e3a2287fe93e8305a8253a1e2d",
+      "bytes": 1780
+    },
+    "demo-cache/tile-1-5.npz": {
+      "sha256": "25e81102f2d6bd2d3ced2120efbf2aa0a32e7e6da1bc0c014af4bff92ae60f9e",
+      "bytes": 43403
+    },
+    "demo-cache/tile-1-6.json": {
+      "sha256": "45d924d9db9f1a6930e07e2c98e9df7332f325eb8577f9c3cd2a7a83c7ae7b8a",
+      "bytes": 1779
+    },
+    "demo-cache/tile-1-6.npz": {
+      "sha256": "38f1c09324d04b8c5320d2cb082425bd6933995835fd2b12706b8015e9d03a67",
+      "bytes": 42648
+    },
+    "demo-cache/tile-1-7.json": {
+      "sha256": "2771e7ab4700e7e29cd70d6081a6bdcc06833ce1e65da9babe4d8ab7ae2ab66b",
+      "bytes": 1798
+    },
+    "demo-cache/tile-1-7.npz": {
+      "sha256": "a08d3e5af3ee11b62aa7b2c177d7c57f86d43c2d993aaf018201e2096f8cc4e6",
+      "bytes": 31908
+    },
+    "demo-cache/tile-1-8.json": {
+      "sha256": "ceb94a560ed2fe1239ec35290be7c0e9ebc56234433f346462e6c012b9aab7e5",
+      "bytes": 1794
+    },
+    "demo-cache/tile-1-8.npz": {
+      "sha256": "2e6a68c3a0059f6420f0c1f98491ba7b5f95a89e6a71eb5662e149b190f6a06e",
+      "bytes": 6621
+    },
+    "demo-cache/tile-2-0.json": {
+      "sha256": "eb1f9f6e47bf25a2037da1eef4fe1d5a9fcdc8070fb86e6b72ac1a30540f470d",
+      "bytes": 1775
+    },
+    "demo-cache/tile-2-0.npz": {
+      "sha256": "ddbfb559ed14989d9a7d75c2ddd8492bde8a5273e39babe4a7c07b6f5f1e4e7f",
+      "bytes": 2354
+    },
+    "demo-cache/tile-2-1.json": {
+      "sha256": "1461fbf1a9df8e97872559511098728547778505dbe611dd7677c405814738cf",
+      "bytes": 1780
+    },
+    "demo-cache/tile-2-1.npz": {
+      "sha256": "9472e2d7283adb7cf497f789b52eef096eb0830b4fcf7ad8aaf35906187e3afd",
+      "bytes": 33532
+    },
+    "demo-cache/tile-2-2.json": {
+      "sha256": "a5a75f67a36926207ff57c6a7b19cef5c4069fa694c60a1a82e3e9ba226f36f4",
+      "bytes": 1780
+    },
+    "demo-cache/tile-2-2.npz": {
+      "sha256": "2a0c46b424e8115abed967f8de3ddb0e21d4fa3fc6d9ebf5e485ef60624c5898",
+      "bytes": 38007
+    },
+    "demo-cache/tile-2-3.json": {
+      "sha256": "0ad913163efbe9e211f5aa2feee8db663872d6798a896ea1627690d66d33cb22",
+      "bytes": 1779
+    },
+    "demo-cache/tile-2-3.npz": {
+      "sha256": "12b4818c379b3153834cb3095004ff8c10d94894d2957bf72db5901f59529dcb",
+      "bytes": 32207
+    },
+    "demo-cache/tile-2-4.json": {
+      "sha256": "cc8b2125f6a73101333030277fe72dd5e4acbbe5dc5f6410049a89a88ff47810",
+      "bytes": 1779
+    },
+    "demo-cache/tile-2-4.npz": {
+      "sha256": "9e98338f6756c70bee843e14aa0d51049274dc3d3a603f300133ad1b34d0db0e",
+      "bytes": 30352
+    },
+    "demo-cache/tile-2-5.json": {
+      "sha256": "d02682aa4bca2ba5afef2cf856bead6495d6378e62187922f8442d8a09db67f7",
+      "bytes": 1779
+    },
+    "demo-cache/tile-2-5.npz": {
+      "sha256": "5d319eaac446e4cde5c28269580b3c788ccd52069bd222100a08081284e49413",
+      "bytes": 29456
+    },
+    "demo-cache/tile-2-6.json": {
+      "sha256": "f181ef0c837ed74c5103a776c27ff2de04f9d5d883ba64718b98da985a74e6c3",
+      "bytes": 1779
+    },
+    "demo-cache/tile-2-6.npz": {
+      "sha256": "daa3d347c89ca6cef2d4fa6a6acd21706fdbc9ed0fb2d923d5d8c8e1cd304926",
+      "bytes": 42275
+    },
+    "demo-cache/tile-2-7.json": {
+      "sha256": "4170dee9b539bd613ae6b3a2c48ec6ccdce836ca4ba99b831ce2753295cf3e4a",
+      "bytes": 1779
+    },
+    "demo-cache/tile-2-7.npz": {
+      "sha256": "a1afe0f43a08d5035c9ddb16f423182fab3f4e4c5cc669c100b8720652f9a9d3",
+      "bytes": 30750
+    },
+    "demo-cache/tile-2-8.json": {
+      "sha256": "3f9a360d0034ef4526b7239f326fa413d00b21c6ab75ab869f4d466d7c6e1689",
+      "bytes": 1780
+    },
+    "demo-cache/tile-2-8.npz": {
+      "sha256": "416fe785cab4fafcfdb29e76c04bc9ac528278e1afdd501ad945bc06a5ba7c63",
+      "bytes": 30526
+    },
+    "demo-cache/tile-2-9.json": {
+      "sha256": "1bce51c8b9a0c61d374a4cf1dc65c380c6067a55b4658a67bf0047783367843e",
+      "bytes": 1776
+    },
+    "demo-cache/tile-2-9.npz": {
+      "sha256": "ad15dbcd220ef5d967edb5eaa55988c7fe70879350e5cd8567cd4a5c31b7c638",
+      "bytes": 2560
+    },
+    "demo-cache/tile-3-0.json": {
+      "sha256": "e61c0856cf75b1b326ef2b641609bc44732c6a8dd29edf51763992898ad2fbf2",
+      "bytes": 1779
+    },
+    "demo-cache/tile-3-0.npz": {
+      "sha256": "dcd5fcf80cd10cb279117b8dad7b0084cac1716c2287fa2dfd43e0819e3684c4",
+      "bytes": 13710
+    },
+    "demo-cache/tile-3-1.json": {
+      "sha256": "b080709c524dd59c49ad00328638e4e0017029eca9dba5823cd86428380d08de",
+      "bytes": 1778
+    },
+    "demo-cache/tile-3-1.npz": {
+      "sha256": "050184390560f5309d15dfc0c48af21920198955ffb90eb91e17c795885ab3b2",
+      "bytes": 39881
+    },
+    "demo-cache/tile-3-2.json": {
+      "sha256": "ea26d84c7b7aa035223e2673cc93e67e5a17a8b5db65e90dfeb48c0099e91555",
+      "bytes": 1779
+    },
+    "demo-cache/tile-3-2.npz": {
+      "sha256": "d14fc1c09ca4eeafca05e44648e4a932ddf61e2c89651b01ddc6b59014456c33",
+      "bytes": 23549
+    },
+    "demo-cache/tile-3-3.json": {
+      "sha256": "d7e2cb01465e3149e3b0cab17f9ff9c755608287a432f222453277a7f3a2c14a",
+      "bytes": 1779
+    },
+    "demo-cache/tile-3-3.npz": {
+      "sha256": "f61cab22fe4c0e6fc6744d353199143da1642e58f4e44bbb090e71c79addb3bc",
+      "bytes": 21213
+    },
+    "demo-cache/tile-3-4.json": {
+      "sha256": "67e74812c17acb3f3a1ee9774c1d0cb49abd0b16d83d0c8cefe3e2edc9cf7c52",
+      "bytes": 1797
+    },
+    "demo-cache/tile-3-4.npz": {
+      "sha256": "c4d1d49a1772a7031b6e255179750e3da0f2ac3a5951efb26672e507cb6df0b2",
+      "bytes": 35818
+    },
+    "demo-cache/tile-3-5.json": {
+      "sha256": "6bfae42e59bc5a1b5052a1a3d3467a25080ea50a28254d4ee4209ad151681c96",
+      "bytes": 1780
+    },
+    "demo-cache/tile-3-5.npz": {
+      "sha256": "8ee817dac6361b50701feddc7e397d55e1fae75249cc8be01a3954cc3f6e9602",
+      "bytes": 38530
+    },
+    "demo-cache/tile-3-6.json": {
+      "sha256": "d22a62baba763598ce14459ae92570acad0392c3f8fa999f8d929497ba885131",
+      "bytes": 1779
+    },
+    "demo-cache/tile-3-6.npz": {
+      "sha256": "766d0f48169858598736152c1465aac2d08a9435c5c24251dd2472e9238c2ebf",
+      "bytes": 39234
+    },
+    "demo-cache/tile-3-7.json": {
+      "sha256": "68335b889f76a4e6b547cfab496b198780d71f49877871c81a23c5696a06ca87",
+      "bytes": 1779
+    },
+    "demo-cache/tile-3-7.npz": {
+      "sha256": "fc9300e93fa033f4325380b44cbdcd50f05b9f64a2171bc62cc940a8a5949b98",
+      "bytes": 39702
+    },
+    "demo-cache/tile-3-8.json": {
+      "sha256": "03312540b21d15b400e9a39340981739090539f51e1337630201b6047e94be57",
+      "bytes": 1797
+    },
+    "demo-cache/tile-3-8.npz": {
+      "sha256": "68843e5be4a6c52573a5c745f6c03a59f7c6210ca13a496a94ba5a9d9fcf91cf",
+      "bytes": 39380
+    },
+    "demo-cache/tile-3-9.json": {
+      "sha256": "dfd052792ceff3fcb2ef137a1eb79ea215d90b1580e36af10be49e374d768f71",
+      "bytes": 1798
+    },
+    "demo-cache/tile-3-9.npz": {
+      "sha256": "d721f293d6709851fb005e54503dd98773c69aa2b16ad8c964501558305c166e",
+      "bytes": 13939
+    },
+    "demo-cache/tile-4-0.json": {
+      "sha256": "bddc9be18574d643dca3f854870ec6cd875870f04db686bea5d5a660604bb43d",
+      "bytes": 1779
+    },
+    "demo-cache/tile-4-0.npz": {
+      "sha256": "49db60dd07da90f8b2bd7d3be33a11b0bf3fbe31ce61e3028a8d7254dc8164df",
+      "bytes": 16048
+    },
+    "demo-cache/tile-4-1.json": {
+      "sha256": "0f095704c5fcfd8339504d68d0ca52676894e5a4aec94918b859c733030ad0d7",
+      "bytes": 1779
+    },
+    "demo-cache/tile-4-1.npz": {
+      "sha256": "64edee13f217b0b9bf9d17c93e73103d38759ce82bf4502a7bfc50bef7409a0a",
+      "bytes": 31019
+    },
+    "demo-cache/tile-4-2.json": {
+      "sha256": "ceb15a9ccc8792637cd0b7ca74eee0c5bade1da910558fca15267d391e246160",
+      "bytes": 1779
+    },
+    "demo-cache/tile-4-2.npz": {
+      "sha256": "3ebbf61da6a058cd7b9c320542cbf08724dce540fccca7a677aa02460779cd2f",
+      "bytes": 36203
+    },
+    "demo-cache/tile-4-3.json": {
+      "sha256": "749dcde04db7e6d90a394f625de8477ab61bbe2aaa980abe8005c33bacd14bf4",
+      "bytes": 1797
+    },
+    "demo-cache/tile-4-3.npz": {
+      "sha256": "b6baedb8168d3537e44d1e5dd186627c96cd4bce181d4fe6423ae0d5f2d3df72",
+      "bytes": 31502
+    },
+    "demo-cache/tile-4-4.json": {
+      "sha256": "22203e76a5dcc794ac7528bfbf792a5524d054749122bfdcbb475b012cdd2285",
+      "bytes": 1780
+    },
+    "demo-cache/tile-4-4.npz": {
+      "sha256": "2ecc5cb466a501708f90b78ac986b5955f48426595357abd29f0bb35eb6f2b61",
+      "bytes": 38580
+    },
+    "demo-cache/tile-4-5.json": {
+      "sha256": "535100051aa593aa7035603add84c02f4344be825ec1bf1a645df2dc833197e2",
+      "bytes": 1779
+    },
+    "demo-cache/tile-4-5.npz": {
+      "sha256": "1a3fac374efdcfac6b1306b6e478f3c05f040b6cd6782e8048fc889403ef58ab",
+      "bytes": 37222
+    },
+    "demo-cache/tile-4-6.json": {
+      "sha256": "bf01edab81bc89a76a2458bde78a25964cb5593ad73f66c16a501c343e8d16d4",
+      "bytes": 1779
+    },
+    "demo-cache/tile-4-6.npz": {
+      "sha256": "5b481d7426097982baaa3460d240730eebbe514b2d0c5c9fda8fe565fedc7143",
+      "bytes": 33619
+    },
+    "demo-cache/tile-4-7.json": {
+      "sha256": "7aaaf3cf91348661983eaac87ad7c682b9a49ef3dc3786b3d1aa219ce482147d",
+      "bytes": 1779
+    },
+    "demo-cache/tile-4-7.npz": {
+      "sha256": "7cd73aaf0b163489d4ba8c2f690e73e77210c08d664d88106d7c4067c26e95f9",
+      "bytes": 41007
+    },
+    "demo-cache/tile-4-8.json": {
+      "sha256": "7dda612c5a6d9a4368ea4c7727dad2765e7c02e1d38037f5390a6a2195e50cf4",
+      "bytes": 1779
+    },
+    "demo-cache/tile-4-8.npz": {
+      "sha256": "24af3591ea9aea3eabf11e7fb9f4b4f5e124f3d6290064c95ef1caa7835841f9",
+      "bytes": 17995
+    },
+    "demo-cache/tile-4-9.json": {
+      "sha256": "6c0b518bc1e333a54519d8bd2a1fc8bc80e100ded7a5ce0ec398e102220e1c54",
+      "bytes": 1797
+    },
+    "demo-cache/tile-4-9.npz": {
+      "sha256": "9c2ac33d2fdac5c4cf3f231019c038f87025e12f4744321679724a44fe1e2f0b",
+      "bytes": 7030
+    },
+    "demo-cache/tile-5-0.json": {
+      "sha256": "b72127e9d67cf506c00943e23e0d1ba89515a10f571c8a26ee6ab54d423786b1",
+      "bytes": 1778
+    },
+    "demo-cache/tile-5-0.npz": {
+      "sha256": "5a02be41df14cc265757bc74d618ab1e06c8191cf65477fa18b402258a2099b5",
+      "bytes": 16045
+    },
+    "demo-cache/tile-5-1.json": {
+      "sha256": "caa0ad47a92e4ad8e04413c9cc3cb8d62a2bd6f747bd78725b4bd1980835d5f5",
+      "bytes": 1780
+    },
+    "demo-cache/tile-5-1.npz": {
+      "sha256": "dcc8bb97757311ac65ac03e5b63d49757b22db3dafa5ed27cabecbde558e6a86",
+      "bytes": 35340
+    },
+    "demo-cache/tile-5-2.json": {
+      "sha256": "eaa3bc3974e0b4b7c6ce4b78ab832294d3340d583f38f717b3812a70182370de",
+      "bytes": 1780
+    },
+    "demo-cache/tile-5-2.npz": {
+      "sha256": "ff2484e2b3efffd17ca3c1ae595c0f8a675419eb95aa9f824bee89c257359f90",
+      "bytes": 42001
+    },
+    "demo-cache/tile-5-3.json": {
+      "sha256": "5a3c3f16d3a937b9a50abbd117c0c17f5c174dde14eab05100f8e54e21092d46",
+      "bytes": 1780
+    },
+    "demo-cache/tile-5-3.npz": {
+      "sha256": "60bb218ebe88bc43ef51027881249c5f2d51f2adfebd91da7e38968e13b1d8e1",
+      "bytes": 27420
+    },
+    "demo-cache/tile-5-4.json": {
+      "sha256": "c89d2c379662a71b7ebdb8b647b01fdcd2845cef127c0ba35db7199f7d979e23",
+      "bytes": 1798
+    },
+    "demo-cache/tile-5-4.npz": {
+      "sha256": "da6b0177538543c5654a81c5b9b7e2568db6f3a2617c02b17aec9472453fbfe8",
+      "bytes": 24576
+    },
+    "demo-cache/tile-5-5.json": {
+      "sha256": "1cd777464144700b05c38b67d37e8bf9b4fec74a74667f12af2c27a58723490c",
+      "bytes": 1779
+    },
+    "demo-cache/tile-5-5.npz": {
+      "sha256": "daeb6b4053330e04e68057d0bf3626aa3ca85fbfc869c5a04ca9cc24e71d6c9b",
+      "bytes": 39218
+    },
+    "demo-cache/tile-5-6.json": {
+      "sha256": "f673a6c58d9ddc46fdd0beabe9c75786c9b904f8111ac44a9d0994ae92c37b46",
+      "bytes": 1779
+    },
+    "demo-cache/tile-5-6.npz": {
+      "sha256": "926e56a1a67c0190791709657b40ae3efc586423222aa1199ec1bf8b36d65195",
+      "bytes": 38449
+    },
+    "demo-cache/tile-5-7.json": {
+      "sha256": "c2f40834cad26421fce593638992063f6479ff1e4e0f35e6a5b676d00ea51015",
+      "bytes": 1798
+    },
+    "demo-cache/tile-5-7.npz": {
+      "sha256": "952e20b1e4431488584f26a473ccc5c83a25138dd6c616c7a025cb10fcfd33da",
+      "bytes": 42381
+    },
+    "demo-cache/tile-5-8.json": {
+      "sha256": "d2281a32d007203699afa0f1a4a31589a5bd94903f49d0870f676a2b98dcdf42",
+      "bytes": 1779
+    },
+    "demo-cache/tile-5-8.npz": {
+      "sha256": "e8ced21e3a5d0bddc9c2825bb5b03a3a2f1d8420e5fe4492051abd077f3393b8",
+      "bytes": 26016
+    },
+    "demo-cache/tile-5-9.json": {
+      "sha256": "cca9a84c31ccada0a2662eac962ce329dbb54c38eb0cba2a047aaf1acb975428",
+      "bytes": 1779
+    },
+    "demo-cache/tile-5-9.npz": {
+      "sha256": "d7bda8b44e896caf920a0a5ffbec6b9090e55b2cf1f2052577d01716cf23db44",
+      "bytes": 11321
+    },
+    "demo-cache/tile-6-0.json": {
+      "sha256": "ef9d5ef1e150c79296bfe8a609b40ad73ed6ede30df6ade2b2304247b6c3705e",
+      "bytes": 1779
+    },
+    "demo-cache/tile-6-0.npz": {
+      "sha256": "4b08da85be72474abcc602eedca36d3bbd04562501591d84d812530376d0b925",
+      "bytes": 11835
+    },
+    "demo-cache/tile-6-1.json": {
+      "sha256": "715edf89db574b971dc4054463c7455da90404fe77b02dc4c7a47da16693c446",
+      "bytes": 1779
+    },
+    "demo-cache/tile-6-1.npz": {
+      "sha256": "4b5da166ca388cb7d2ee017c466821e7946ea86fb798bc31dcd82832995087db",
+      "bytes": 37377
+    },
+    "demo-cache/tile-6-2.json": {
+      "sha256": "74051f531b23ebe97cfbb2f4f44ded03d9b41cfa03ec841b3126b35690871a68",
+      "bytes": 1779
+    },
+    "demo-cache/tile-6-2.npz": {
+      "sha256": "d5299447130b588e06f6988cc5ecba583011b87e835d272abd4263a55c1d8687",
+      "bytes": 38720
+    },
+    "demo-cache/tile-6-3.json": {
+      "sha256": "dfd8644e583d94c1220f024b670a32c55209a2e5c2034127878ce807119369c6",
+      "bytes": 1779
+    },
+    "demo-cache/tile-6-3.npz": {
+      "sha256": "1e5094ad091bf8c414ac35df45ff2bdfce3482ee363c9d96a72ae0d65f948ac5",
+      "bytes": 37095
+    },
+    "demo-cache/tile-6-4.json": {
+      "sha256": "ce89264281385fdc1fa5385b5c3c3623941343daeb422613fa35c8b4f3705bc4",
+      "bytes": 1780
+    },
+    "demo-cache/tile-6-4.npz": {
+      "sha256": "941ee811f965458682066efb107dbd584f01a1ad2551c709ad7b4772f8c73634",
+      "bytes": 41695
+    },
+    "demo-cache/tile-6-5.json": {
+      "sha256": "ead42504f052d9169088e4f37f0c528ef540978c126efe6c485e76b92d62877c",
+      "bytes": 1779
+    },
+    "demo-cache/tile-6-5.npz": {
+      "sha256": "dd186338c172b752f5f2ea329b1668eac31b910937c940d6ecdefafce547df3c",
+      "bytes": 42658
+    },
+    "demo-cache/tile-6-6.json": {
+      "sha256": "57d5ec3d7953b524bea5a615ff424e16737c4d7c5fd1a96f1facf4b68e968cee",
+      "bytes": 1779
+    },
+    "demo-cache/tile-6-6.npz": {
+      "sha256": "0e062220c0f6b7f22fd49789e0e8b89bf07fa4e9cc9c49c9b2df4310265da632",
+      "bytes": 32581
+    },
+    "demo-cache/tile-6-7.json": {
+      "sha256": "060cec16c8532772d0148283098ec2d064bf03fd9b831e14e246d4aac6895965",
+      "bytes": 1798
+    },
+    "demo-cache/tile-6-7.npz": {
+      "sha256": "40d822fa0a47138c3e8ba2471cc59f1075139654896f925585d928dc2f6af547",
+      "bytes": 22480
+    },
+    "demo-cache/tile-6-8.json": {
+      "sha256": "8cdd099a8066dc46fc5099b63e69a5c71c8d835e8fd3cd462163e438a014ef43",
+      "bytes": 1798
+    },
+    "demo-cache/tile-6-8.npz": {
+      "sha256": "6503a82d1fc94f640bcaa11e71f49a1e54cc01427e1350c7ccc85af978872521",
+      "bytes": 40840
+    },
+    "demo-cache/tile-6-9.json": {
+      "sha256": "10cbee96e2ddae58a3c4c190db50dbe6e2b4f5b3de10b1a4138a9227c82f3bb2",
+      "bytes": 1779
+    },
+    "demo-cache/tile-6-9.npz": {
+      "sha256": "02647971f8580b6416bf2b4b39d8af0da24b66f9874dd7fc1292d6e0009bc43d",
+      "bytes": 13572
+    },
+    "demo-cache/tile-7-0.json": {
+      "sha256": "6367f89d0b6112a20f5c5506ea39cd716fd49ee31eca25785fc5719a3a2d3f4f",
+      "bytes": 1793
+    },
+    "demo-cache/tile-7-0.npz": {
+      "sha256": "2201d86ee6bc65e5c1daed2d42a2c65932746f089518c9fe79d13fca9ce11ba6",
+      "bytes": 2359
+    },
+    "demo-cache/tile-7-1.json": {
+      "sha256": "672984c233c1c86adb57554ebbe53911730f0a379cdd0c7992d8a01bdb934a51",
+      "bytes": 1798
+    },
+    "demo-cache/tile-7-1.npz": {
+      "sha256": "e7fdd023e103409f71c0603c251d7042cce11006900c382d444f9cf1822742c7",
+      "bytes": 33487
+    },
+    "demo-cache/tile-7-2.json": {
+      "sha256": "d6bd1fd0d75f9160eae39a33daad9c0c70fed6ff7d6e8a673730ab358a87a9c0",
+      "bytes": 1779
+    },
+    "demo-cache/tile-7-2.npz": {
+      "sha256": "98a79242277a66197531c8665e61842456df11ed5aef036746d03cd73d66af1f",
+      "bytes": 42584
+    },
+    "demo-cache/tile-7-3.json": {
+      "sha256": "798330bcf2b0a19986cc88a6b3152052f1d751177654bd266f9af4b059530174",
+      "bytes": 1779
+    },
+    "demo-cache/tile-7-3.npz": {
+      "sha256": "d82cd71784f2c34ad49e853c501750ffb1be58008573321c09b531970f8552e4",
+      "bytes": 33656
+    },
+    "demo-cache/tile-7-4.json": {
+      "sha256": "93be9d49d3226588f7e6f8501b493c8cf7a56411c9aa0bfbd4ffcb027a79a5aa",
+      "bytes": 1778
+    },
+    "demo-cache/tile-7-4.npz": {
+      "sha256": "16a15d98e719985dc59a3987326c96a3240ee9f975e8923645d1d87d08bc2c38",
+      "bytes": 37081
+    },
+    "demo-cache/tile-7-5.json": {
+      "sha256": "96a179e545251a3f948d6bc328d1628a538e685e85e76f64faed8f996fb0a248",
+      "bytes": 1779
+    },
+    "demo-cache/tile-7-5.npz": {
+      "sha256": "359b66fc29ff62a43fe92f0e4a50da3f3c460857a22d4b431f5aa25e49debc4c",
+      "bytes": 41555
+    },
+    "demo-cache/tile-7-6.json": {
+      "sha256": "b1f5d9126c216e6cf070c804b8e6e80940e1fcad3c87efbf73c424c64ab2ba0e",
+      "bytes": 1779
+    },
+    "demo-cache/tile-7-6.npz": {
+      "sha256": "d2d485fead460a13ee7c0883ca7eaff5e14584ccb1056ab2665ff2aa33906736",
+      "bytes": 27254
+    },
+    "demo-cache/tile-7-7.json": {
+      "sha256": "b8305fe5bd5b7108d28718602d1ecffee4bdef316dc55cb6ba71b2ac2ba93f47",
+      "bytes": 1779
+    },
+    "demo-cache/tile-7-7.npz": {
+      "sha256": "f63dea2df8b1d82dce8562d1a10821e50f1646a5265495e43f6c76072f42f826",
+      "bytes": 12352
+    },
+    "demo-cache/tile-7-8.json": {
+      "sha256": "ee35b914915df312ad1dfd55726c295a064aea19e5bd423a0b536b5457e493d1",
+      "bytes": 1778
+    },
+    "demo-cache/tile-7-8.npz": {
+      "sha256": "10b9ac88978211060644c85bbaa2cc9038d07a1871ff7ab18c282f10ac046ec2",
+      "bytes": 30746
+    },
+    "demo-cache/tile-7-9.json": {
+      "sha256": "5f81e7f218949d89e4ef2476d11bffd0a443616833ce50468d9bfd759b095225",
+      "bytes": 1794
+    },
+    "demo-cache/tile-7-9.npz": {
+      "sha256": "9ff1e47a85e1c2aae32a4139b5f37c88a3620832d232afb0d82ad36cb29c633b",
+      "bytes": 2749
+    },
+    "demo-cache/tile-8-1.json": {
+      "sha256": "1824822331be8b913763ea0350c09705d65243fc7446d9f361940457e1a356f7",
+      "bytes": 1777
+    },
+    "demo-cache/tile-8-1.npz": {
+      "sha256": "03d6307c07723a0b3ad2a1f40be902432bbc59de2add1332b5306a3d7a6d9ca9",
+      "bytes": 6869
+    },
+    "demo-cache/tile-8-2.json": {
+      "sha256": "841c84e0d0a9bd9c7a6aa309918b77a6b2dc2c8cb4ee4239cc9041b41d4d4562",
+      "bytes": 1779
+    },
+    "demo-cache/tile-8-2.npz": {
+      "sha256": "bbdd168e3499ebbfb7418c2c5eb3864932307b69bc967711849f3682d6bf1152",
+      "bytes": 34712
+    },
+    "demo-cache/tile-8-3.json": {
+      "sha256": "1159b68edaaa0a2acebbe50f41f74131706d4a883504f4a3f4996e9b565473a8",
+      "bytes": 1779
+    },
+    "demo-cache/tile-8-3.npz": {
+      "sha256": "ce2215858fab70bed7f53bdf2b80633c153e70ad95a8f1db96fb8505f3508692",
+      "bytes": 36388
+    },
+    "demo-cache/tile-8-4.json": {
+      "sha256": "e252afa64e7925b55049f5562b1dcfd05e5d1ae4dc0398e25739f02c009bc2e6",
+      "bytes": 1797
+    },
+    "demo-cache/tile-8-4.npz": {
+      "sha256": "8dedbbc0715d441572eefc7d54574834c78873453a7bb9d05851cbccba1059ba",
+      "bytes": 41740
+    },
+    "demo-cache/tile-8-5.json": {
+      "sha256": "a9368bfaa671f6eb243f725e29df92ef4a351f0a66880462fa4eb615cb2ccc18",
+      "bytes": 1779
+    },
+    "demo-cache/tile-8-5.npz": {
+      "sha256": "1bd816e338be55c890b9e9904fc4fe3afb28c546ac13c0c7934965c538953aad",
+      "bytes": 33019
+    },
+    "demo-cache/tile-8-6.json": {
+      "sha256": "ad3aaf64a0c89d9b98303a08a522130975bd016cfdecc4e3fbd9e0e8060db231",
+      "bytes": 1779
+    },
+    "demo-cache/tile-8-6.npz": {
+      "sha256": "95c927e7813bc3e6effe3121f339ef8547adc4d31068bf6b35dbb9cc0a12ecce",
+      "bytes": 41178
+    },
+    "demo-cache/tile-8-7.json": {
+      "sha256": "151db15f8786aaad33c5766a73128f61afaa19619aaeb09ce1b27be744e8a963",
+      "bytes": 1780
+    },
+    "demo-cache/tile-8-7.npz": {
+      "sha256": "9b08b944f3e09446b4054026f6f045373b95bf8d9d230e1380baebacafae9d05",
+      "bytes": 35088
+    },
+    "demo-cache/tile-8-8.json": {
+      "sha256": "8f0fc6a5005fe85ff2aa3e1d32a865bd5a6a41946b084980d7cca10d46dda499",
+      "bytes": 1796
+    },
+    "demo-cache/tile-8-8.npz": {
+      "sha256": "ca4468c4d42a55992c36a2d9571fd4058c17c29fda383f92ebd430064c0f0684",
+      "bytes": 7338
+    },
+    "demo-cache/tile-9-2.json": {
+      "sha256": "0786b18927d51103fadedf3c3195f1f04c4e9b32a37a663636f95e4f06f5fb3d",
+      "bytes": 1775
+    },
+    "demo-cache/tile-9-2.npz": {
+      "sha256": "65afda39abeef5813809e6578848e6d542c33a310701aad25dcfc1fb9855495b",
+      "bytes": 2482
+    },
+    "demo-cache/tile-9-3.json": {
+      "sha256": "80cc75d172b87a76a06b8b139bf4dbac467b45c83abcc738661b2c9d7626dd76",
+      "bytes": 1797
+    },
+    "demo-cache/tile-9-3.npz": {
+      "sha256": "213544926a860bb8beaa690adf5b9729aa48c00d36364525f1cd0da3170f3950",
+      "bytes": 11230
+    },
+    "demo-cache/tile-9-4.json": {
+      "sha256": "3b209ce283493600b48a377dcdbc49d0f79b5344c393fa07e7eaec2541437293",
+      "bytes": 1778
+    },
+    "demo-cache/tile-9-4.npz": {
+      "sha256": "f9a2bea14bab4bda3ff4093daea69da3749c0ec4bf38311f72e53fa909ae4193",
+      "bytes": 19734
+    },
+    "demo-cache/tile-9-5.json": {
+      "sha256": "242a261948f15e1ea299443eea337087ec7ed650f926fec338f35887720002d8",
+      "bytes": 1777
+    },
+    "demo-cache/tile-9-5.npz": {
+      "sha256": "6c1323135986dc3e2d4c796a5de2d7893f1edea159bb24b4351d2a814da0a924",
+      "bytes": 7313
+    },
+    "demo-cache/tile-9-6.json": {
+      "sha256": "b1e2451ce2b0cd20181977bb492f641990f14be2d62a72787b4d9bdcbdd32eba",
+      "bytes": 1779
+    },
+    "demo-cache/tile-9-6.npz": {
+      "sha256": "b879c7fd35ef77fa231191cd04f87dc8164a499e142f7820e8359751b2f25e9e",
+      "bytes": 11915
+    },
+    "demo-cache/tile-9-7.json": {
+      "sha256": "092a535266314cb3f72fc093f8468869b0836f753c7d17480a87e3c1e291b740",
+      "bytes": 1776
+    },
+    "demo-cache/tile-9-7.npz": {
+      "sha256": "fa343228810ae5b68fdec90a1fecfd35bdee0f48a36b9b7391f563bce9ee4e9a",
+      "bytes": 2736
+    },
+    "features.json": {
+      "sha256": "427401136c687640fe111c64a66bddbaff341b6166d98022bce3579074d695b7",
+      "bytes": 12947
+    },
+    "loader-benchmark.json": {
+      "sha256": "5cdda8f82572ee3dc45995bde818127e7a7881ca6359e0b6910d23f16ab67802",
+      "bytes": 3074
+    },
+    "metadata.json": {
+      "sha256": "98e92242bae13e7eca26903114eb3ba09262d41f32712ea14c51573d9b3a0b2b",
+      "bytes": 20459
+    },
+    "provenance/kernel-manifest.json": {
+      "sha256": "547600fc0771fd2a72681ece1dee1158b28ca99b94701f25b880eb3ef8d20b92",
+      "bytes": 966
+    },
+    "provenance/recipe/backend/app/__init__.py": {
+      "sha256": "49e19aa2ac5b3de12e217b50aa20937c3b2de45178869b62bb2e2c12697ef25e",
+      "bytes": 26
+    },
+    "provenance/recipe/backend/app/api.py": {
+      "sha256": "319dc1f6818f335b62e93a1ab9bec3bf7e83ee9a95a823e53950ce10e220ce8e",
+      "bytes": 6014
+    },
+    "provenance/recipe/backend/app/data/dataset-manifest.json": {
+      "sha256": "5f64be99f4c971902b224d1f06bd92a0675b785ca8557b617823165464a9eb4c",
+      "bytes": 3770
+    },
+    "provenance/recipe/backend/app/data/legacy-scoring-reference.json": {
+      "sha256": "1dfe8ec182d74ddc3cba839e660b4a4e6044b7bba694a2dbd7b19e82d476ed2f",
+      "bytes": 395
+    },
+    "provenance/recipe/backend/app/exploration_api.py": {
+      "sha256": "fe829cbc9c3fec6ea56054cd19ca20a9649fa4f8199438acea3733f45e1a98c7",
+      "bytes": 913
+    },
+    "provenance/recipe/backend/app/global_api.py": {
+      "sha256": "900782f39a08ad8bfcbeb558816f7fef40e9a496ee2c32f09476d0ebc8b479f2",
+      "bytes": 7318
+    },
+    "provenance/recipe/backend/app/main.py": {
+      "sha256": "bf005f5563e8afb2c8437d9306b3124a7df4aaaa5698b29467466d6acd57d153",
+      "bytes": 1585
+    },
+    "provenance/recipe/backend/app/models.py": {
+      "sha256": "8fe8b64eea6fd70c77eed68c8a763ae696ba61b3ffcb78edfd36fccb827aec16",
+      "bytes": 3504
+    },
+    "provenance/recipe/backend/app/services/__init__.py": {
+      "sha256": "fc557bf1cd4c8028b863063eb909292c6c661757ee76ea95eb28b1578f29083a",
+      "bytes": 57
+    },
+    "provenance/recipe/backend/app/services/dataset.py": {
+      "sha256": "f75528696c8bfa9583087967484e64c7c313f16fa8404169e7feb215b4aeb307",
+      "bytes": 3073
+    },
+    "provenance/recipe/backend/app/services/ephemeris.py": {
+      "sha256": "71fc191a52f48f24e14e64e51f8d9ea6db7d6027263e1244533e2446a277a62e",
+      "bytes": 4885
+    },
+    "provenance/recipe/backend/app/services/proximity.py": {
+      "sha256": "7533230aa83fff97aacfa2b72b47688cdb292b3af018ca8ae4c750c1d07f42b8",
+      "bytes": 1832
+    },
+    "provenance/recipe/backend/app/services/scoring_reference.py": {
+      "sha256": "bb7a31d3148a1335c4e3671143723b3d3ba7a2915403176085a2077bb1282775",
+      "bytes": 1428
+    },
+    "provenance/recipe/backend/app/services/search.py": {
+      "sha256": "4ff1254e7e4dbf86191316bf8c667e8ee633f76de39b0989d9c17a8d7267db82",
+      "bytes": 24998
+    },
+    "provenance/recipe/backend/app/services/sites.py": {
+      "sha256": "7a4c5a39a764be7a87b7d2d0af339d8da47fc56da0680ac60b7aaa490557a3ad",
+      "bytes": 12713
+    },
+    "provenance/recipe/backend/app/services/terrain_store.py": {
+      "sha256": "4c914ca86bce2801d31711248d564cea47d5257af251e2bb822efbab6a83f69e",
+      "bytes": 12222
+    },
+    "provenance/recipe/backend/app/services/tile_metrics.py": {
+      "sha256": "137a22c0bd4b5b30ea854c05a91942f9437782f57d930a13f5518ac3532c25a7",
+      "bytes": 2548
+    },
+    "provenance/recipe/backend/app/services/validation.py": {
+      "sha256": "018cc5c4e38c269d4de0f5cfc2af9194d6f0b94751b8fcd881f60ed3ab00f467",
+      "bytes": 7137
+    },
+    "provenance/recipe/backend/app/settings.py": {
+      "sha256": "ce8b010a7315e37a2a417796d92f37a383e0cddd12d70876cdd2c2581b1c1339",
+      "bytes": 770
+    },
+    "provenance/recipe/backend/pyproject.toml": {
+      "sha256": "0c4a7289695fc8273e3bd82c9e519a48cda3f4624f71130106dff8558e1ec9e7",
+      "bytes": 623
+    },
+    "provenance/recipe/data/derived/pgda-demo-v1/features.json": {
+      "sha256": "427401136c687640fe111c64a66bddbaff341b6166d98022bce3579074d695b7",
+      "bytes": 12947
+    },
+    "provenance/recipe/data/derived/pgda-demo-v1/metadata.json": {
+      "sha256": "f277832eac702e7a95994d3df9b4c325459963b5179c973ce661437782b44246",
+      "bytes": 7222
+    },
+    "provenance/recipe/data/derived/pgda-demo-v1/psr.json": {
+      "sha256": "5192bf456a804dd137014f614731d2eaa8650f88339840c075ff4fc6fa49354b",
+      "bytes": 50490
+    },
+    "provenance/recipe/data/derived/pgda-demo-v1/terrain.json": {
+      "sha256": "81ca995fb3e197c3b354e54623790afd8c2c6e9b0fef85bbefbf5c64317818bc",
+      "bytes": 118411
+    },
+    "provenance/recipe/data/derived/pgda-demo-v1/terrain.npz": {
+      "sha256": "ba62c3afed06e1b16bff6c59fe1c0217555ab8c2f001bcd5ccd9b1d7f62c1ea9",
+      "bytes": 619013
+    },
+    "provenance/recipe/docs/lunar-cap-release.md": {
+      "sha256": "25845639412b303f79571fed88dfcbe23388def7ec7277200ab01ea7766fefff",
+      "bytes": 12831
+    },
+    "provenance/recipe/scripts/data/assemble_cap.py": {
+      "sha256": "818d67b8650ca689414d60b460b65baa58701fa6a15b53a9cf56f349639bc73b",
+      "bytes": 5550
+    },
+    "provenance/recipe/scripts/data/benchmark_cap_loader.py": {
+      "sha256": "28494847d334c54bb39c3bc5b5d63a61bce45e5a7481232294a4bcbcf936b82a",
+      "bytes": 1965
+    },
+    "provenance/recipe/scripts/data/build_cap_catalog.py": {
+      "sha256": "62e0b2245565fd5d4f2c4a99f78a22bc62db08a21a92f4ff17deebdfc1df8c1b",
+      "bytes": 5745
+    },
+    "provenance/recipe/scripts/data/cap_test_support.py": {
+      "sha256": "f9c8fc1ef5bf0a9d37af8b13c52369bcdffe995a954f31350f2cf165b125f2cd",
+      "bytes": 2734
+    },
+    "provenance/recipe/scripts/data/package_cap_release.py": {
+      "sha256": "79493bdb1bf6d1753867eb88bd55f6b47f18dbdf1dda55a9334b598bc3456cc2",
+      "bytes": 6638
+    },
+    "provenance/recipe/scripts/data/precompute_cap_window.py": {
+      "sha256": "5947c9d5f8f7370047a8b2096bf5422706d854604bb6e50ceed656e4a43d0e13",
+      "bytes": 4695
+    },
+    "provenance/recipe/scripts/data/precompute_window.py": {
+      "sha256": "4f79554f4f751bda793736f6d6957876476570a3496868042a26e8c293c14206",
+      "bytes": 1153
+    },
+    "provenance/recipe/scripts/data/prepare_cap.py": {
+      "sha256": "d6be36395c492e775c986e076adf960d0a9aeaf369ae96696cea7baccddfaebd",
+      "bytes": 3143
+    },
+    "provenance/recipe/scripts/data/prepare_global.py": {
+      "sha256": "ff7538c3be0cc5a19996879f610b9b31e76227caf8c6e9e36e13c0bb792fe0cd",
+      "bytes": 2225
+    },
+    "provenance/recipe/scripts/data/prepare_kernels.py": {
+      "sha256": "b85b3f4b4e3540aac802375eb4a52640300f4572de06079c712be08186b10ecb",
+      "bytes": 1810
+    },
+    "provenance/recipe/scripts/data/prepare_science_layers.py": {
+      "sha256": "bb68f8148d80d5be03f3d87ea4d1ecead6163e8fac207291ff20c9f86fc1af6b",
+      "bytes": 11271
+    },
+    "provenance/recipe/scripts/data/prepare_terrain.py": {
+      "sha256": "396081051ef05f61cd7b4a0c5873091587fee0f7ffa224f654f02ca0d268503a",
+      "bytes": 14200
+    },
+    "provenance/recipe/scripts/data/requirements.txt": {
+      "sha256": "d7cf37ebe097c081de982be8034612a51cab9ee2d0131452767078918c641baf",
+      "bytes": 65
+    },
+    "provenance/recipe/scripts/data/source_catalog.json": {
+      "sha256": "578a416f767113db1dc60a1753bd1c666ca85d167368430ace5c98a082447184",
+      "bytes": 1687
+    },
+    "provenance/recipe/scripts/data/test_prepare_science_layers.py": {
+      "sha256": "11975e9466260f15e303bd1d69993f92fa277195bc07c7ca288dcc314ac7c3c6",
+      "bytes": 2678
+    },
+    "provenance/recipe/scripts/data/test_prepare_terrain.py": {
+      "sha256": "22a52b2fd8825b4931bfb162035b413984cd5ff8ae24857d5800c156e80351bd",
+      "bytes": 2904
+    },
+    "provenance/recipe/scripts/data/test_verify_cap_tiles.py": {
+      "sha256": "c13fea67dae69b7454dfbfd47a4675f317e511fa12e60dd96ae67c5ea566de6b",
+      "bytes": 1865
+    },
+    "provenance/recipe/scripts/data/verify_cap_reference.py": {
+      "sha256": "b2df3d08bc0cfd5a69ef2d4443e17a9f15887eafb3d4f5d4427e8b8d5513dcfd",
+      "bytes": 3320
+    },
+    "provenance/recipe/scripts/data/verify_cap_release.py": {
+      "sha256": "6f21c31dac874e62e9368d99ddb5718501ed62cb18113eb36d3b6b5b0a592f33",
+      "bytes": 7625
+    },
+    "provenance/recipe/scripts/data/verify_cap_tiles.py": {
+      "sha256": "83706dd4e065995236f923682408a4dd64bec56b4a59fc49ca3a2aff97b821bb",
+      "bytes": 9040
+    },
+    "provenance/recipe/scripts/data/verify_manifest.py": {
+      "sha256": "e9df1524509173e841ca094c4711819e53d5e6cbdd6fc77bc9d50a07ee869108",
+      "bytes": 2837
+    },
+    "release-validation.json": {
+      "sha256": "fd3bdbcdaec164b5076b7a276b4189f5a9047cfc8935db7ac01e850e068d6adf",
+      "bytes": 5015
+    },
+    "source-reference-validation.json": {
+      "sha256": "a5ecee2817662a4d22862f76072f79f4ddb7f792a9bf4d7a922e02cd7caf6b73",
+      "bytes": 1266
+    },
+    "terrain.json": {
+      "sha256": "d78035f923116a1412527688afed587ba63d14b2c2b30c8feab579b99a3441b1",
+      "bytes": 186246
+    },
+    "terrain.npz": {
+      "sha256": "242b59295c2788f656470b819c98414a3c767260f33d377284f8d2243a3fa16e",
+      "bytes": 37674389
+    },
+    "tile-0-2/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-0-2/measurement.json": {
+      "sha256": "43eb28f57d73eb26ae9da422a844c8769d302ee5d653fb54ad32229efd71a124",
+      "bytes": 239
+    },
+    "tile-0-2/metadata.json": {
+      "sha256": "faf7f4cbf68b7ed58a9f91387254f89b0731e3ad0e886faaee533440a422fb68",
+      "bytes": 5014
+    },
+    "tile-0-2/terrain.json": {
+      "sha256": "5520894fdc6db787c040b335f9fbdaa0f0d3560a8cafa32f3687a6fdd07f07c1",
+      "bytes": 119632
+    },
+    "tile-0-2/terrain.npz": {
+      "sha256": "476b20c5a1041afc49e38e83256f7ac483e4f1cfa428260620b4e9d1e7212250",
+      "bytes": 4796
+    },
+    "tile-0-3/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-0-3/measurement.json": {
+      "sha256": "e994bf4119615a19a14a30d3f2c21e6ef76464a60802f79b90e95f08486ed455",
+      "bytes": 240
+    },
+    "tile-0-3/metadata.json": {
+      "sha256": "b5f60541f7dccea979319b4ff06f76bfb14b9fd93da596df4dc5634104d6130e",
+      "bytes": 5017
+    },
+    "tile-0-3/terrain.json": {
+      "sha256": "5b8b7986819863f2ab87da77835b5eeb4916fc3678b95dad4f4b5fc491b48df6",
+      "bytes": 119237
+    },
+    "tile-0-3/terrain.npz": {
+      "sha256": "f222baeb9c1cad2b0b5b65d6cf17d880ae5d0b647345547c3e157415bc4e7d7e",
+      "bytes": 158861
+    },
+    "tile-0-4/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-0-4/measurement.json": {
+      "sha256": "ba548cd41b12346abb009c9e2c4dd6e7c8a8c1f4f116521626b75c01e21516bb",
+      "bytes": 241
+    },
+    "tile-0-4/metadata.json": {
+      "sha256": "80a3c4b8e24431bb78ad6443baa1f9119001d60382d35c158430ca0fa675d908",
+      "bytes": 5009
+    },
+    "tile-0-4/terrain.json": {
+      "sha256": "ea038fb31bd9514f13c8ea2593239205241633802122de73643e5d3762b6583f",
+      "bytes": 120629
+    },
+    "tile-0-4/terrain.npz": {
+      "sha256": "8461f6fcd917885d428e9ee3c8113ed1d41f3768565971d64c251b75b4e0f1d2",
+      "bytes": 295556
+    },
+    "tile-0-5/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-0-5/measurement.json": {
+      "sha256": "24ac409e1405bc0992dade46c853a2626ed0b39e4f2b677f4fcc7240ca4bac4c",
+      "bytes": 240
+    },
+    "tile-0-5/metadata.json": {
+      "sha256": "4b1c646cd5dbcb79d9b6bb54551869f9874a2d00bd12c8f60e97dc206ab5fb47",
+      "bytes": 5010
+    },
+    "tile-0-5/terrain.json": {
+      "sha256": "608edb9fd9c685333e042b02970904e60e04c86f2928f976340169cc58f50030",
+      "bytes": 118404
+    },
+    "tile-0-5/terrain.npz": {
+      "sha256": "8f65f450523a14d4ba88af157fe7c56e15acb78241e6a24f5162c863ce964400",
+      "bytes": 300406
+    },
+    "tile-0-6/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-0-6/measurement.json": {
+      "sha256": "184aebca4df36c17ba07f7e704427a4b9ef029a5cd7d2ff005414a37724f4f30",
+      "bytes": 239
+    },
+    "tile-0-6/metadata.json": {
+      "sha256": "48efa9102cbbaf7f443f50ac4344ec2ee80af4b34ceb38cb1275013bd52762a7",
+      "bytes": 5016
+    },
+    "tile-0-6/terrain.json": {
+      "sha256": "779a5b813dc947dce4b17203374aec966bfb386866e777fd2a9e5f24f17dc82b",
+      "bytes": 118625
+    },
+    "tile-0-6/terrain.npz": {
+      "sha256": "d3e1c78df2c60b765e427e4fdf7d2e75ac0c79013b30e9fe3f2762abc467f7f0",
+      "bytes": 166121
+    },
+    "tile-0-7/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-0-7/measurement.json": {
+      "sha256": "7183042ecb3ff07afdbf377448753696cc8204225e4aa1b2be4cdd282f8c2d5c",
+      "bytes": 239
+    },
+    "tile-0-7/metadata.json": {
+      "sha256": "cc57862b7545644300f6f59a765e138ea8b903912053e12fccb6f6666e5a886d",
+      "bytes": 5012
+    },
+    "tile-0-7/terrain.json": {
+      "sha256": "226e5e4de58f284bac9d9a1cabaf341ee03949f304cd70ca4394e55b81dab40f",
+      "bytes": 122528
+    },
+    "tile-0-7/terrain.npz": {
+      "sha256": "822e2029e9fb880e8d07d1529386c9207ec7a2403ae279b2f477ee116dd56bcc",
+      "bytes": 6095
+    },
+    "tile-1-1/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-1-1/measurement.json": {
+      "sha256": "6b71a8cb4d7c0d7a00b6d7ae091bd7431a36482a6dd4a386ff032ad68f93b61f",
+      "bytes": 240
+    },
+    "tile-1-1/metadata.json": {
+      "sha256": "5f77100d68f1123d7a68446a71e964f0bcab64fc2043a1b1e737cd683489784f",
+      "bytes": 5016
+    },
+    "tile-1-1/terrain.json": {
+      "sha256": "119ea2d5a1dd4a707ec472d9379d517dc7b00dc9870b370750a4e96d2d11340c",
+      "bytes": 119999
+    },
+    "tile-1-1/terrain.npz": {
+      "sha256": "306cb8a45d90454a7bdb5634048e0f952eea0ccee5d7c92231c618edbf595b8b",
+      "bytes": 53278
+    },
+    "tile-1-2/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-1-2/measurement.json": {
+      "sha256": "c2b41ab62b1af373c9cad0c46393a3c132a5db3cc77f7081da04daea3dd37112",
+      "bytes": 242
+    },
+    "tile-1-2/metadata.json": {
+      "sha256": "57a566d93def8fe31286df76ec61ec873ec39bd1be4d6f2b0da3203e2c7ed32b",
+      "bytes": 5018
+    },
+    "tile-1-2/terrain.json": {
+      "sha256": "276d4ebdef6680720c8595528e47e82248f845f90b71ec6a5de91dd5e150c3db",
+      "bytes": 119158
+    },
+    "tile-1-2/terrain.npz": {
+      "sha256": "90191c716ce2fe3b0b9da24f93d60ed0244bb9df0598f18fbf84cb0bbd199675",
+      "bytes": 447646
+    },
+    "tile-1-3/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-1-3/measurement.json": {
+      "sha256": "1a17a4e2a4a00c6e2c445e495b6f0fcf8b745a5b1fd4e61657b114eda856e842",
+      "bytes": 242
+    },
+    "tile-1-3/metadata.json": {
+      "sha256": "0c86a2fb9d87caf13c9411fac8c460426433d76f0d98d4cc04ed4b8951b97976",
+      "bytes": 5018
+    },
+    "tile-1-3/terrain.json": {
+      "sha256": "fee4a54b63d79861896801d60d1212f7af09568970ff1c4cb4356b7cfd6ddeba",
+      "bytes": 121544
+    },
+    "tile-1-3/terrain.npz": {
+      "sha256": "9a0178bc4e08545899a696edfadc960fef88f03c77981bca3d2cde3d591d19ad",
+      "bytes": 590011
+    },
+    "tile-1-4/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-1-4/measurement.json": {
+      "sha256": "128c0f986ee2d2890abd0cd1decbe0fc27f285664679b07d3fb8f31eaa064043",
+      "bytes": 242
+    },
+    "tile-1-4/metadata.json": {
+      "sha256": "2a53b96a30536fc621c85f64b2424c83a9d30551bd0049e5b4d809c8198b084e",
+      "bytes": 5013
+    },
+    "tile-1-4/terrain.json": {
+      "sha256": "6c63e4deba032a53a34e779f248b77475d802554a2c24bee1ffc1e915857fc4f",
+      "bytes": 121810
+    },
+    "tile-1-4/terrain.npz": {
+      "sha256": "d47d780e01b248acac5e36a639ecef5477d0bc853b438085a101b8fa37ab7cdc",
+      "bytes": 583275
+    },
+    "tile-1-5/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-1-5/measurement.json": {
+      "sha256": "f93ce723f66cc680fc34dfdda1faaccee56ea2cc300dc0443f0b05fb65aa4a97",
+      "bytes": 242
+    },
+    "tile-1-5/metadata.json": {
+      "sha256": "9d517157c5cf90ef4a7034704a76b717ae61a943d8bd1fc6d2f17f6156d87307",
+      "bytes": 5011
+    },
+    "tile-1-5/terrain.json": {
+      "sha256": "69abe2407145434ce6617a537270d8c4ff5e9f48bedcd581a538cec39cd62021",
+      "bytes": 121902
+    },
+    "tile-1-5/terrain.npz": {
+      "sha256": "f0c3c804113fb58be9ca0526302fb9bdd12a4d56435f2bb155ba37cfbf70ad83",
+      "bytes": 593243
+    },
+    "tile-1-6/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-1-6/measurement.json": {
+      "sha256": "d34b99fe3216838530cfcd519a138fbebff2b30eaacbcf99e72b98ace31adb02",
+      "bytes": 242
+    },
+    "tile-1-6/metadata.json": {
+      "sha256": "ae5b0717d6769229db17e44b87e7fbdabbd4ce014b6553767094f9bf66e75150",
+      "bytes": 5016
+    },
+    "tile-1-6/terrain.json": {
+      "sha256": "b3f05ee27da0f93c236702c23bde9138a1b500ee1bd2c3b989ece61078951c98",
+      "bytes": 121275
+    },
+    "tile-1-6/terrain.npz": {
+      "sha256": "6204803d812840db0bb6b173158ae75f045a2989fea67030bffa81eee131946e",
+      "bytes": 589282
+    },
+    "tile-1-7/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-1-7/measurement.json": {
+      "sha256": "f29bf39c8df4fe029e85f2791b49008753e429652395ce92a8bec75a3437febe",
+      "bytes": 242
+    },
+    "tile-1-7/metadata.json": {
+      "sha256": "d1d101fec630ddfb33f28790eaee34a8aa648c0dd686e6fb752ebd5c0d754917",
+      "bytes": 5015
+    },
+    "tile-1-7/terrain.json": {
+      "sha256": "1d4407c68e9596271c90ae5ed7062f9ffcf5697bd1d32b11ec2dc461bce3892e",
+      "bytes": 122917
+    },
+    "tile-1-7/terrain.npz": {
+      "sha256": "b6e969dc1cf4bd7e70eb10b65f5583f51b5a04393f033c1ac40e3594d8ef8e41",
+      "bytes": 454428
+    },
+    "tile-1-8/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-1-8/measurement.json": {
+      "sha256": "32c000599494566fc1a87e838629326594e3eacce027ba2d2e9d2492c0ea837f",
+      "bytes": 240
+    },
+    "tile-1-8/metadata.json": {
+      "sha256": "f110cf04e31a20e0f0bf6f02062e6244bcb9825833a11347157d9ec59020151a",
+      "bytes": 5014
+    },
+    "tile-1-8/terrain.json": {
+      "sha256": "121de2a83efe630a257627275f2a28536cd8cf5cd19343b9f4a4c204bfbb3a94",
+      "bytes": 120221
+    },
+    "tile-1-8/terrain.npz": {
+      "sha256": "50f9572e8af1f485dfef049338e4153af7cfa931c3593a7c6ce1daa0aa813125",
+      "bytes": 57756
+    },
+    "tile-2-0/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-2-0/measurement.json": {
+      "sha256": "9816410bdfe971958e8af9921fcbccebccd55a8f141c79eb12ab5940644c858c",
+      "bytes": 239
+    },
+    "tile-2-0/metadata.json": {
+      "sha256": "7180e75fc1d15232e0d41c79b0658299700ba82dcf0a3e75aaeb38a80b490c9e",
+      "bytes": 5014
+    },
+    "tile-2-0/terrain.json": {
+      "sha256": "aaa294b417ce52a098005139555e37947f8b006438ba525d60ab8cff90482331",
+      "bytes": 120813
+    },
+    "tile-2-0/terrain.npz": {
+      "sha256": "5a66afbb87cfc96b709a94d9cfd33d8e1f6add498e4cc7e91bdae7c5197a6690",
+      "bytes": 4851
+    },
+    "tile-2-1/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-2-1/measurement.json": {
+      "sha256": "f8638b054ccc800df4b42809028b9a8e5a815c238a49bba06919e3f2826d0dba",
+      "bytes": 242
+    },
+    "tile-2-1/metadata.json": {
+      "sha256": "c9a7f24a152d7405f15da8214c1ab297b2a90414261a6bc2377b06c57dbb4e03",
+      "bytes": 5018
+    },
+    "tile-2-1/terrain.json": {
+      "sha256": "bada890fb081f6d9e3095f4f684ab0eb70a6b004069fbbde77911799a92113cf",
+      "bytes": 122292
+    },
+    "tile-2-1/terrain.npz": {
+      "sha256": "d72607108e2b4b8027c7eba64ab0e1c70993015c08ec00463c5da128c62b64a2",
+      "bytes": 449067
+    },
+    "tile-2-2/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-2-2/measurement.json": {
+      "sha256": "b89d8e870905a7381628f2beb09cdc97238a67859001d654a85d42a5cae859b7",
+      "bytes": 241
+    },
+    "tile-2-2/metadata.json": {
+      "sha256": "9471333b389f2d766579a416df10a64fa45b7d1c8671bf0da7aaa7c7d74444e8",
+      "bytes": 5018
+    },
+    "tile-2-2/terrain.json": {
+      "sha256": "8b36a0c6cfe5f441ac68eb4ea10254fd36d4bbe83fb4194957876b4b0aeb0797",
+      "bytes": 123006
+    },
+    "tile-2-2/terrain.npz": {
+      "sha256": "ec09885402ecf374b4aa85198c13f4e936ccbdc2d9edbb32570a97a77ab8fc87",
+      "bytes": 584441
+    },
+    "tile-2-3/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-2-3/measurement.json": {
+      "sha256": "7c9664398244b636f383a68342cb71a090719373783d19b69ed8d3c21db6f66c",
+      "bytes": 242
+    },
+    "tile-2-3/metadata.json": {
+      "sha256": "1fbce91ee1be46960678b616b53e1c0acf73efb61942f1dc1201359e71b1d21e",
+      "bytes": 5016
+    },
+    "tile-2-3/terrain.json": {
+      "sha256": "5956b092c77a39805f6a52404ada695e7b1b918b07d3621cd37e8dda6dcb5d7c",
+      "bytes": 120752
+    },
+    "tile-2-3/terrain.npz": {
+      "sha256": "3af6da65fb0810a4621f1e6624af27f23f7a6af824522fd7cb0c7766917e3200",
+      "bytes": 590209
+    },
+    "tile-2-4/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-2-4/measurement.json": {
+      "sha256": "e9f2d83728fff68a44e9f0d11a99131c96e5e41e3cdcb76a38d9ac1381d4d73f",
+      "bytes": 241
+    },
+    "tile-2-4/metadata.json": {
+      "sha256": "6125f8f0c8f00b041065c460e6c798005f56bb381aeb9bb9b5a667cd0932cd0f",
+      "bytes": 5013
+    },
+    "tile-2-4/terrain.json": {
+      "sha256": "bdfbc01d4d005530d59b93c0ca02aefe0698b62fb703067f716f36e51be1e92b",
+      "bytes": 121674
+    },
+    "tile-2-4/terrain.npz": {
+      "sha256": "bb7913f890190090ca080f5d022ac2977c1f4f1761be536900c8d6895873df05",
+      "bytes": 581114
+    },
+    "tile-2-5/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-2-5/measurement.json": {
+      "sha256": "184fc3a10205db917c42ea8d428c0ab7abfe38fbfceca83670491044b1cf281c",
+      "bytes": 242
+    },
+    "tile-2-5/metadata.json": {
+      "sha256": "03fe5902ae8a397597a08c459ee16e0884347e372e25933a7c1f6f47c3452ef3",
+      "bytes": 5011
+    },
+    "tile-2-5/terrain.json": {
+      "sha256": "3d633008bf1973ecb6c34b0ea05060819861c3dcb2fa48c5575b8f35f46d02a4",
+      "bytes": 120347
+    },
+    "tile-2-5/terrain.npz": {
+      "sha256": "cf07a5077d34cce6d01bf7f940eceabeea07eb815f13805b86fd3c9c03081c55",
+      "bytes": 582600
+    },
+    "tile-2-6/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-2-6/measurement.json": {
+      "sha256": "4ca9dc13614b43c7a995cf1f9517117221896c0fecb93655e445251e5fcdd541",
+      "bytes": 241
+    },
+    "tile-2-6/metadata.json": {
+      "sha256": "708decf7201ea611f64f3546aa1a15897b152e07d53663edcff9d2837c1b960b",
+      "bytes": 5016
+    },
+    "tile-2-6/terrain.json": {
+      "sha256": "5b886ae09702a4da071382c431e2e878dab9fd356680b155141efdc104bdfb03",
+      "bytes": 121809
+    },
+    "tile-2-6/terrain.npz": {
+      "sha256": "a30304afcf9b88443c5a9ef70038057a2f6caf12cf10495d73ff5fb1aceb2ae3",
+      "bytes": 598086
+    },
+    "tile-2-7/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-2-7/measurement.json": {
+      "sha256": "091a3e061f3895d0b5ea29220560c629f0658dd15ae3d305a18ebd7197c64336",
+      "bytes": 242
+    },
+    "tile-2-7/metadata.json": {
+      "sha256": "49a573caebd16f530609abaaba9ff8c2a60a51a84afe0579b98efcd10a51ee08",
+      "bytes": 5016
+    },
+    "tile-2-7/terrain.json": {
+      "sha256": "2386f0c0689f4536f466934e93523c5df5d7ee5b5dd574d43323c58d3c46fc6f",
+      "bytes": 121898
+    },
+    "tile-2-7/terrain.npz": {
+      "sha256": "70b5fc5bc8193605536c013d57d75277e71dbe3db181837676a0d05e2068378e",
+      "bytes": 575584
+    },
+    "tile-2-8/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-2-8/measurement.json": {
+      "sha256": "dfa4ea08983df81bf93543bb0d87fe442f5d4f734eb20f78d034098cfcc3b74d",
+      "bytes": 242
+    },
+    "tile-2-8/metadata.json": {
+      "sha256": "3facdbee6ecbfa7b0edca123344cca616510fe96a6e686fd254009643ba3fea4",
+      "bytes": 5016
+    },
+    "tile-2-8/terrain.json": {
+      "sha256": "f04f12f8b1a6c5b397dfd4c4a3b6da3ad3acb5c72798d2fedb69b1d4a0d85145",
+      "bytes": 119676
+    },
+    "tile-2-8/terrain.npz": {
+      "sha256": "17ccfccf0d2b9494f90b96f2ecd77bb05d35188966d687f5d58d4dd3932dc0b0",
+      "bytes": 459128
+    },
+    "tile-2-9/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-2-9/measurement.json": {
+      "sha256": "56839a96dd12e2b215b3eb31564172507344f07a0d6a15bf85cc5c5064c2ee55",
+      "bytes": 240
+    },
+    "tile-2-9/metadata.json": {
+      "sha256": "3a787fe2d0f6b73f21efceee07bca92a4688c321e9d63d6846765d3416545062",
+      "bytes": 5013
+    },
+    "tile-2-9/terrain.json": {
+      "sha256": "af756970ba5bfb54b385158b3c26d4b434010d02982e1bf961978c2ac684a65f",
+      "bytes": 117776
+    },
+    "tile-2-9/terrain.npz": {
+      "sha256": "860777e6c609483d1130e4ca2f5c0b3003ee4e40de06d2f8f731d818b957cbfc",
+      "bytes": 7177
+    },
+    "tile-3-0/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-3-0/measurement.json": {
+      "sha256": "2ecd8a91e85dbb65c71ab85b45070c313c8b7dae1f9669d3d1ce2505d29f4de2",
+      "bytes": 240
+    },
+    "tile-3-0/metadata.json": {
+      "sha256": "b794776761511b9fd955b2486604bcb9352e590ba2dbce4815c725df415160b8",
+      "bytes": 5017
+    },
+    "tile-3-0/terrain.json": {
+      "sha256": "22ce7ec0657280b323e5a36995c855650aafe79ae3c9cceab2b84a4bbb1dba4f",
+      "bytes": 121960
+    },
+    "tile-3-0/terrain.npz": {
+      "sha256": "efaa77efad569569405cf0719e7011f9ae2597abb6001b2b64c9cfe6e1261e8b",
+      "bytes": 157069
+    },
+    "tile-3-1/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-3-1/measurement.json": {
+      "sha256": "090c7269aee1bf1ae00da9b00270aff07bb26718f1f13766b4ecfe1ed5f64d3d",
+      "bytes": 241
+    },
+    "tile-3-1/metadata.json": {
+      "sha256": "59039fd4888b7d48ab4a76333f8344e1ca8976ab1db4b3f74e3f97404ca4a381",
+      "bytes": 5018
+    },
+    "tile-3-1/terrain.json": {
+      "sha256": "d2b2153a497e9b60e66bb9e63210f133a846f9a1b14fdaef5a1fda7b7631d575",
+      "bytes": 121940
+    },
+    "tile-3-1/terrain.npz": {
+      "sha256": "49f146564e322b4a9496c77920df422b45e11b12d25c274a2c48b7927ec09119",
+      "bytes": 598332
+    },
+    "tile-3-2/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-3-2/measurement.json": {
+      "sha256": "99901d628f3b62e5afc850f263810eb3eb4f2152ed2f9ac00c26e8c1edc8611a",
+      "bytes": 242
+    },
+    "tile-3-2/metadata.json": {
+      "sha256": "a0c862503a9b5df9009d9bd38534bee3bcfbc31b9dff7cb12b2f783c337fed8e",
+      "bytes": 5016
+    },
+    "tile-3-2/terrain.json": {
+      "sha256": "abf8f1236f277385bf211b7e8bc8199b9aa37cb4ec606f44ddc668baf1ffbce7",
+      "bytes": 118651
+    },
+    "tile-3-2/terrain.npz": {
+      "sha256": "71d38185c3f734d7e0ff4ad61a93d8e11f1c278be94c71e673734a40f3ed78cc",
+      "bytes": 583852
+    },
+    "tile-3-3/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-3-3/measurement.json": {
+      "sha256": "ab15eb202b15e264a3633c8c813468e9076cc8a57ac28b52b30f266260d2294e",
+      "bytes": 241
+    },
+    "tile-3-3/metadata.json": {
+      "sha256": "7ed9f835e50d9d7e3c59af18e9d2e45815dfe7e92f195e841bb08df19bfe47a4",
+      "bytes": 5018
+    },
+    "tile-3-3/terrain.json": {
+      "sha256": "f7efe63473ae3dc047405d6ac8e84f6a3596f789c1dbcbf5b4a077eb229ce25e",
+      "bytes": 117797
+    },
+    "tile-3-3/terrain.npz": {
+      "sha256": "890c9aa0ac839c32af398bbc6dacadce07af15524199331c90f439ceb6d18ba0",
+      "bytes": 583529
+    },
+    "tile-3-4/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-3-4/measurement.json": {
+      "sha256": "cd96e474648bb74849ecfbe20bc74b79b5b0289d553e545fd1e5225daad82f4c",
+      "bytes": 242
+    },
+    "tile-3-4/metadata.json": {
+      "sha256": "2e25a3aa81250c607d4722e0db3ab2efc3e6d3d644f6f0b07464b645a4997867",
+      "bytes": 5013
+    },
+    "tile-3-4/terrain.json": {
+      "sha256": "f3357c3923aa0b0e29df032066e168438a213f38d5e11418f3e0a922f5f8e89a",
+      "bytes": 119131
+    },
+    "tile-3-4/terrain.npz": {
+      "sha256": "edaffbbc54e95edec061f206050312036f7585f326724b8ac31300e6141425be",
+      "bytes": 594787
+    },
+    "tile-3-5/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-3-5/measurement.json": {
+      "sha256": "a96c1fcf00cdc8675058a5e8e1303375f27ed70e3c62b4583e103ddb7010fb3f",
+      "bytes": 242
+    },
+    "tile-3-5/metadata.json": {
+      "sha256": "70c464db79e127ae95f9d709c709a8a08e33163eee5540c19a8bc3938fe8e1ee",
+      "bytes": 5012
+    },
+    "tile-3-5/terrain.json": {
+      "sha256": "e8dfcbf37e80fba17206b5ac14459d866958e8a6c37f7607b3b407fafbbe4835",
+      "bytes": 118603
+    },
+    "tile-3-5/terrain.npz": {
+      "sha256": "5079c87ec8d50fa7d0f4d866e46d92f2dcfa567d137ad0d6c8827f25b4b41ae9",
+      "bytes": 590210
+    },
+    "tile-3-6/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-3-6/measurement.json": {
+      "sha256": "3ba6e77865a8fa85ab567a7650308c02c8f9e3104be23ea0b909f160bb129aab",
+      "bytes": 242
+    },
+    "tile-3-6/metadata.json": {
+      "sha256": "8135f14798b2def78849aa23cafb7a120b50e6b7cc77d035861891a88c1e0e79",
+      "bytes": 5014
+    },
+    "tile-3-6/terrain.json": {
+      "sha256": "0ffeefbb409b648bab4f0e834fe3207b90e84d55a662bb98190bde01738132a8",
+      "bytes": 120404
+    },
+    "tile-3-6/terrain.npz": {
+      "sha256": "1a11adde5ee33a722c6f0b50b79f67cb2d261b85ffd199ca47802cb195987fa5",
+      "bytes": 581292
+    },
+    "tile-3-7/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-3-7/measurement.json": {
+      "sha256": "2f62635ec34fcff7dd81cf4f081f0f67a731701a248f01a470f559b5300d08d9",
+      "bytes": 241
+    },
+    "tile-3-7/metadata.json": {
+      "sha256": "3667bf691d11077c24e2ff751e8bf5ddc6898165a1c8810b7cd07c6b6f3ef889",
+      "bytes": 5016
+    },
+    "tile-3-7/terrain.json": {
+      "sha256": "5029c8e8770ff8b697dd900ac2880410fcf5be3e220887e357c574c80bab5b6f",
+      "bytes": 122136
+    },
+    "tile-3-7/terrain.npz": {
+      "sha256": "fb2347b2d4ae46a273386e5a5d733dc721392f0a61948d186925dc24adc3e575",
+      "bytes": 581991
+    },
+    "tile-3-8/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-3-8/measurement.json": {
+      "sha256": "da58d526ea3f3b7e44e24af1379dd02fe3852ab3c2a598c3472c1d03208096f5",
+      "bytes": 242
+    },
+    "tile-3-8/metadata.json": {
+      "sha256": "bb232c62f9a2cd3e2af18d89487fe4dd9ec2c76bda729e7694aa59182be50475",
+      "bytes": 5015
+    },
+    "tile-3-8/terrain.json": {
+      "sha256": "3c01ebf622151be87ad94cb4196a9d6629b71c0ee794dc896dbe8da3dd909f9a",
+      "bytes": 120623
+    },
+    "tile-3-8/terrain.npz": {
+      "sha256": "d820a0264fbf6a6f0aa0f79e42969d6bf2bae31a2acb6995dfa363b8504e800f",
+      "bytes": 590133
+    },
+    "tile-3-9/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-3-9/measurement.json": {
+      "sha256": "3538e179363b373f89a13a8d303f7106b02eec3aba79677f68e6c59987caa970",
+      "bytes": 240
+    },
+    "tile-3-9/metadata.json": {
+      "sha256": "92e16c9a0a97c0025e9a6676c9392083acb0b409716f79a9594aa5bfb201f603",
+      "bytes": 5016
+    },
+    "tile-3-9/terrain.json": {
+      "sha256": "eefb856a0af98db13fd2826f3679e3539449c4e845d711925b43fb91d72929da",
+      "bytes": 117119
+    },
+    "tile-3-9/terrain.npz": {
+      "sha256": "99399dfbb0e0b3af69de49cc673b3aa013cc7929f6ff381deef0d94838b39588",
+      "bytes": 175836
+    },
+    "tile-4-0/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-4-0/measurement.json": {
+      "sha256": "05186f66df2c3e0773a02b8af36c9a703d1604a0a574b0939ab8da7a29f17dd2",
+      "bytes": 241
+    },
+    "tile-4-0/metadata.json": {
+      "sha256": "1ea8335376b3d7a9f7ed1935edaefb4ded08e3ef84d883f622a63c486b300173",
+      "bytes": 5009
+    },
+    "tile-4-0/terrain.json": {
+      "sha256": "3affc55d01a7a7c24759f4facebeef32d72dc2a3b745fe59c9a6fc3f0839ccec",
+      "bytes": 117855
+    },
+    "tile-4-0/terrain.npz": {
+      "sha256": "6438e6183dfe69e321ae38b31d16a6d998b3bc57771e74610a89e46032cd35e8",
+      "bytes": 302547
+    },
+    "tile-4-1/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-4-1/measurement.json": {
+      "sha256": "eaa5460ed66330b7285c1b0e44d6322d58e9758da512f43d8d37840403df6a6b",
+      "bytes": 242
+    },
+    "tile-4-1/metadata.json": {
+      "sha256": "102569bb2d8acd85f8e727bc140591cc1447cccbf03a87bbd003edab381f69b4",
+      "bytes": 5013
+    },
+    "tile-4-1/terrain.json": {
+      "sha256": "ee240a3c83b708d23e8fdf6cbaa3db3bb61d4f1f73bd75d92a5dfb4209e40e87",
+      "bytes": 121549
+    },
+    "tile-4-1/terrain.npz": {
+      "sha256": "dbd79de86ea5e67ffb4a4021b10042c2ed3b918c81a1e3e4ce449ef56f6dc5de",
+      "bytes": 601419
+    },
+    "tile-4-2/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-4-2/measurement.json": {
+      "sha256": "2680cd666f50fc7918cb0d3f8a4875384923341d8c24867d7254f4f1c9ab188c",
+      "bytes": 242
+    },
+    "tile-4-2/metadata.json": {
+      "sha256": "e30f49d60704f4692866a685503aee711c5eac2a2064eada0bf237a397e09ae0",
+      "bytes": 5013
+    },
+    "tile-4-2/terrain.json": {
+      "sha256": "57e4f8bf539386be57c757d6c2c5fec6eb58830575fe0096484d271c7d7da2d8",
+      "bytes": 120633
+    },
+    "tile-4-2/terrain.npz": {
+      "sha256": "5a22ea30115afff741fbbec35b6089f001b424ae747d89e8dab94c011c7c7b68",
+      "bytes": 591288
+    },
+    "tile-4-3/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-4-3/measurement.json": {
+      "sha256": "232dca448aa3f49038d85fe74559e046bdc5d9d32be612752bf9a756d791dabe",
+      "bytes": 241
+    },
+    "tile-4-3/metadata.json": {
+      "sha256": "eb856c9ef0e7c6512d851a095da9f10bcffd7e3bc64026c3eb38a80d86529fe4",
+      "bytes": 5013
+    },
+    "tile-4-3/terrain.json": {
+      "sha256": "4db49a79012ae3d20a2a3c1c0137dfdca854368c0fdbbeeab5ab93b63b8fd032",
+      "bytes": 120392
+    },
+    "tile-4-3/terrain.npz": {
+      "sha256": "ed3d273e22987341dc3bcf70942e8abba2c0da5a3c1ca295de7237dbf54ac01b",
+      "bytes": 589729
+    },
+    "tile-4-4/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-4-4/measurement.json": {
+      "sha256": "33b0da8f4da9aeaacf620c0d81b3920a2d7af42196a439853fd6e28b06c852d7",
+      "bytes": 242
+    },
+    "tile-4-4/metadata.json": {
+      "sha256": "cc5e72dcb4acf10b776c1b1fa0f1a3c0165b60e5b9dbaeddbd987ac914c88aa3",
+      "bytes": 5008
+    },
+    "tile-4-4/terrain.json": {
+      "sha256": "2aa3336135e849e4eb3b0485993ff901f03a953ef796c47174b3a1042ce34ae7",
+      "bytes": 116448
+    },
+    "tile-4-4/terrain.npz": {
+      "sha256": "484f9bb242e7b5b232037d543d6f06119f85068cf287e3bf4640d335a5a4933a",
+      "bytes": 582070
+    },
+    "tile-4-5/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-4-5/measurement.json": {
+      "sha256": "41a22fe4a12f674fcd84eb5085e266f3026baf55659a7b896dc06f27d8d9a803",
+      "bytes": 241
+    },
+    "tile-4-5/metadata.json": {
+      "sha256": "004ae177205dadae773af2121c1e81fb45bb974251c52bfcafc1f7d090d9c5d7",
+      "bytes": 5006
+    },
+    "tile-4-5/terrain.json": {
+      "sha256": "b193a1b3849ed7594cc2ed10ba86f6170bd78884c4807fc514da432d6684fd64",
+      "bytes": 121470
+    },
+    "tile-4-5/terrain.npz": {
+      "sha256": "1834f492ec6aaa229621b6e4d98de5a986a27e48ab5040a5702a23e3c4b73b92",
+      "bytes": 589049
+    },
+    "tile-4-6/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-4-6/measurement.json": {
+      "sha256": "f213468bee63cd6e786974968bd4bd53aca87cd4b144c3c73e2bedc716530a4b",
+      "bytes": 242
+    },
+    "tile-4-6/metadata.json": {
+      "sha256": "8fbf3a72f3f7e8b132e91a156a9e1fd63d4b2d140d473eea20a53bef7c5db1f5",
+      "bytes": 5011
+    },
+    "tile-4-6/terrain.json": {
+      "sha256": "3756503f9542a0a0f1f5009d3b5f0537fba5facabb0c0d84d99e73857402e1df",
+      "bytes": 122121
+    },
+    "tile-4-6/terrain.npz": {
+      "sha256": "a36310aa04c547a5a9babf34069a03818e648cf0f24cfae589e619f4849dc0bb",
+      "bytes": 576100
+    },
+    "tile-4-7/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-4-7/measurement.json": {
+      "sha256": "877fdd9980e787dc42176cbbc5b8a06ba61ab2618aa0ed903addfca997df5293",
+      "bytes": 242
+    },
+    "tile-4-7/metadata.json": {
+      "sha256": "8309482d4fd521b52798a696cfe6609515d08f1429affc563beb9980760677be",
+      "bytes": 5009
+    },
+    "tile-4-7/terrain.json": {
+      "sha256": "bd7937af82bec6feaf7e8ce61a209660a825d6d35dbf8696fd83b76c700b4089",
+      "bytes": 121329
+    },
+    "tile-4-7/terrain.npz": {
+      "sha256": "f7f3a6d56eec3f4f2de05b97e7a8b95da4ea89f925ac6e80876b42dfd9bbf317",
+      "bytes": 589363
+    },
+    "tile-4-8/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-4-8/measurement.json": {
+      "sha256": "d271ff478938c5d1bc43e88f645b1da12a4cab6150eabc05d897dab3bf65728f",
+      "bytes": 241
+    },
+    "tile-4-8/metadata.json": {
+      "sha256": "94931073125b641404b0126207303645b2c15bd4dee61baeb135f28f86f70058",
+      "bytes": 5011
+    },
+    "tile-4-8/terrain.json": {
+      "sha256": "ffbc4e6c07023f9c5aa6cb6d1888de833bd5cb1c6edaaa3cb87390427f957736",
+      "bytes": 116949
+    },
+    "tile-4-8/terrain.npz": {
+      "sha256": "f74cb5c47743ff0fc7929075aa20492d7c478c944564b402058aa5e4f4640d5a",
+      "bytes": 581407
+    },
+    "tile-4-9/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-4-9/measurement.json": {
+      "sha256": "f1afd1ea6415c0b942564a30a2c153022113dc7e0d7951e8c1cfebb91a129762",
+      "bytes": 240
+    },
+    "tile-4-9/metadata.json": {
+      "sha256": "13643732e54a006a33a20dbc69e54f7706487b5a0b145794feec42eb46f2dc88",
+      "bytes": 5009
+    },
+    "tile-4-9/terrain.json": {
+      "sha256": "d3dfedb19242ded4a1edc43052841ce9957c6ce9a854ca3a8023a6fc556df93d",
+      "bytes": 119998
+    },
+    "tile-4-9/terrain.npz": {
+      "sha256": "cf111a76eb05ebb913f8b802bebf69c482662ac548ba543cb2adf52dbd78243d",
+      "bytes": 308761
+    },
+    "tile-5-0/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-5-0/measurement.json": {
+      "sha256": "91acf59b362bb309eb8720ef61e4bc9b060d6915ce82f14335a1d2b050cd69ba",
+      "bytes": 240
+    },
+    "tile-5-0/metadata.json": {
+      "sha256": "1fa2a346b379349c64b8dac5008b481f5665719a18a61e0e6240fe7aadbad75e",
+      "bytes": 5010
+    },
+    "tile-5-0/terrain.json": {
+      "sha256": "a0a9123115a33de8a66fe027f95b468e1a31ca44d3c045778b1ef2c5ebeb6e6c",
+      "bytes": 117615
+    },
+    "tile-5-0/terrain.npz": {
+      "sha256": "0607bae3bb26b1c85b53dd2b1b25604769a990c186a53bbdb5e17df0ed3ac69c",
+      "bytes": 303301
+    },
+    "tile-5-1/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-5-1/measurement.json": {
+      "sha256": "897e6541c2c5f7054172ae11469908a2579bc075085fff2282306253da10f525",
+      "bytes": 242
+    },
+    "tile-5-1/metadata.json": {
+      "sha256": "ed71fb906f96766fa6ade52ebeb8989707bdc6d16ec8f18e20971b99dcf03445",
+      "bytes": 5011
+    },
+    "tile-5-1/terrain.json": {
+      "sha256": "8c86629e6563320032f5022a99e3f3d53e5b52e8b73f721c481a4bf2124a5ffa",
+      "bytes": 121527
+    },
+    "tile-5-1/terrain.npz": {
+      "sha256": "ccd07b74ab011fef3d2117f866e33bef994dfbd59f9a7b53cc588da5c10eaea5",
+      "bytes": 589963
+    },
+    "tile-5-2/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-5-2/measurement.json": {
+      "sha256": "7539260aabd35a0a1512d6d0cb13148799da71bca0d21a42abd62d7cf013a5a4",
+      "bytes": 242
+    },
+    "tile-5-2/metadata.json": {
+      "sha256": "6ff919316bcc72e6ecbd22e2fa4f0fdee3c2222b7b76411e07b51aebc9fe952e",
+      "bytes": 5011
+    },
+    "tile-5-2/terrain.json": {
+      "sha256": "ef3f25151bbd04c1873fd152b8c03ac7e8d4c30d3a58db8cb0d0e7b9da62df7c",
+      "bytes": 119987
+    },
+    "tile-5-2/terrain.npz": {
+      "sha256": "10e78c4bc5ac580cbaf6f9e215ea140f1f2e76a3148a7c8c48dbd4ea6a4795bc",
+      "bytes": 571852
+    },
+    "tile-5-3/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-5-3/measurement.json": {
+      "sha256": "70895204f6088ae75eae2e302d2c35eaf562ee4cc4f50eb68c6ad54453f69c8c",
+      "bytes": 242
+    },
+    "tile-5-3/metadata.json": {
+      "sha256": "bc2c8f73ac8af7a1e8fa84e6047bcde79e9828418a97898b7a402d8fb777f98b",
+      "bytes": 5012
+    },
+    "tile-5-3/terrain.json": {
+      "sha256": "42af2aaeb2a7b9cbefc73f6a6d45014ddf67cb06dd3f74337a9bc1f4b9a8b1b8",
+      "bytes": 121097
+    },
+    "tile-5-3/terrain.npz": {
+      "sha256": "406e501b046e8a5f37f378e0f3270f1b2de0727ce76055f97421f4197f269cc8",
+      "bytes": 587362
+    },
+    "tile-5-4/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-5-4/measurement.json": {
+      "sha256": "227431df77b0df8cc3196e32d666793a172f5388050e39e4aebffaaabff2dc11",
+      "bytes": 242
+    },
+    "tile-5-4/metadata.json": {
+      "sha256": "689086cad1d52cfbb7dd7fc9047ca698536534651c8552daa36d94a8c4b6ed19",
+      "bytes": 5006
+    },
+    "tile-5-4/terrain.json": {
+      "sha256": "1aea7468b6aaaa60f8f05c486c39192e0ef8412d006b6ceebb9f29938da23768",
+      "bytes": 117808
+    },
+    "tile-5-4/terrain.npz": {
+      "sha256": "eddeb091a1eca2944319ffc3d4477b3d7f1cf2049bca6d23cc97fc3d6111c9b9",
+      "bytes": 579625
+    },
+    "tile-5-5/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-5-5/measurement.json": {
+      "sha256": "9921bdc59d57a0215b00f6a9a47652edfb1d176a940996fa47a91669c030748e",
+      "bytes": 241
+    },
+    "tile-5-5/metadata.json": {
+      "sha256": "db3a36c24fa715994ab1c475f97346fd91c08757c4043bbf0f6ff55a797a70ca",
+      "bytes": 5005
+    },
+    "tile-5-5/terrain.json": {
+      "sha256": "9cb95d2aa656732e2c342800fbc5317a8c6abe37f67e7392fa5981b0cee9ec41",
+      "bytes": 120065
+    },
+    "tile-5-5/terrain.npz": {
+      "sha256": "4e6f1e24f685186dfe7c0794c337bbbbaf87af9f1c547a46941a64e642ec6e79",
+      "bytes": 597227
+    },
+    "tile-5-6/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-5-6/measurement.json": {
+      "sha256": "fd4ce26342ce69f279c191f157d7744ce78fc62e5a5d8c19a97893ccc2c740b3",
+      "bytes": 242
+    },
+    "tile-5-6/metadata.json": {
+      "sha256": "6112fa9e0d36a3f36db9fd604f15eed9f576c437fcd11f22c41fb6f78a29a4f7",
+      "bytes": 5009
+    },
+    "tile-5-6/terrain.json": {
+      "sha256": "a236cfb3618bcde8c5dfa6eae1a49b4fd8873cd445cc395184a4353af9dea992",
+      "bytes": 121664
+    },
+    "tile-5-6/terrain.npz": {
+      "sha256": "831ae2e8a4757f1e007f5e20304b34e52aeed6d5a76e2d5cb8bbd712ab72a41e",
+      "bytes": 577397
+    },
+    "tile-5-7/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-5-7/measurement.json": {
+      "sha256": "954a63c321781ce05860441766631b88de585f894c0f5c0dcb72c16dc08ba605",
+      "bytes": 241
+    },
+    "tile-5-7/metadata.json": {
+      "sha256": "fa56ba65c728666e9d80079b837bb76abf261d992682fdb3c01216f946245186",
+      "bytes": 5009
+    },
+    "tile-5-7/terrain.json": {
+      "sha256": "7bff1e43b00ec818a1130ecb91a3664ae953d166a0df6a072f979d6d029ace27",
+      "bytes": 121977
+    },
+    "tile-5-7/terrain.npz": {
+      "sha256": "fb5057970ed4480ddefd282311475b0b1496ad30c9315e26ee202418bf8d3a75",
+      "bytes": 579929
+    },
+    "tile-5-8/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-5-8/measurement.json": {
+      "sha256": "f23a2ca650599dab90145a1cdaccc5147729f4bb09204693ce8ff2bec9ca2dfe",
+      "bytes": 242
+    },
+    "tile-5-8/metadata.json": {
+      "sha256": "1d871b9f7f3e6b585e1cd3e41094f9853ca16ecbed6c948442d88608cb9624b6",
+      "bytes": 5010
+    },
+    "tile-5-8/terrain.json": {
+      "sha256": "ecc1e8f1d1905e568865e24a3ab05d933c6bc8e7afe6d28db5169f28048f046d",
+      "bytes": 118972
+    },
+    "tile-5-8/terrain.npz": {
+      "sha256": "de33c138279e0ae185563b670d1a302ca90e23e84acbe8cb91a40f0b037cd065",
+      "bytes": 585042
+    },
+    "tile-5-9/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-5-9/measurement.json": {
+      "sha256": "843f513069a9202b23d2bd8e47a46f205430fc1d071e844adab6cb46585e5ada",
+      "bytes": 241
+    },
+    "tile-5-9/metadata.json": {
+      "sha256": "f2114fb21ad96f450ea296381351c856bd4c5a2e8ce2dc94ae12a60f931d01a6",
+      "bytes": 5008
+    },
+    "tile-5-9/terrain.json": {
+      "sha256": "8a49f32b52ca3f20098e0f99c05edb8f93aed08845704e1b5f5182433a799a95",
+      "bytes": 119532
+    },
+    "tile-5-9/terrain.npz": {
+      "sha256": "4a7b9d9e0705957ef90a8e2ef69cf07f098b3efcb2329459355a9dac014afa61",
+      "bytes": 313412
+    },
+    "tile-6-0/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-6-0/measurement.json": {
+      "sha256": "70f13b042f1be594af4edbf1521332daff2b675ed911801dd022d4cfd84fbca0",
+      "bytes": 240
+    },
+    "tile-6-0/metadata.json": {
+      "sha256": "a231cde9af85fe4bb0b627e081d8825af4cdbf797602d4309a83bb1dcb14ecdb",
+      "bytes": 5016
+    },
+    "tile-6-0/terrain.json": {
+      "sha256": "af3a21ec659e951bf9ce325f4d84fcbfcba458e662ee0700ebae8dde4e2c8536",
+      "bytes": 120494
+    },
+    "tile-6-0/terrain.npz": {
+      "sha256": "7a36e335ed8efac8fc33e317ff8601cbedd262b7b30d5b502ada761e24a7078a",
+      "bytes": 167900
+    },
+    "tile-6-1/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-6-1/measurement.json": {
+      "sha256": "f965381a403540c54736064e2944607da09d4eb42475ed5ff3c90bdec55e11f2",
+      "bytes": 241
+    },
+    "tile-6-1/metadata.json": {
+      "sha256": "777c9d341ac8c836460275cb34ce7d8128a9da39c3732d1162ecbc7326c31c0f",
+      "bytes": 5016
+    },
+    "tile-6-1/terrain.json": {
+      "sha256": "b1a0d68ec33df5ece0ad8b8013fba99ea8a50770e5cf0cd9f3f5b61d053c5b49",
+      "bytes": 121957
+    },
+    "tile-6-1/terrain.npz": {
+      "sha256": "3117dae8020326e0ef75981e80d047faa96d817723d24cb45647267df92d7fb6",
+      "bytes": 586110
+    },
+    "tile-6-2/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-6-2/measurement.json": {
+      "sha256": "f7c8c1679bf275c4666b2f26e9a8fbae0e193b81b5dc8f6253462ed9c57950d2",
+      "bytes": 242
+    },
+    "tile-6-2/metadata.json": {
+      "sha256": "56dbe063dafacc92bb74afb19776f1cb004ae21bc85eb5be789421224a67b022",
+      "bytes": 5016
+    },
+    "tile-6-2/terrain.json": {
+      "sha256": "096728edca8d93fbecdd0364345b345ff4575e7e1e44aa24811f00ca2d90e6a3",
+      "bytes": 118104
+    },
+    "tile-6-2/terrain.npz": {
+      "sha256": "3a181097c079be311a704a26b92000ca25bf62897e37cb2ba8928666b840b535",
+      "bytes": 574185
+    },
+    "tile-6-3/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-6-3/measurement.json": {
+      "sha256": "bea1c11d94933f2b1352b4e46f075241943d724431f31e1ff635787802fbc588",
+      "bytes": 242
+    },
+    "tile-6-3/metadata.json": {
+      "sha256": "f473cf759f3f9d671bb84618c65388fee7c9d1b62051843b9467446faa5ffecc",
+      "bytes": 5014
+    },
+    "tile-6-3/terrain.json": {
+      "sha256": "0df15de8d4e24905a00de2996653388ae294cac87aeffd899f62320fab4c86bf",
+      "bytes": 119270
+    },
+    "tile-6-3/terrain.npz": {
+      "sha256": "7764d43b7f94010cd760138d237cdf6ef0fc295e8bee52db76927290c9867c62",
+      "bytes": 584506
+    },
+    "tile-6-4/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-6-4/measurement.json": {
+      "sha256": "ca30e590f18558c1e14c631e95848790b025882497977c035765c11c58c2ac39",
+      "bytes": 239
+    },
+    "tile-6-4/metadata.json": {
+      "sha256": "d61342a62377530f5673609345e72cf6865323ef5d5633ffcc3939db5a40ec8a",
+      "bytes": 5011
+    },
+    "tile-6-4/terrain.json": {
+      "sha256": "dbcd42ff1439ecd53fb7f862f677e09020d8a5aa47fee1d935a2516eb1a34783",
+      "bytes": 118942
+    },
+    "tile-6-4/terrain.npz": {
+      "sha256": "d6fc6ff6dca730cfe7045c7d6165e0aa13fce9133599149f5105148a0aaa8852",
+      "bytes": 594340
+    },
+    "tile-6-5/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-6-5/measurement.json": {
+      "sha256": "4954bc2452eec92261ffe7749a081a489027bf95ade6ec192440c593098210e2",
+      "bytes": 240
+    },
+    "tile-6-5/metadata.json": {
+      "sha256": "8044c2c352f69c26f9988068e90b7f2c9b588e3b66cda2bc2198d3a9a10f02ca",
+      "bytes": 5009
+    },
+    "tile-6-5/terrain.json": {
+      "sha256": "d370fd6aa3e07535b552b2f5cf60fdcd87fcb0a15e172c3f72046d0fae77e806",
+      "bytes": 120862
+    },
+    "tile-6-5/terrain.npz": {
+      "sha256": "eb2ccb887a4ba72de415ed0dab0517d22afd52f612acd2d84931eab2503c7da1",
+      "bytes": 589127
+    },
+    "tile-6-6/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-6-6/measurement.json": {
+      "sha256": "9c7da57057ea8a0410d178bc8816a24e1a3f99d27912658afb96cb092d2a3965",
+      "bytes": 242
+    },
+    "tile-6-6/metadata.json": {
+      "sha256": "bc673483473bc28b11fed954ac2441bf7b4d948ea3b1a6fa2c303be18764e129",
+      "bytes": 5013
+    },
+    "tile-6-6/terrain.json": {
+      "sha256": "3116e3d7889c665db45b6ffd3fef05fdb8cc987571bec187536b4540b13afc84",
+      "bytes": 117898
+    },
+    "tile-6-6/terrain.npz": {
+      "sha256": "05953416db213b48b52b0fd293eb58b922238a8c24194da7cb40bc851463cf94",
+      "bytes": 595016
+    },
+    "tile-6-7/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-6-7/measurement.json": {
+      "sha256": "5d7a1aacd67dc02435ed61b974c5f9672afec67a2cac7e827c990493417aad7e",
+      "bytes": 242
+    },
+    "tile-6-7/metadata.json": {
+      "sha256": "46940a264d6309d4a9f254607c9b1e1438fc89521c7ad1b21792088cfc6d2679",
+      "bytes": 5013
+    },
+    "tile-6-7/terrain.json": {
+      "sha256": "529877c8bf477f18564657c5d5f700f51832e5286d8833c6d1063fcd9efbd06c",
+      "bytes": 118257
+    },
+    "tile-6-7/terrain.npz": {
+      "sha256": "b7ce8a370b64a123c506b8a00cf56a03ffe200c8f14ff7dfdad69aaa8599ba40",
+      "bytes": 594232
+    },
+    "tile-6-8/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-6-8/measurement.json": {
+      "sha256": "958ff4d034f8d1bcd7313432f009ed77140190aa8d4a5ba149cdb55bcba55ded",
+      "bytes": 242
+    },
+    "tile-6-8/metadata.json": {
+      "sha256": "7509edf791fbd2f967bc41cf1174d88cd1139ce62d6d508d9110befb257aaf45",
+      "bytes": 5014
+    },
+    "tile-6-8/terrain.json": {
+      "sha256": "3ea48c9759f148041c73c64bc3e268328e2b7002549755c8d893b3ded159b3fa",
+      "bytes": 122609
+    },
+    "tile-6-8/terrain.npz": {
+      "sha256": "cdc721d8befda25108ee70f78c67bec6bc79b3c5ab58db1e52f3b9389d3e4278",
+      "bytes": 582748
+    },
+    "tile-6-9/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-6-9/measurement.json": {
+      "sha256": "728837863682fa2a1d219ba84cae8ffa4a4a7b90417cd8222d37e8640178ba67",
+      "bytes": 241
+    },
+    "tile-6-9/metadata.json": {
+      "sha256": "65d73feff9884ed22ffb53f64a9ebdefda63f5684e5adafdf3c4e180ce543dc6",
+      "bytes": 5014
+    },
+    "tile-6-9/terrain.json": {
+      "sha256": "02e1280d558553021d87d27585580013a58ec4508ee98b89815e030f5bc2ba99",
+      "bytes": 121983
+    },
+    "tile-6-9/terrain.npz": {
+      "sha256": "67cf6e3ff0f086f28b46eceb1e50b57c86ae75dd50e11c5c48d1992207685493",
+      "bytes": 180792
+    },
+    "tile-7-0/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-7-0/measurement.json": {
+      "sha256": "0734ec59f0209bcf4a4b95c4ae8ca8cf0fa8bdf832278541e0ad06e0989ab09f",
+      "bytes": 239
+    },
+    "tile-7-0/metadata.json": {
+      "sha256": "c3496aa4cd7bdc5eea2978a28f8e4a52dfa69e6f696933851473d023e077cf6c",
+      "bytes": 5012
+    },
+    "tile-7-0/terrain.json": {
+      "sha256": "347ad0a11dd05941bee299569d0dedd585be32f04ceb4c06366d59bde305f29d",
+      "bytes": 122721
+    },
+    "tile-7-0/terrain.npz": {
+      "sha256": "2f599e158223d1a7f38caff073f722ef1ef546dce35ce2e85838e3fbe1c49907",
+      "bytes": 5705
+    },
+    "tile-7-1/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-7-1/measurement.json": {
+      "sha256": "b0b4d54bcbf57506678d397b23d7e6e3851f447d74706b6c5d060040a8e51b94",
+      "bytes": 242
+    },
+    "tile-7-1/metadata.json": {
+      "sha256": "d0a8075c7b2689e8d5d98668c49917ed5c4bf2278a3428fb2fe3d25b9a3f25ee",
+      "bytes": 5015
+    },
+    "tile-7-1/terrain.json": {
+      "sha256": "925d95402ab5cb9e4f7c568329ef2c1d74955fd13ff00a320c120f19488d3cc2",
+      "bytes": 122337
+    },
+    "tile-7-1/terrain.npz": {
+      "sha256": "926b90a09183eac44f40bb6eb6e0b8c796b4c01d4f6aa5924009507be00773d8",
+      "bytes": 455616
+    },
+    "tile-7-2/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-7-2/measurement.json": {
+      "sha256": "0dd4e03096a293c31dae5beb59997fdc54648766c8f83cb54290f2e37fa3d26e",
+      "bytes": 242
+    },
+    "tile-7-2/metadata.json": {
+      "sha256": "3990f45e6c5ab5410ee1bbf76dff92d235666b36479ceeeabd7524f9909d4676",
+      "bytes": 5016
+    },
+    "tile-7-2/terrain.json": {
+      "sha256": "e68102285edb0db4f549f994a030b0e5fbe36dcb87439fb06c61e2cea89e38e5",
+      "bytes": 120489
+    },
+    "tile-7-2/terrain.npz": {
+      "sha256": "db378647e82dc144c528587d3095488e536b2d08c7cc30f01140e3786a794d39",
+      "bytes": 573535
+    },
+    "tile-7-3/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-7-3/measurement.json": {
+      "sha256": "efddce4513590a141049e8e8963179b2857b77a902608d2495248000ff0096a6",
+      "bytes": 242
+    },
+    "tile-7-3/metadata.json": {
+      "sha256": "4315ff20c60f61dc8e455afe7b332cc842914483247f6af3b706c83139a7a235",
+      "bytes": 5016
+    },
+    "tile-7-3/terrain.json": {
+      "sha256": "6ec4e40a0fefac13fd0ed5c6019a976cc0f4a58c8b288633b50149feeb917202",
+      "bytes": 122323
+    },
+    "tile-7-3/terrain.npz": {
+      "sha256": "ccc3a39b4d5358800adb1b648edfe7e63b331e4681f6a0350934fac41ef1e7d7",
+      "bytes": 589526
+    },
+    "tile-7-4/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-7-4/measurement.json": {
+      "sha256": "c144ffac94c518218c62d35ef85ccabd4970077c4d1a0ba330bfcd8990be6da0",
+      "bytes": 242
+    },
+    "tile-7-4/metadata.json": {
+      "sha256": "e6495cc0b0d3f2290080c27271f2a7210de5118b5373addfd1388594d93a6c66",
+      "bytes": 5009
+    },
+    "tile-7-4/terrain.json": {
+      "sha256": "88baadba6ff5476cb67dd269e8c3da9cd4114f75d102ba3a99bb7fa5bddf7a05",
+      "bytes": 122084
+    },
+    "tile-7-4/terrain.npz": {
+      "sha256": "456717657d55cedfc9145ab7585d8d52080bea6fd25afa3e2789daa7d6ad50e0",
+      "bytes": 583857
+    },
+    "tile-7-5/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-7-5/measurement.json": {
+      "sha256": "c4b2047bf2940bf6aa8e127f599cd5e86ddbea576d5d3e59229c735faa3f8de5",
+      "bytes": 241
+    },
+    "tile-7-5/metadata.json": {
+      "sha256": "1f6876d1a1891b21d85a49ae1eec6cd73813078062178577276bcbca36cf120f",
+      "bytes": 5009
+    },
+    "tile-7-5/terrain.json": {
+      "sha256": "7f2fe1d4043111191d0f329b4c04c3cd4b00fc3e2011c567c888d9ea320b36cb",
+      "bytes": 121646
+    },
+    "tile-7-5/terrain.npz": {
+      "sha256": "9fd08412bf51df60f333cc299d45359b66e69ddae4b9cfac311b6622fd311610",
+      "bytes": 579720
+    },
+    "tile-7-6/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-7-6/measurement.json": {
+      "sha256": "85b57ad27f2fa40f90353d9732655090816d6e83532ca1ed4bf933ab97c1e8b1",
+      "bytes": 241
+    },
+    "tile-7-6/metadata.json": {
+      "sha256": "993aeb765adcde841b661b064d6d4ae306a108f03ebf34e611d06883f31eac27",
+      "bytes": 5013
+    },
+    "tile-7-6/terrain.json": {
+      "sha256": "0152ed4712529c59b4b8d97cea6b1a2274e8002440088a80d58af86b5f2e50a6",
+      "bytes": 117776
+    },
+    "tile-7-6/terrain.npz": {
+      "sha256": "626a79e452605b98576270311f955a277a5aeacff77d946aa39e3ce5d32ce709",
+      "bytes": 586588
+    },
+    "tile-7-7/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-7-7/measurement.json": {
+      "sha256": "e98b2ab89756bac5b1f2bbaabcb2d8d13395a49325f9062075ca49322c9d6d07",
+      "bytes": 242
+    },
+    "tile-7-7/metadata.json": {
+      "sha256": "782b83e065772ed2df8ff2d709ddf36ead61efdb00a63b49bb48246eae31639d",
+      "bytes": 5014
+    },
+    "tile-7-7/terrain.json": {
+      "sha256": "c41defa991fa1c9d2a10bc28bb32ef077ef84d8f9f5e89b25e754c9db9422abb",
+      "bytes": 118331
+    },
+    "tile-7-7/terrain.npz": {
+      "sha256": "6804cbbf1c37d380e28a20bf9a2b0d0a2c6023766a78bca3a13af33ee9cb31a9",
+      "bytes": 585897
+    },
+    "tile-7-8/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-7-8/measurement.json": {
+      "sha256": "6159cb28b41084fa63df3fc39f19324ef3be20052a931bbb060fff7d06dc1b38",
+      "bytes": 241
+    },
+    "tile-7-8/metadata.json": {
+      "sha256": "5a93aeb5dbadfc91861cb2735acd3dc1542534edc386dccd8c0498e2e64bc71d",
+      "bytes": 5014
+    },
+    "tile-7-8/terrain.json": {
+      "sha256": "91bb2833b7e2dc7dcd1e80117776e92dccd62e074282c25945c59ed2ef29cf43",
+      "bytes": 122012
+    },
+    "tile-7-8/terrain.npz": {
+      "sha256": "38dfbd7a424027733597d1fcfa5fc2b1a5741e2f2f584e1b5710de54f57c4c81",
+      "bytes": 465538
+    },
+    "tile-7-9/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-7-9/measurement.json": {
+      "sha256": "b0d9a90925116da1e743270c6e65f2efae0a68daaea5a78500abb0f6567d7fdc",
+      "bytes": 240
+    },
+    "tile-7-9/metadata.json": {
+      "sha256": "5540ac9c69ed9563d3461faaa3dc34a36753d497d3b5b2d698e1cd7292bfb5a3",
+      "bytes": 5011
+    },
+    "tile-7-9/terrain.json": {
+      "sha256": "cb51b83cf59ccb299c38b96f18c3039ffcddb273c3bb0c9e17d88faa493222b4",
+      "bytes": 122007
+    },
+    "tile-7-9/terrain.npz": {
+      "sha256": "99f5c9b98330d3af7438fe720f59461a9bcb3ca6b533ce4c9ecff83d3b6a8c27",
+      "bytes": 8970
+    },
+    "tile-8-1/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-8-1/measurement.json": {
+      "sha256": "3548396cff6645fa5ba5062fb896cad7b3aff908f07143cc08b9a2a687d55e24",
+      "bytes": 240
+    },
+    "tile-8-1/metadata.json": {
+      "sha256": "3f62c21d61d4e685a4d6b51c83ef27e5b9063c0e264a4091173bebe4f4037ccc",
+      "bytes": 5014
+    },
+    "tile-8-1/terrain.json": {
+      "sha256": "e7d6935564b560e0bc7fba8cd77d84e2197e84e5df68d2c48749b35d7068b535",
+      "bytes": 120763
+    },
+    "tile-8-1/terrain.npz": {
+      "sha256": "98699e3489e9e526e18034305b72738896bf2121a0b70c28c06931673c04a874",
+      "bytes": 56127
+    },
+    "tile-8-2/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-8-2/measurement.json": {
+      "sha256": "72a2a6ab92aee4f03edb9f5a4d0cefa51d9712cc12790febe0675f983820c2f3",
+      "bytes": 242
+    },
+    "tile-8-2/metadata.json": {
+      "sha256": "8a9304905f023eba326f2b2fa42eb19d47477601525e904c232380cc8d071f8f",
+      "bytes": 5016
+    },
+    "tile-8-2/terrain.json": {
+      "sha256": "3340e6577203e6126195d66acc04b9cd4272ca3ad6576c55e48bf36af9748c20",
+      "bytes": 120978
+    },
+    "tile-8-2/terrain.npz": {
+      "sha256": "ca325df6a511aed2d2fd5c648d215f27c27b9ed92fd370093cf2f60d7de32036",
+      "bytes": 453887
+    },
+    "tile-8-3/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-8-3/measurement.json": {
+      "sha256": "54c15e4ed71c3c161ec3031d655f9bf1785011b617203b997a214b34bb44cfe5",
+      "bytes": 242
+    },
+    "tile-8-3/metadata.json": {
+      "sha256": "3951697d25fb65c6f4a56d1f46c94c4b31e7634241bc18ebd0bf885337494461",
+      "bytes": 5015
+    },
+    "tile-8-3/terrain.json": {
+      "sha256": "e549ec7b7fd380dedbe28944a7ab9b530cac2d75b9be3eb0a31d8e46f14abe59",
+      "bytes": 122335
+    },
+    "tile-8-3/terrain.npz": {
+      "sha256": "d6136d0fc21a8e842c4c86a670342f1bdc64b987fa19e70670f563f96757a1bf",
+      "bytes": 584687
+    },
+    "tile-8-4/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-8-4/measurement.json": {
+      "sha256": "757f0c2a2c266f2f45707c19262f56295bf70cc6eb9f60c92b60c7f5d6cc87e6",
+      "bytes": 242
+    },
+    "tile-8-4/metadata.json": {
+      "sha256": "dedef02457db2063d4e1a04b2a9f1d11dbd99acaf2b1fc03e5b351972417b089",
+      "bytes": 5011
+    },
+    "tile-8-4/terrain.json": {
+      "sha256": "4d5dec2d48399ab9912ca86729c0bdd01ea4db5ef63533cb160360aaf964a1ac",
+      "bytes": 121036
+    },
+    "tile-8-4/terrain.npz": {
+      "sha256": "6f72a74fcd5b55b0e54bfbe3baf38bb2f5a8b2c1a1439a553fb2cf0a8fe6f30b",
+      "bytes": 583914
+    },
+    "tile-8-5/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-8-5/measurement.json": {
+      "sha256": "b2f511d315429e9c58674d2a6b6a5180900c4d7d63a44280e13102d54a2f365a",
+      "bytes": 241
+    },
+    "tile-8-5/metadata.json": {
+      "sha256": "5f96ac5948cf00cfff0062913c33d01f20eaaff851e29198d65f4c5891b5b417",
+      "bytes": 5010
+    },
+    "tile-8-5/terrain.json": {
+      "sha256": "178f899ca07ebcb50109d56802f2038ff0ca2cd4792c487f1d91c7263b10c37b",
+      "bytes": 120525
+    },
+    "tile-8-5/terrain.npz": {
+      "sha256": "64d2043b532c9059b1c36fd6a91ca6079f564afb650bd92eeaca66acf0985f85",
+      "bytes": 585863
+    },
+    "tile-8-6/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-8-6/measurement.json": {
+      "sha256": "6afc3347dd80af34bb0f4753e6963d691dc088bfabbf20b05a1f7dc7cfc2c7d6",
+      "bytes": 242
+    },
+    "tile-8-6/metadata.json": {
+      "sha256": "63c66c27e3a7c0c5328cbe25036b1451730096c4d4c8c82c06cabab9ea8ccc2a",
+      "bytes": 5014
+    },
+    "tile-8-6/terrain.json": {
+      "sha256": "6f1a6f07ec3f99dc80ea37559d6ea0c78152b0bba316f38713bff12228de3bf8",
+      "bytes": 120362
+    },
+    "tile-8-6/terrain.npz": {
+      "sha256": "775e1c6295245610f5c5a82e8a7bfab25345ae5dd9658ee1f0139eec58756a23",
+      "bytes": 585975
+    },
+    "tile-8-7/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-8-7/measurement.json": {
+      "sha256": "810f62a8d20b87398e79afd4e19864c69cdcdfc8fb53a6580171536b42c10b97",
+      "bytes": 242
+    },
+    "tile-8-7/metadata.json": {
+      "sha256": "36080adf23eefb50cf3460b28c6312615acaf6588777dead69304fc0084902a4",
+      "bytes": 5014
+    },
+    "tile-8-7/terrain.json": {
+      "sha256": "91ce323be7fb53e180a82d49bdcf4e07236d17708ac56cbade45e22e97202867",
+      "bytes": 119307
+    },
+    "tile-8-7/terrain.npz": {
+      "sha256": "7a3e3a9060c1e055e48633156bd54aa1aff45257383318c43bba8f0367e092d3",
+      "bytes": 467680
+    },
+    "tile-8-8/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-8-8/measurement.json": {
+      "sha256": "3cee40db61834b6b741f9f4e8235d0256fb1b04541f2d2e9cfe24948fcd9f5cb",
+      "bytes": 240
+    },
+    "tile-8-8/metadata.json": {
+      "sha256": "cd5774d8d3516ecec389f199250838aa389339fd99c69a4cd914b004f2ffe062",
+      "bytes": 5012
+    },
+    "tile-8-8/terrain.json": {
+      "sha256": "2c2b37c1d0428e2af8975c845a4a8e95eebae0a24ae8b029b8db911b843a92f7",
+      "bytes": 116318
+    },
+    "tile-8-8/terrain.npz": {
+      "sha256": "fcf8cdc4f48848e285b78bafeb8421043c181a61c5bb8fa169dc42be56ad4957",
+      "bytes": 64208
+    },
+    "tile-9-2/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-9-2/measurement.json": {
+      "sha256": "117436b8d075ced846f5eeb820f4cf6a25a0adca5f27221e8f0dbe6d7dd02685",
+      "bytes": 239
+    },
+    "tile-9-2/metadata.json": {
+      "sha256": "bc83d62cba84ff42a740c56928ebf4de5d673080af37800a5a41538d4e79f9a4",
+      "bytes": 5013
+    },
+    "tile-9-2/terrain.json": {
+      "sha256": "649875732d212b3e0d02cf85c6c9dc5ebc0cf356ec993c5e9e73ee5f28ffdbb4",
+      "bytes": 121237
+    },
+    "tile-9-2/terrain.npz": {
+      "sha256": "17517321b9f4362501dc75960866bd8446e0f10311e207a9b8382246d9732fc1",
+      "bytes": 7028
+    },
+    "tile-9-3/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-9-3/measurement.json": {
+      "sha256": "f96afc6188e8bd58daeeb649aaebceefb2a927317c960395b292ab04e522b599",
+      "bytes": 240
+    },
+    "tile-9-3/metadata.json": {
+      "sha256": "9e07a0d7cfe79830b8f5ac4df31b22a53331cff2146bc59d05c081894c12a7c2",
+      "bytes": 5016
+    },
+    "tile-9-3/terrain.json": {
+      "sha256": "e6e455b110b72b9566e5d1e3d0458903da2180e1cf5ffb24c7acbdc01e56cb65",
+      "bytes": 122211
+    },
+    "tile-9-3/terrain.npz": {
+      "sha256": "a38f4e8cc434caf3a1455ecb84b6dfade4e9ff153ca1f4d8d95e683fdf2d862b",
+      "bytes": 172429
+    },
+    "tile-9-4/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-9-4/measurement.json": {
+      "sha256": "e42bc738c640e705d8a6c2dc09a5661b6fcde290ad21df563d57a32f7ff11098",
+      "bytes": 241
+    },
+    "tile-9-4/metadata.json": {
+      "sha256": "6f8b10d00f8d186829746b1fb4cef87010271480e803edd76a6684e96d08d882",
+      "bytes": 5009
+    },
+    "tile-9-4/terrain.json": {
+      "sha256": "6f58091832c51bb1fe90a11da9fcbb2f119f866d46f6e7a1e516b659a73c877a",
+      "bytes": 120357
+    },
+    "tile-9-4/terrain.npz": {
+      "sha256": "f529ae1178038b312ff04ebbf36ea0aedee4f382d7612082eb48304bb8670e0e",
+      "bytes": 309948
+    },
+    "tile-9-5/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-9-5/measurement.json": {
+      "sha256": "40f662915e48f8b6d58b4a52e9fd70709a07455d7d45d6bbcc162c853958ea3b",
+      "bytes": 241
+    },
+    "tile-9-5/metadata.json": {
+      "sha256": "fa006b35cc46fe0672dc73ed11c3191e881d83ea6dfae4cbd16c8c5c2ad101a8",
+      "bytes": 5008
+    },
+    "tile-9-5/terrain.json": {
+      "sha256": "10b7395f2f9c670df5f25f5a2e20a4611c64bc0469162c460e119d5ff59d38ac",
+      "bytes": 118551
+    },
+    "tile-9-5/terrain.npz": {
+      "sha256": "0b565d06e449cc0bd4ea0ccd88554f0e1bdd670cc1799cb4a4ccbde5763196da",
+      "bytes": 300101
+    },
+    "tile-9-6/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-9-6/measurement.json": {
+      "sha256": "c0666bff60a7db3a8bc1ddcd5adc16ee6959f486fb7be0875e75f302a8f48776",
+      "bytes": 240
+    },
+    "tile-9-6/metadata.json": {
+      "sha256": "76720d0ecde14ed6d065c653669fd06d56b38136624011243cf9b94d0eee6b4f",
+      "bytes": 5014
+    },
+    "tile-9-6/terrain.json": {
+      "sha256": "bad267a0bae4ea6fb243ebca0927572aa291c3721929d956bfc3cbb2701d805d",
+      "bytes": 118686
+    },
+    "tile-9-6/terrain.npz": {
+      "sha256": "e42491cd9a1f4fefcb8bfb4b1e97db2921d0bd250d90a77f1195ef3ea3ee461c",
+      "bytes": 175208
+    },
+    "tile-9-7/exclusions.json": {
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    "tile-9-7/measurement.json": {
+      "sha256": "f66c613304b77f51e273aab1a24d6018d1fddd278a5cb630063f3e257e5391f7",
+      "bytes": 239
+    },
+    "tile-9-7/metadata.json": {
+      "sha256": "d9c6e60dade7233c07c763530736019eebe0858e7e7bdca70b4236456bf94bfa",
+      "bytes": 5011
+    },
+    "tile-9-7/terrain.json": {
+      "sha256": "2cd924468a7b446310156c6f2a89a2703c41885c9612b28cc901024f03beaa0d",
+      "bytes": 116783
+    },
+    "tile-9-7/terrain.npz": {
+      "sha256": "d64ecba62b88763868c321df9e0d60b6ab2886f136a74a311fce895560bd9c24",
+      "bytes": 8572
+    },
+    "verification.json": {
+      "sha256": "be2df291bb9721bdf4056db480a634ee321e65a6364035312d5f90419bee8bb9",
+      "bytes": 584
+    }
+  },
+  "uncompressed_bytes": 90825992,
+  "python_version": "3.12.7 | packaged by Anaconda, Inc. | (main, Oct  4 2024, 13:17:27) [MSC v.1929 64 bit (AMD64)]",
+  "dependencies": {
+    "numpy": "1.26.4",
+    "rasterio": "1.4.3",
+    "scipy": "1.13.1",
+    "spiceypy": "7.0.0",
+    "psutil": "5.9.0"
+  },
+  "validation": {
+    "tiles": 88,
+    "candidate_count": 103996
+  },
+  "unavailable_layers": [
+    "psr_distance",
+    "psr_display",
+    "dem_confidence"
+  ],
+  "kernels_included": false,
+  "preparation_recipe": "provenance/recipe/docs/lunar-cap-release.md"
+}

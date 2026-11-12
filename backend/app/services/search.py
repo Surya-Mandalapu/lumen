@@ -335,7 +335,7 @@ def category_scores(
         low, high = anchors[key]
         if high <= low:
             return 0.5
-        normalized = float(np.clip((value - low) / (high - low), 0, 1))
+        normalized = min(1.0, max(0.0, (value - low) / (high - low)))
         return normalized if higher else 1 - normalized
 
     safety = (

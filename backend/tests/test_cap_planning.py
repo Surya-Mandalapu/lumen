@@ -39,6 +39,7 @@ def cap_service(cap, monkeypatch):  # noqa: F811 -- pytest fixture injection
     import app.api
     import app.coverage_api
     import app.exploration_api
+    import app.services.bounded_analysis
     import app.services.search
     import app.services.sites
     import app.services.validation
@@ -50,6 +51,7 @@ def cap_service(cap, monkeypatch):  # noqa: F811 -- pytest fixture injection
         app.services.search,
         app.services.sites,
         app.services.validation,
+        app.services.bounded_analysis,
     ):
         monkeypatch.setattr(module, "settings", replace(settings, data_root=root))
 

@@ -120,3 +120,8 @@
 .moon-loading { position: absolute; top: 70px; left: 20px; right: 20px; color: #e2ede3; font-size: 13px; background: #101819dd; padding: 10px; pointer-events: none; }
 .area-layout > div { min-width: 0; }
 .area-3d-preview canvas, .terrain-3d-frame canvas { max-width: 100%; }
+
+.candidate-globe { height: 680px; margin: 16px 0; }
+.mapped-site-detail { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 12px; border: 1px solid #405748; border-radius: 7px; margin: 12px 0; }
+.mapped-site-detail > span { font-size: 12px; }.mapped-site-count { font-size: 12px; }
+@media (max-width: 480px) { .candidate-globe { height: 720px; } }

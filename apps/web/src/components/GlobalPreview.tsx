@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import type { TerrainData, TimeSample } from "../lib/types";
 import { downloadJson } from "../lib/format";
+import { withinSearchDeadline } from "../lib/deadline";
 import "./global-preview.css";
 
 const TerrainScene = lazy(() => import("./TerrainScene").then(m => ({ default: m.TerrainScene })));
@@ -34,7 +35,7 @@ function visibilitySegments(samples: TimeSample[], key: "sun_visible" | "earth_v
 
 async function json<T>(response: Response): Promise<T> {
   const body = await response.json();
-  if (!response.ok) throw new Error(typeof body.detail === "string" ? body.detail : "Preview unavailable. Check the coordinates and dates.");
+  if (!response.ok) throw new Error(typeof body.detail === "string" ? body.detail : body.detail?.message ?? "Preview unavailable. Check the coordinates and dates.");
   return body as T;
 }
 
@@ -108,12 +109,11 @@ export function GlobalPreview() {
     const abort = new AbortController(); controller.current = abort;
     setLoading(true); setError(null);
     try {
-      const response = await fetch(`${API}/global/preview`, {
-        method: "POST", headers: { "Content-Type": "application/json" }, signal: abort.signal,
+      const next = await withinSearchDeadline(abort.signal, async signal => json<Preview>(await fetch(`${API}/global/preview`, {
+        method: "POST", headers: { "Content-Type": "application/json" }, signal,
         body: JSON.stringify({ coordinate: { latitude_deg: latitude, longitude_deg_east: longitude },
           time_range: { start_utc: new Date(`${start}Z`).toISOString(), end_utc: new Date(`${end}Z`).toISOString() } }),
-      });
-      const next = await json<Preview>(response);
+      })));
       if (!abort.signal.aborted) { setResult(next); setIndex(0); setDirty(false); }
     } catch (reason) { if (!abort.signal.aborted) setError(reason instanceof Error ? reason.message : "Preview unavailable"); }
     finally { if (!abort.signal.aborted) setLoading(false); }

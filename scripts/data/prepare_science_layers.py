@@ -39,7 +39,7 @@ def retrieve(path: Path, url: str, expected_sha256: str | None) -> str:
     return digest
 
 
-def features_from_kmz(path: Path) -> list[dict]:
+def features_from_kmz(path: Path, maximum_latitude_deg: float = -85) -> list[dict]:
     with zipfile.ZipFile(path) as archive:
         kml = next(name for name in archive.namelist() if name.endswith(".kml"))
         root = ET.fromstring(archive.read(kml))
@@ -50,7 +50,7 @@ def features_from_kmz(path: Path) -> list[dict]:
             for node in placemark.findall(".//k:SimpleData", NS)
         }
         latitude = float(fields.get("center_lat", "90"))
-        if latitude > -85 or fields.get("approval") != "Adopted by IAU":
+        if latitude > maximum_latitude_deg or fields.get("approval") != "Adopted by IAU":
             continue
         link = fields["link"].replace("http://", "https://")
         identifier = re.search(r"/Feature/(\d+)", link).group(1)

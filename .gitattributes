@@ -8,3 +8,12 @@
 # Preserve the exact bytes covered by scientific artifact checksums on every OS.
 data/derived/** -text
 
+# These downloaded inputs are verified by byte-for-byte SHA-256 at runtime.
+backend/app/data/pck00011.tpc -text
+backend/app/data/hemisphere-landmarks.json -text
+
+# Preserve binary scientific display assets and handoff documents on every OS.
+*.glb binary
+*.jpg binary
+*.i16 binary
+*.docx binary

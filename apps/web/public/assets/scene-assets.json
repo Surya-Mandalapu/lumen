@@ -1,0 +1,50 @@
+{
+  "earth": {
+    "source_url": "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/09/e/Earth_1_12756.glb",
+    "visual_model_sha256": "472de6535d973a0b1b178f7b06eb1edfca3aa15936bb130d6fff9cf05e3c0c01",
+    "source_sha256": "05a5aea99db8ab472487a06debc3b5d0b2cae7636a1a6b9ecfa40b7d1722ba23",
+    "asset_sha256": "fc60366d330076535983325157a0802dd0e334908e493213b90804a0230f34aa",
+    "size": [
+      1365,
+      1024
+    ]
+  },
+  "sun": {
+    "source_url": "https://assets.science.nasa.gov/content/dam/science/psd/solar/2023/09/s/Sun_1_1391000.glb",
+    "visual_model_sha256": "1c369fea924a6833ed7c7e74b8544954e17b115c8c4fcf925bb481fc8152f9fd",
+    "source_sha256": "a178f5c43c2c9a6ee6c011c315149a7ab5a2594fd5aa9119ee219625a18da1dd",
+    "asset_sha256": "d7cacd3d27d8e5568693fa33c79ff925399a9645bb260f1f159af539da4ce106",
+    "size": [
+      1365,
+      1024
+    ]
+  },
+  "moon_height": {
+    "width": 1440,
+    "height": 720,
+    "units": "metres above 1737400m sphere",
+    "source": {
+      "dataset_version": "global-lola-preview-v1",
+      "source_url": "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/ldem_16_uint.tif",
+      "source_sha256": "45a2b32d56e81ed30db07fead8abc842b249b6511219d9ca2c53f81bc2dc5d62",
+      "documentation_url": "https://svs.gsfc.nasa.gov/4720/",
+      "artifact_sha256": "b691f185c4c4cc53320fd057877b938b884e1acdcff78ff92bdcfedb9008f254",
+      "pixels_per_degree": 16,
+      "reference_radius_m": 1737400,
+      "source_frame": "MOON_ME (LOLA mean Earth/polar axis)",
+      "row_order": "north_to_south",
+      "longitude_extent_deg": [
+        -180,
+        180
+      ],
+      "pixel_registration": "pixel_centers",
+      "elevation_conversion": "unsigned TIFF value * 0.5 - 10000 metres"
+    },
+    "sha256": "ccc3b215bcd0fac3d8003e6aeb70cfc962512579f6411db5ad4d72405f973f45"
+  },
+  "moon_color": {
+    "source_url": "https://svs.gsfc.nasa.gov/vis/a000000/a004700/a004720/lroc_color_2k.jpg",
+    "sha256": "f7130a1822681fa7512d7dcfd40db8c10b9ba4f06777910348698260ed7a2170",
+    "credit": "NASA Goddard Space Flight Center / LRO"
+  }
+}

@@ -8,6 +8,7 @@ from app.api import router
 from app.coverage_api import router as coverage_router
 from app.exploration_api import router as exploration_router
 from app.global_api import router as global_router
+from app.scene_api import router as scene_router
 from app.settings import settings
 
 app = FastAPI(
@@ -22,6 +23,7 @@ app.include_router(router)
 app.include_router(exploration_router)
 app.include_router(global_router)
 app.include_router(coverage_router)
+app.include_router(scene_router)
 
 
 if settings.static_dir.exists():

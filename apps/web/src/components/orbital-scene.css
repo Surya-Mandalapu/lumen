@@ -1,0 +1,66 @@
+.orbital-scene { position: relative; width: 100%; height: 100%; min-height: 590px; display: flex; flex-direction: column; border: 1px solid #314b40; border-radius: 14px; background: #080f12; overflow: hidden; color: #d4e4df; isolation: isolate; }
+.orbital-scene.immersive, .orbital-scene:fullscreen { position: fixed; inset: 0; z-index: 10000; width: 100vw; height: 100dvh; max-height: none; min-height: 0; border: 0; border-radius: 0; }
+.orbital-toolbar { z-index: 70; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; align-items: center; padding: 12px 15px; border-bottom: 1px solid #24392f; background: #101b1bd9; }
+.orbital-scene button { border: 1px solid #334c44; background: #13231fe8; color: #c4d7cd; border-radius: 6px; padding: 9px 12px; font-size: 12px; line-height: 1.2; cursor: pointer; transition: background .18s, border-color .18s; }
+.orbital-scene button:hover { background: #223c30; border-color: #71977b; }
+.orbital-scene button[aria-pressed="true"] { background: #b9d6b0; color: #18261d; border-color: #b9d6b0; }
+.orbital-scene button:focus-visible, .orbital-scene input:focus-visible, .orbital-scene select:focus-visible { outline: 2px solid #d5eab9; outline-offset: 3px; }
+.scene-view-tabs, .scene-tools { display: flex; gap: 6px; align-items: center; }
+.scene-tools { flex-wrap: wrap; }
+.relief-control { display: flex; gap: 6px; align-items: center; font-size: 11px; color: #94b3a8; }
+.orbital-scene select, .orbital-scene input[type="datetime-local"] { border: 1px solid #33483d; background: #15241f; color: #d3e4d7; padding: 7px 8px; border-radius: 5px; font-size: 12px; color-scheme: dark; }
+.orbital-scene .relief-control select { width: 85px; }
+.orbital-canvas { position: relative; flex: 1; min-height: 400px; overflow: hidden; }
+.orbital-canvas > div:first-child { position: absolute !important; inset: 0; }
+.scene-navigation { position: absolute; left: 16px; bottom: 16px; display: flex; gap: 7px; z-index: 65; }
+.scene-navigation { flex-wrap: wrap; right: 12px; }
+.drawing-area canvas { cursor: crosshair; }
+.area-selection-status { position: absolute; top: 58px; left: 16px; right: 16px; width: fit-content; max-width: calc(100% - 32px); padding: 8px 10px; font-size: 11px; line-height: 1.5; background: #10271feb; color: #d2e9c5; border: 1px solid #729c7b; border-radius: 5px; pointer-events: none; z-index: 65; }
+.scene-readout { position: absolute; top: 16px; left: 16px; display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid #2f4d3c; background: #0c1919d9; border-radius: 5px; font: 11px monospace; letter-spacing: .03em; pointer-events: none; z-index: 65; }
+.scene-live-dot { width: 5px; height: 5px; border-radius: 50%; background: #bfdba4; box-shadow: 0 0 10px #b5d59c80; }
+.orbital-scene .body-label { font: 10px monospace; letter-spacing: .16em; white-space: nowrap; color: #dce9e0; text-shadow: 0 2px 6px #000; pointer-events: none; }
+.orbital-scene .body-label.earth { color: #9bcddd; }.orbital-scene .body-label.sun { color: #eaca85; }
+.moon-grid-label { color: #efd598; background: #14201ac4; font-size: 10px; padding: 3px 5px; white-space: nowrap; pointer-events: none; }
+.sky-compass { color: #dbdfb2; font: 600 18px monospace; pointer-events: none; }
+.site-sky-context { position: absolute; left: 16px; right: 16px; top: 58px; font-size: 11px; color: #d6e5d8; }
+.site-sky-context > strong { display: inline-block; padding: 8px; background: #10221ce8; border-radius: 5px; }
+.site-sky-readings { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 7px; }
+.site-sky-readings > div { display: flex; flex-direction: column; gap: 4px; padding: 9px; background: #10221ce8; border: 1px solid #395143; border-radius: 5px; }
+.site-sky-readings b { color: #eed39a; }
+.site-sky-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; pointer-events: auto; width: fit-content; }
+.site-sky-context p { max-width: 440px; font-size: 10px; line-height: 1.5; background: #10221ce8; padding: 6px 8px; border-radius: 4px; }
+.site-horizon-overview { position: absolute; right: 16px; bottom: 64px; width: min(400px, calc(100% - 32px)); padding: 8px; background: #10221ce8; border: 1px solid #395143; border-radius: 5px; }
+.site-horizon-overview strong { font-size: 10px; color: #c3d8be; }.site-horizon-overview svg { display: block; width: 100%; height: 86px; overflow: visible; }.site-horizon-overview text { font: 10px sans-serif; fill: #d5e2d5; }
+@media (max-width: 480px) { .site-sky-context { left: 10px; right: 10px; font-size: 10px; }.site-sky-context p { display: none; }.site-sky-readings { gap: 4px; }.site-sky-readings > div { flex: 1; padding: 6px; }.site-sky-actions { gap: 4px; }.site-sky-actions button { font-size: 10px; padding: 6px; }.site-horizon-overview { left: 10px; right: 10px; width: auto; padding: 6px; }.site-horizon-overview svg { height: 56px; } }
+@media (max-height: 600px) { .orbital-scene.immersive .site-sky-context { top: 40px; font-size: 9px; }.orbital-scene.immersive .site-sky-context p, .orbital-scene.immersive .site-horizon-overview { display: none; }.orbital-scene.immersive .site-sky-actions { margin-top: 4px; } }
+.orbital-scene .moon-landmark { display: block; font-size: 10px; font-weight: 400; white-space: nowrap; padding: 4px 7px; border-radius: 3px; border: 1px solid #7fa79660; background: #10231ec9; min-height: 0; opacity: .95; }
+.site-marker-label { display: block; margin-top: -27px; white-space: nowrap; border: 1px solid #dcc69380; background: #352c17df; color: #f8dea4; border-radius: 4px; padding: 4px 7px; font-size: 10px; pointer-events: none; }
+.orbital-timeline { z-index: 70; display: flex; align-items: center; gap: 16px; padding: 14px 16px; border-top: 1px solid #283e32; background: #101c19; }
+.orbital-scene .play-scene { width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0; background: #c2dcb0; color: #1b2b1b; border-color: #c2dcb0; }
+.scene-time-slider { flex: 1; min-width: 100px; display: flex; flex-direction: column; gap: 7px; }
+.scene-time-slider > span { display: flex; justify-content: space-between; gap: 8px; font-size: 11px; color: #d6e4cf; }.scene-time-slider > span > span { color: #9ab4a6; font-size: 10px; }
+.scene-time-slider input { width: 100%; height: 18px; accent-color: #c3d6a8; cursor: pointer; }
+.scene-date, .scene-duration { display: flex; flex-direction: column; gap: 7px; font-size: 10px; color: #98b1a3; }
+.scene-date input { width: 172px; }.scene-duration select { width: 88px; }
+.orbital-footer { z-index: 70; position: relative; display: flex; justify-content: space-between; gap: 15px; align-items: center; padding: 9px 16px; background: #0d1714; border-top: 1px solid #23372c; font-size: 10px; color: #89a294; }
+.orbital-footer details > summary { cursor: pointer; white-space: nowrap; color: #b4c8b6; }
+.orbital-footer details[open] { position: absolute; right: 12px; bottom: 8px; width: min(400px, calc(100vw - 40px)); max-height: 280px; overflow: auto; padding: 16px; background: #15251ef5; border: 1px solid #425d46; border-radius: 8px; font-size: 12px; color: #c0d2be; }
+.orbital-footer details p { line-height: 1.7; }.orbital-footer details a { display: inline-block; margin: 7px 14px 0 0; color: #d2e1c3; }
+.scene-data-error, .scene-landmark-error { position: absolute; left: 16px; right: 16px; bottom: 58px; padding: 12px; background: #302820ec; border: 1px solid #8a7350; border-radius: 6px; font-size: 12px; z-index: 65; }
+.scene-landmark-error { bottom: 110px; }
+.scene-loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 12px 16px; background: #11241edb; border: 1px solid #435f4c; border-radius: 7px; font-size: 12px; white-space: nowrap; pointer-events: none; }
+@media (max-width: 800px) { .orbital-timeline { flex-wrap: wrap; gap: 12px; }.scene-time-slider { flex-basis: calc(100% - 56px); }.scene-date { flex: 1; }.scene-date input { width: 100%; }.orbital-footer > span { font-size: 9px; }.orbital-toolbar { padding: 9px; gap: 8px; }.orbital-scene { min-height: 600px; }.orbital-canvas { min-height: 360px; } }
+@media (max-width: 480px) { .scene-tools { gap: 4px; }.orbital-toolbar .scene-view-tabs { width: 100%; }.scene-view-tabs button { flex: 1; }.scene-tools { width: 100%; justify-content: space-between; }.orbital-scene button { min-height: 36px; font-size: 11px; padding: 8px; }.orbital-scene .moon-landmark { min-height: 25px; padding: 4px 6px; font-size: 10px; }.orbital-timeline { padding: 11px; }.scene-time-slider > span > span { display: none; }.scene-readout { top: 12px; left: 10px; font-size: 10px; }.scene-navigation { left: 10px; bottom: 10px; } }
+@media (max-height: 600px) { .orbital-scene.immersive .orbital-canvas, .orbital-scene:fullscreen .orbital-canvas { min-height: 80px; }.orbital-scene.immersive .orbital-toolbar { padding: 5px 12px; }.orbital-scene.immersive .orbital-timeline { padding: 6px 12px; flex-wrap: nowrap; }.orbital-scene.immersive .scene-date { display: none; } }
+@media (prefers-reduced-motion: reduce) { .orbital-scene button { transition: none; } }
+
+/* Leave actual sky visible between the observer controls and compass overview. */
+.guided-planner .area-3d-preview:has(.site-view:not(.immersive)) { height: auto; }
+.orbital-scene.site-view:not(.immersive) { height: auto; }
+.orbital-scene.site-view:not(.immersive) .orbital-canvas { min-height: 540px; }
+.orbital-scene.site-view .orbital-footer { flex-wrap: wrap; row-gap: 5px; }
+
+.orbital-scene .moon-landmark { pointer-events: auto; }
+.drawing-area canvas { touch-action: none !important; }
+
+.orbital-scene .candidate-site-label { pointer-events: auto; border-radius: 50%; padding: 3px; min-height: 20px; min-width: 20px; font: 10px monospace; background: #5b4924e8; color: #ffe6a3; border: 1px solid #e1bd76; }
