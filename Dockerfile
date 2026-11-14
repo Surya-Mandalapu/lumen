@@ -6,17 +6,29 @@ RUN npm ci
 COPY apps/web apps/web
 RUN npm run build
 
+FROM python:3.12-slim AS science-data
+WORKDIR /workspace
+RUN pip install --no-cache-dir "numpy>=1.26,<2" "rasterio==1.4.3"
+COPY scripts/data/prepare_global.py scripts/data/prepare_global.py
+COPY scripts/data/install_cap_release.py scripts/data/install_cap_release.py
+RUN python scripts/data/prepare_global.py && python scripts/data/install_cap_release.py
+
 FROM python:3.12-slim AS runtime
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    LUMEN_STATIC_DIR=/app/apps/web/dist
+    LUMEN_STATIC_DIR=/app/apps/web/dist \
+    LUMEN_ENV=production \
+    LUMEN_DATA_ROOT=/app/data/derived/lunar-south-cap-v1 \
+    LUMEN_GLOBAL_ROOT=/app/data/derived/global-preview-v1
 WORKDIR /app
 COPY backend backend
 RUN pip install --no-cache-dir ./backend
 COPY scripts/data/prepare_kernels.py scripts/data/prepare_kernels.py
 RUN python scripts/data/prepare_kernels.py
 COPY --from=web-build /workspace/apps/web/dist apps/web/dist
-COPY data/derived data/derived
+COPY data/derived/pgda-demo-v1 data/derived/pgda-demo-v1
+COPY --from=science-data /workspace/data/derived/global-preview-v1 data/derived/global-preview-v1
+COPY --from=science-data /workspace/data/derived/lunar-south-cap-v1 data/derived/lunar-south-cap-v1
 EXPOSE 8000
-CMD ["uvicorn", "app.main:app", "--app-dir", "backend", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["sh", "-c", "exec uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port \"${PORT:-8000}\""]
 

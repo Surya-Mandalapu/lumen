@@ -1,6 +1,6 @@
 import { Bvh, Html, Line, useTexture } from "@react-three/drei";
 import { useFrame, useLoader, useThree } from "@react-three/fiber";
-import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { mergeVertices } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { lunarCircle, lunarCoordinate, lunarDragRadius, lunarPoint } from "../lib/lunar-picking";
@@ -28,6 +28,10 @@ export const TopographicMoon = memo(function TopographicMoon({ exaggeration, fea
   const { camera, gl, controls, invalidate } = useThree();
   const [draft, setDraft] = useState<{ center: LunarCoordinate; radiusKm: number } | null>(null);
   const suppressClickUntil = useRef(0);
+  const registerLabel = useCallback((id: string, element: HTMLElement | null) => {
+    if (element) { element.style.visibility = "hidden"; labelElements.current.set(id, element); invalidate(); }
+    else labelElements.current.delete(id);
+  }, [invalidate]);
   const callbacks = useRef({ onArea, onDrawFeedback, onDrawEnd });
   callbacks.current = { onArea, onDrawFeedback, onDrawEnd };
   const baseGeometry = useMemo(() => {
@@ -204,11 +208,12 @@ export const TopographicMoon = memo(function TopographicMoon({ exaggeration, fea
     const occupied: { x: number; y: number; width: number }[] = [];
     const entries = marker ? [{ id: "site", name: "Your site", point: new THREE.Vector3(...marker) }, ...labelPoints] : [...labelPoints];
     entries.push(...gridLabels);
+    entries.unshift(...sites.flatMap((site, i) => site.rank && site.rank <= 10 ? [{ id: `candidate-${site.id}`, name: String(site.rank), point: sitePositions[i] }] : []));
     for (const item of entries) {
       const element = labelElements.current.get(item.id); if (!element) continue;
       const projected = group.current.localToWorld(item.point.clone()).project(camera);
       const x = projected.x * size.width / 2, y = projected.y * size.height / 2, width = item.name.length * 7 + 20;
-      const visible = localCamera.dot(item.point) > item.point.lengthSq() + .01 && Math.abs(projected.x) < .95 && Math.abs(projected.y) < .88 && !occupied.some(other => Math.abs(x - other.x) < (width + other.width) / 2 && Math.abs(y - other.y) < 28);
+      const visible = localCamera.dot(item.point) > item.point.lengthSq() + 1e-6 && Math.abs(projected.x) < .95 && Math.abs(projected.y) < .88 && !occupied.some(other => Math.abs(x - other.x) < (width + other.width) / 2 && Math.abs(y - other.y) < 28);
       element.style.visibility = visible ? "visible" : "hidden";
       if (visible) occupied.push({ x, y, width });
     }
@@ -233,16 +238,16 @@ export const TopographicMoon = memo(function TopographicMoon({ exaggeration, fea
       `);
     }} /></mesh></Bvh>
     {sites.length > 0 && <instancedMesh key={sites.length} ref={siteCloud} args={[undefined, undefined, sites.length]} onClick={event => { event.stopPropagation(); if (event.delta < 5 && event.instanceId !== undefined) onSiteSelect?.(sites[event.instanceId].id); }}><sphereGeometry args={[1, 10, 8]} /><meshBasicMaterial /></instancedMesh>}
-    {sites.filter(site => site.rank && site.rank <= 10).map(site => { const i = sites.indexOf(site); return <Html key={site.id} position={sitePositions[i]} center style={{ pointerEvents: "none" }} zIndexRange={[42, 0]}><button className="candidate-site-label" aria-label={`Select mapped candidate ${site.rank}`} aria-pressed={site.id === selectedSite} onClick={() => onSiteSelect?.(site.id)}>{site.rank}</button></Html>; })}
+    {sites.filter(site => site.rank && site.rank <= 10).map(site => { const i = sites.indexOf(site); return <Html key={site.id} position={sitePositions[i]} center style={{ pointerEvents: "none" }} zIndexRange={[42, 0]}><button ref={element => registerLabel(`candidate-${site.id}`, element)} className="candidate-site-label" aria-label={`Select mapped candidate ${site.rank}`} aria-pressed={site.id === selectedSite} onClick={() => onSiteSelect?.(site.id)}>{site.rank}</button></Html>; })}
     {graticule.map(line => <Line key={line.key} points={line.points} color={line.equator ? "#efc97c" : "#a8c5c3"} opacity={line.equator ? .9 : .25} transparent lineWidth={line.equator ? 2 : .7} raycast={() => {}} />)}
     <Line points={Array.from({ length: 129 }, (_, index) => {
       const longitude = index / 128 * 360 - 180;
       return lunarPoint(-87, longitude, terrainRadius(grid, { latitude_deg: -87, longitude_deg_east: longitude }, exaggeration) + .012);
     })} color="#90c9ae" opacity={.6} transparent lineWidth={1} />
-    {gridLabels.map(item => <Html style={{ pointerEvents: "none" }} key={item.id} position={item.point} center zIndexRange={[32, 0]}><span className="moon-grid-label" ref={element => { if (element) labelElements.current.set(item.id, element); else labelElements.current.delete(item.id); }}>{item.name}</span></Html>)}
-    {marker && <><mesh ref={pin} position={marker}><sphereGeometry args={[.022, 16, 16]} /><meshBasicMaterial color="#f6d68c" /></mesh><Html style={{ pointerEvents: "none" }} position={marker} center zIndexRange={[40, 0]}><span ref={element => { if (element) labelElements.current.set("site", element); else labelElements.current.delete("site"); }} className="site-marker-label">Your site</span></Html></>}
+    {gridLabels.map(item => <Html style={{ pointerEvents: "none" }} key={item.id} position={item.point} center zIndexRange={[32, 0]}><span className="moon-grid-label" ref={element => registerLabel(item.id, element)}>{item.name}</span></Html>)}
+    {marker && <><mesh ref={pin} position={marker}><sphereGeometry args={[.022, 16, 16]} /><meshBasicMaterial color="#f6d68c" /></mesh><Html style={{ pointerEvents: "none" }} position={marker} center zIndexRange={[40, 0]}><span ref={element => registerLabel("site", element)} className="site-marker-label">Your site</span></Html></>}
     {draft && <mesh position={lunarPoint(draft.center.latitude_deg, draft.center.longitude_deg_east, terrainRadius(grid, draft.center, exaggeration) + .025)} raycast={() => {}}><sphereGeometry args={[.012, 12, 12]} /><meshBasicMaterial color="#96e2cf" /></mesh>}
     {outline && <Line points={outline} color={draft ? "#96e2cf" : "#f6d68c"} lineWidth={draft ? 3 : 2} raycast={() => {}} />}
-    {labels && !drawMode && !draft && labelPoints.map(({ feature, point }) => <Html style={{ pointerEvents: "none" }} key={feature.id} position={point} center zIndexRange={[35, 0]}><button ref={element => { if (element) labelElements.current.set(feature.id, element); else labelElements.current.delete(feature.id); }} className="moon-landmark" onClick={event => { event.stopPropagation(); onLandmark?.(feature); }} title={`${feature.name} · IAU landmark center`}>{feature.name}</button></Html>)}
+    {labels && !drawMode && !draft && labelPoints.map(({ feature, point }) => <Html style={{ pointerEvents: "none" }} key={feature.id} position={point} center zIndexRange={[35, 0]}><button ref={element => registerLabel(feature.id, element)} className="moon-landmark" onClick={event => { event.stopPropagation(); onLandmark?.(feature); }} title={`${feature.name} · IAU landmark center`}>{feature.name}</button></Html>)}
   </group>;
 });

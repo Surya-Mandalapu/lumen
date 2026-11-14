@@ -20,16 +20,18 @@ Requires Node.js 22.12+ and Python 3.12+. From the repository folder:
 npm install
 python -m venv .venv
 .venv\Scripts\Activate.ps1
-python -m pip install -e "./backend[dev]"
-npm run prepare:data
+python -m pip install -e "./backend[dev]" -r scripts/data/requirements.txt
+npm run prepare:all-data
 npm run dev
 ```
 
 Open [Lumen](http://localhost:5173). The API is at
 [http://localhost:8000/docs](http://localhost:8000/docs).
 
-The small NASA-derived terrain bundle and context Moon model are included.
-`prepare:data` downloads and verifies approximately 44 MB of pinned JPL kernels once.
+The small NASA-derived terrain bundle and Moon display assets are included.
+`prepare:all-data` installs the verified full polar cap, global coarse-ranking terrain
+and approximately 44 MB of pinned JPL kernels. `prepare:data` remains available for
+the smaller bundled-demo setup, which does not enable every data-backed feature.
 After preparation, searches run locally without external science-data services.
 Missing or corrupt science inputs return an explicit unavailable error.
 
@@ -170,8 +172,11 @@ exports, stale/empty results, global terrain/timelines, service-error recovery a
 docker compose up --build
 ```
 
-Open [http://localhost:8000](http://localhost:8000). The image downloads and verifies
-pinned kernels during its first build and includes the prepared terrain bundle.
+Open [http://localhost:8000](http://localhost:8000). A clean image prepares the global
+coarse-ranking terrain, installs the verified 103,996-site polar cap and downloads
+pinned kernels during its build. It does not depend on ignored files on a developer's
+computer. GIS preparation libraries remain in a build stage rather than the runtime.
+See [Render setup and deployed-feature checks](docs/render-feature-recovery.md).
 
 ## Rebuild scientific inputs
 
