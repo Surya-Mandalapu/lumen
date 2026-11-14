@@ -8,6 +8,8 @@ RUN npm run build
 
 FROM python:3.12-slim AS science-data
 WORKDIR /workspace
+RUN apt-get update && apt-get install --yes --no-install-recommends libexpat1 \
+    && rm -rf /var/lib/apt/lists/*
 RUN pip install --no-cache-dir "numpy>=1.26,<2" "rasterio==1.4.3"
 COPY scripts/data/prepare_global.py scripts/data/prepare_global.py
 COPY scripts/data/install_cap_release.py scripts/data/install_cap_release.py
