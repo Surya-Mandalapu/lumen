@@ -85,3 +85,9 @@
 @media (max-width: 1100px) { .guided-planner .area-layout { grid-template-columns: minmax(0, 1fr) 270px; gap: 14px; }.guided-planner#explorer { padding-inline: 18px; } }
 @media (max-width: 850px) { .guided-planner .area-layout { grid-template-columns: 1fr; }.guided-planner .area-3d-preview { height: 670px; min-height: 0; }.guided-planner .area-editor { margin-top: 12px; }.guided-planner .guide-data-badge { display: none; }.guided-planner .guide-intro { padding-bottom: 14px; }.guided-planner .guide-intro .eyebrow { font-size: 9px; } }
 @media (max-width: 480px) { .guided-planner#explorer { padding: 16px 12px 0; }.guided-planner .guide-intro h1 { font-size: 25px; }.guided-planner .guide-steps button { font-size: 11px; padding: 11px 8px; }.guided-planner .area-view-switch button { flex: initial; }.guided-planner .area-3d-preview { height: 660px; } }
+
+.local-area-workspace { margin-top: 22px; }
+.local-area-workspace > .coarse-area-preview { padding: 22px; border: 1px solid #3e5746; border-radius: 12px; background: #142019; }
+.local-area-workspace .coarse-area-preview > .guide-fields { grid-template-columns: repeat(2, minmax(0, 240px)); }
+.local-area-workspace .coarse-area-preview > label { max-width: 490px; }
+@media (max-width: 480px) { .local-area-workspace > .coarse-area-preview { padding: 16px; }.local-area-workspace .coarse-area-preview > .guide-fields { grid-template-columns: 1fr; } }

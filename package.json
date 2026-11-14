@@ -18,6 +18,7 @@
     "test:api": "python -m pytest backend/tests",
     "verify:data": "python scripts/data/verify_manifest.py",
     "prepare:data": "python scripts/data/prepare_kernels.py && python scripts/data/verify_manifest.py --require-kernels",
+    "prepare:all-data": "python scripts/data/prepare_kernels.py && python scripts/data/prepare_global.py && python scripts/data/install_cap_release.py && python scripts/data/verify_manifest.py --require-kernels",
     "prepare:global": "python scripts/data/prepare_global.py"
   },
   "devDependencies": {

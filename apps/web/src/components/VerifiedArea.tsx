@@ -71,9 +71,10 @@ export function VerifiedArea({ catalog, request, features, terrain, outcome, pen
         {!pending && outcome && <span>{outcome.candidate_count.toLocaleString()} prepared candidate locations in your selection.</span>}
         {error && <button className="secondary-button" onClick={onRetry}>Retry coverage check</button>}
       </div>
-      {request.region.selector_type !== "full_supported_region" && <div hidden={outcome?.status !== "outside" || !southernCoordinate(center)}><CoarseAreaPreview center={center} radiusKm={request.region.search_radius_km} /></div>}
       {outcome?.status === "outside" && <button className="secondary-button" onClick={() => selectCoordinate({ latitude_deg: -89.9, longitude_deg_east: 0 })}>Use a supported south-pole area</button>}
       <p className="field-hint">{catalog.candidate_spacing_m} m candidate spacing · exact pole excluded. Live areas: up to {catalog.public_limits.maximum_radius_km} km radius. Broader analysis is available through the fixed full-region demo.</p>
     </div></details>
-  </div></>;
+  </div>
+  {request.region.selector_type !== "full_supported_region" && <div className="local-area-workspace" hidden={outcome?.status !== "outside" || !southernCoordinate(center)}><CoarseAreaPreview center={center} radiusKm={request.region.search_radius_km} /></div>}
+  </>;
 }

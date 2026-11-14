@@ -30,6 +30,26 @@ jobs:
       - run: python scripts/data/prepare_kernels.py
       - run: python scripts/data/prepare_global.py
       - run: python -m pytest backend/tests
-      - run: python -m pytest scripts/data/test_prepare_terrain.py scripts/data/test_prepare_science_layers.py scripts/data/test_verify_cap_tiles.py
+      - run: python -m pytest scripts/data/test_prepare_terrain.py scripts/data/test_prepare_science_layers.py scripts/data/test_verify_cap_tiles.py scripts/data/test_install_cap_release.py
       - run: python -m ruff check backend scripts
       - run: python scripts/data/verify_manifest.py
+
+  hosted-image:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: docker build --tag lumen-hosted-check .
+      - run: docker run --detach --name lumen-hosted-check --env PORT=10000 --publish 10000:10000 lumen-hosted-check
+      - name: Verify production data, models, scene and rankings
+        run: |
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:10000/api/v1/health; then break; fi
+            sleep 2
+          done
+          python scripts/verify_hosted_features.py --url http://127.0.0.1:10000
+      - name: Container logs
+        if: always()
+        run: docker logs lumen-hosted-check || true

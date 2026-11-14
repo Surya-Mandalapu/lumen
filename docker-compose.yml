@@ -4,6 +4,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      LUMEN_ENV: development
-      LUMEN_DATA_ROOT: /app/data/derived/pgda-demo-v1
+      LUMEN_ENV: production
+      LUMEN_DATA_ROOT: /app/data/derived/lunar-south-cap-v1
+      LUMEN_GLOBAL_ROOT: /app/data/derived/global-preview-v1
 
