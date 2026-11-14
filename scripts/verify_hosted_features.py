@@ -52,6 +52,16 @@ def verify(base: str):
     assert result["map_candidates"] and all(
         "latitude_deg" in point for point in result["map_candidates"]
     )
+    full_started = perf_counter()
+    full_cap = call(
+        "/api/v1/candidates/search",
+        {
+            "region": {"selector_type": "full_supported_region"},
+            "time_range": {**window, "end_utc": "2028-10-31T00:00:00Z"},
+        },
+    )
+    full_seconds = perf_counter() - full_started
+    assert full_cap["counts"]["region"] == 103996 and full_cap["candidates"], full_cap
     expected_assets = {
         "moon-height.i16": "ccc3b215bcd0fac3d8003e6aeb70cfc962512579f6411db5ad4d72405f973f45",
         "earth-visual.glb": "472de6535d973a0b1b178f7b06eb1edfca3aa15936bb130d6fff9cf05e3c0c01",
@@ -67,6 +77,7 @@ def verify(base: str):
         "completed_area_ranking_seconds": round(seconds, 3),
         "scene": "ok",
         "prepared_search": "ok",
+        "completed_full_cap_search_seconds": round(full_seconds, 3),
         "model_assets": "verified",
     }
 
